@@ -28,7 +28,7 @@ public class WelcomeScreen {
         screen.getChildren().addAll(gameTitle, toGame, toSettings);
         
         Scene welcomeScreen = new Scene(screen, MainScreen.length, MainScreen.height);
-        welcomeScreen.getStylesheets().add("/design/WelcomeScreen.css");
+        welcomeScreen.getStylesheets().add("main/design/WelcomeScreen.css");
 
         return welcomeScreen;
     }
