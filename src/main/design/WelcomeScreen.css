@@ -1,0 +1,22 @@
+.screen {
+    -fx-background-image: url("/main/design/images/dungeon.jpg");
+    -fx-background-size: cover;
+    -fx-spacing: 30px;
+    -fx-background-position: center center;
+}
+
+.game_title {
+    -fx-text-alignment: center;
+    -fx-font-size: 80px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.5), 0,0,0,1);
+    -fx-font-family: "Times New Roman";
+    -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, rgb(255, 25, 0) 0%, rgb(255, 0, 100) 100%);
+}
+
+.button {
+    -fx-text-alignment: center;
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Times New Roman";
+}
