@@ -1,3 +1,56 @@
+.customization_panel_hbox {
+    -fx-padding: 30;
+}
+
+.customization_panel_back {
+    -fx-background-color: #2a6666;
+    -fx-opacity: 0.5;
+}
+
 .bottom_buttons {
-    -fx-alignment: Center;
+}
+
+.screen {
+    -fx-background-image: url("/main/design/images/dungeon.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.choose_character {
+}
+
+.nav_buttons {
+}
+
+.entry_fields {
+    -fx-spacing: 50;
+}
+
+.rect {
+    -fx-arc-height: 10px;
+    -fx-arc-width: 10px;
+    -fx-fill: #1d9179;
+    -fx-border-color: #000000;
+    -fx-border-radius: 10px;
+    -fx-opacity: 0.7;
+}
+
+.name_vbox {
+
+}
+
+.name {
+
+}
+
+.weapons_vbox {
+
+}
+
+.center {
+    -fx-alignment: center;
+}
+
+.entry_boxes {
+    -fx-spacing: 4px;
 }
