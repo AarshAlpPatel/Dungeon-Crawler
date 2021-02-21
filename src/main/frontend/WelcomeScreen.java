@@ -18,6 +18,9 @@ public class WelcomeScreen {
 
         Button toGame = new Button("Start Game");
         toGame.getStyleClass().add("button");
+        toGame.setOnAction(event -> {
+            MainScreen.setScene(SetUpPlayerScreen.getScene());
+        });
 
         Button toSettings = new Button("Settings");
         toSettings.getStyleClass().add("button");
@@ -28,7 +31,7 @@ public class WelcomeScreen {
         screen.getChildren().addAll(gameTitle, toGame, toSettings);
         
         Scene welcomeScreen = new Scene(screen, MainScreen.length, MainScreen.height);
-        welcomeScreen.getStylesheets().add("/design/WelcomeScreen.css");
+        welcomeScreen.getStylesheets().add("/main/design/WelcomeScreen.css");
 
         return welcomeScreen;
     }

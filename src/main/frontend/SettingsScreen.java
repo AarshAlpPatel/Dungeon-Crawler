@@ -54,7 +54,7 @@ public class SettingsScreen {
         screen.setCenter(middle);
         
         Scene welcomeScreen = new Scene(screen, MainScreen.length, MainScreen.height);
-        welcomeScreen.getStylesheets().add("/design/SettingsScreen.css");
+        welcomeScreen.getStylesheets().add("/main/design/SettingsScreen.css");
 
         return welcomeScreen;
     }
