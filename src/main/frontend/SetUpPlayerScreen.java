@@ -1,17 +1,27 @@
 package main.frontend;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.*;
 
+import main.backend.characters.Character;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class SetUpPlayerScreen {
+
+    private static int index = 0;
 
     public static Scene getScene() {
 
         //top is the customization panel and bottom are the start and back buttons
-        VBox screen = new VBox(100);
+        VBox screen = new VBox();
         screen.getStyleClass().addAll("screen", "center");
 
         //contains the entryFields and the character chooser
@@ -87,8 +97,11 @@ public class SetUpPlayerScreen {
         chooseChar.getStyleClass().addAll("choose_character", "center");
 
         StackPane character = new StackPane();
-        ImageView flash = new ImageView(new Image("/main/design/images/flash.png"));
-        character.getChildren().add(flash);
+
+        ImageView char1 = new ImageView(new Image("/main/design/images/char1.gif"));
+        ImageView char2 = new ImageView(new Image("/main/design/images/char2.gif"));
+        ImageView char3 = new ImageView(new Image("/main/design/images/char3.gif"));
+        character.getChildren().add(char1);
         character.getStyleClass().add("character");
 
         StackPane navButtons = new StackPane();
@@ -97,11 +110,36 @@ public class SetUpPlayerScreen {
         HBox navButtons_hbox = new HBox(5); //flip through character skins
         navButtons.getChildren().addAll(rectNav, navButtons_hbox);
         navButtons_hbox.getStyleClass().addAll("nav_buttons_hbox", "center");
+
         Button forward = new Button(">");
         forward.getStyleClass().add("forward");
+        forward.setOnAction(event -> {
+            index++;
+            character.getChildren().remove(0);
+            if (index > 2) {
+                index = 0;
+                character.getChildren().add(char1);
+            } else if (index == 1) {
+                character.getChildren().add(char2);
+            } else if (index == 2) {
+                character.getChildren().add(char3);
+            }
+        });
 
         Button backward = new Button("<");
         backward.getStyleClass().add("backward");
+        backward.setOnAction(event -> {
+            index--;
+            character.getChildren().remove(0);
+            if (index < 0) {
+                index = 2;
+                character.getChildren().add(char3);
+            } else if (index == 1) {
+                character.getChildren().add(char2);
+            } else if (index == 0) {
+                character.getChildren().add(char1);
+            }
+        });
 
         Button choose = new Button("Choose");
         choose.getStyleClass().add("choose");
@@ -110,12 +148,12 @@ public class SetUpPlayerScreen {
             if (choose.getText().equals("Choose")) {
                 forward.setDisable(true);
                 backward.setDisable(true);
-                flash.setOpacity(0.7); //change flash to image and have image change between the pictures
+                character.getChildren().get(0).setOpacity(0.7); //change flash to image and have image change between the pictures
                 character.getChildren().add(new ImageView(new Image("/main/design/images/check.png")));
                 choose.setText("Uncheck");
             } else if (choose.getText().equals("Uncheck")) {
                 character.getChildren().remove(1);
-                flash.setOpacity(1);
+                character.getChildren().get(0).setOpacity(1);
                 forward.setDisable(false);
                 backward.setDisable(false);
                 choose.setText("Choose");
@@ -129,15 +167,15 @@ public class SetUpPlayerScreen {
         screen.getChildren().add(customization_panel);
 
         HBox bottom_buttons = new HBox(50);
-        bottom_buttons.getStyleClass().addAll("bottom_buttons", "center");
-        Button toMainScreen = new Button("back");
-        toMainScreen.getStyleClass().add("back_button");
+        bottom_buttons.getStyleClass().addAll("bottom_buttons_hbox", "center");
+        Button toMainScreen = new Button("Main Menu");
+        toMainScreen.getStyleClass().addAll("back_button", "bottom_buttons");
         toMainScreen.setOnAction(event -> {
             MainScreen.setScene(WelcomeScreen.getScene());
         });
 
         Button start = new Button("Start Game");
-        start.getStyleClass().add("start");
+        start.getStyleClass().addAll("start", "bottom_buttons");
         start.setOnAction(event -> {
             if (nameField.getText().isEmpty()) {
                 nameField.setStyle("-fx-background-color: red;");
