@@ -72,3 +72,38 @@
 .entry_boxes {
     -fx-spacing: 4px;
 }
+
+.label {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Bernard MT Condensed";
+    -fx-text-fill: silver;
+}
+
+.name_field {
+
+}
+
+.choose {
+    -fx-text-fill: black;
+    -fx-background-color: grey;
+    -fx-arc-width: 30;
+    -fx-arc-height: 30;
+    -fx-opacity: 0.8;
+}
+
+.forward {
+    -fx-text-fill: black;
+    -fx-background-color: grey;
+    -fx-arc-width: 10;
+    -fx-arc-height: 10;
+    -fx-opacity: 0.8;
+}
+
+.backward {
+    -fx-text-fill: black;
+    -fx-background-color: grey;
+    -fx-arc-width: 30;
+    -fx-arc-height: 30;
+    -fx-opacity: 0.8;
+}
