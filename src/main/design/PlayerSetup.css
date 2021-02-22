@@ -1,5 +1,5 @@
 .customization_panel_hbox {
-    -fx-padding: 30;
+    -fx-padding: 40;
 }
 
 .customization_panel_back {
@@ -7,13 +7,31 @@
     -fx-opacity: 0.5;
 }
 
+.back_button {
+    -fx-background-color: #223dbc;
+    -fx-text-fill: white;
+}
+
+.start {
+    -fx-background-color: #db2f2f;
+}
+
+.bottom_buttons_hbox {
+    -fx-spacing: 350;
+}
+
 .bottom_buttons {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Bernard MT Condensed";
+    -fx-min-width: 175px;
 }
 
 .screen {
     -fx-background-image: url("/main/design/images/dungeon.jpg");
     -fx-background-size: cover;
     -fx-background-position: center center;
+    -fx-spacing: 50px;
 }
 
 .choose_character {
