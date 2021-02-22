@@ -13,6 +13,8 @@ import main.backend.characters.Character;
 import main.backend.characters.Player;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -39,7 +41,7 @@ public class SetUpPlayerScreen {
         VBox entryFields = new VBox();
         entryFields.getStyleClass().addAll("entry_fields", "center");
 
-            //enter name -- Start Game button checks if its blank
+        //enter name -- Start Game button checks if its blank
         StackPane name = new StackPane();
         name.getStyleClass().addAll("name", "center");
         VBox nameVBox = new VBox();
@@ -48,7 +50,7 @@ public class SetUpPlayerScreen {
         name.getChildren().addAll(rectName, nameVBox);
         nameVBox.getStyleClass().addAll("name_vbox", "center", "entry_boxes");
         Label nameLabel = new Label("Enter Name");
-        nameLabel.getStyleClass().add("name_label");
+        nameLabel.getStyleClass().addAll("name_label", "label");
         TextField nameField = new TextField();
         nameField.setOnMouseClicked(event -> {
             nameField.setStyle("-fx-background-color: #ffffff;");
@@ -66,7 +68,7 @@ public class SetUpPlayerScreen {
         rectWeapons.getStyleClass().add("rect");
         weapons.getChildren().addAll(rectWeapons, weaponsVBox);
         Label weaponsLabel = new Label("Starting Weapon");
-        weaponsLabel.getStyleClass().add("weapons_label");
+        weaponsLabel.getStyleClass().addAll("weapons_label", "label");
         ComboBox<String> weaponsCombo = new ComboBox<>();
         weaponsCombo.getStyleClass().add("weapons_combo");
         weaponsCombo.setPromptText("Select A Starting Weapon");
@@ -83,7 +85,7 @@ public class SetUpPlayerScreen {
         rectDiff.getStyleClass().add("rect");
         diff.getChildren().addAll(rectDiff, diffVBox);
         Label diffLabel = new Label("Difficulty");
-        diffLabel.getStyleClass().add("diff_label");
+        diffLabel.getStyleClass().addAll("diff_label", "label");
         ComboBox<String> diffCombo = new ComboBox<>();
         diffCombo.setPromptText("Select A Difficulty");
         diffCombo.getStyleClass().add("diff_combo");
@@ -145,15 +147,20 @@ public class SetUpPlayerScreen {
 
         Button choose = new Button("Choose");
         choose.getStyleClass().add("choose");
+        navButtons_hbox.getChildren().addAll(backward, choose, forward);
         choose.setOnAction(event -> {
             //add the checkmark and change text (checks or unchecks based on getText)
             if (choose.getText().equals("Choose")) {
                 forward.setDisable(true);
                 backward.setDisable(true);
+                navButtons_hbox.getChildren().remove(0);
+                navButtons_hbox.getChildren().remove(1);
                 character.getChildren().get(0).setOpacity(0.7); //change flash to image and have image change between the pictures
                 character.getChildren().add(new ImageView(new Image("/main/design/images/check.png")));
                 choose.setText("Uncheck");
             } else if (choose.getText().equals("Uncheck")) {
+                navButtons_hbox.getChildren().add(0, backward);
+                navButtons_hbox.getChildren().add(2, forward);
                 character.getChildren().remove(1);
                 character.getChildren().get(0).setOpacity(1);
                 forward.setDisable(false);
@@ -161,7 +168,7 @@ public class SetUpPlayerScreen {
                 choose.setText("Choose");
             }
         });
-        navButtons_hbox.getChildren().addAll(backward, choose, forward);
+
         chooseChar.getChildren().addAll(character, navButtons);
 
         customization_panel_hbox.getChildren().addAll(chooseChar, entryFields);
@@ -199,5 +206,27 @@ public class SetUpPlayerScreen {
 
         return playerSetUp;
     }
+
+//    public static Button forward(Pane character) {
+//        ArrayList<Character> characters = new ArrayList<>();
+//        characters.add(new Character("Brute", new File("/main/design/images/char1.gif")));
+//        Button forward = new Button(">");
+//        forward.getStyleClass().add("forward");
+//        forward.setOnAction(event -> {
+//            index++;
+//            character.getChildren().remove(0);
+//            ImageView sprite = new ImageView();
+//            if (index == characters.size()) {
+//                index = 0;
+//            }
+//            try {
+//                sprite.setImage(new Image(characters.get(index).getImagePath().getCanonicalPath()));
+//            } catch (IOException ioe) {
+//                System.out.println(ioe.getMessage());
+//            }
+//            character.getChildren().add(sprite);
+//        });
+//        return forward;
+//    }
 
 }
