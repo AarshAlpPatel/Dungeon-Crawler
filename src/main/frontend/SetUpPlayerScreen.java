@@ -8,7 +8,9 @@ import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.*;
 
+import main.backend.Controller;
 import main.backend.characters.Character;
+import main.backend.characters.Player;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -180,6 +182,10 @@ public class SetUpPlayerScreen {
             if (nameField.getText().isEmpty()) {
                 nameField.setStyle("-fx-background-color: red;");
             } else {
+                //updates name, weapon, and difficulty for player
+                Player.name = nameField.getText();
+                Player.weapon = weaponsCombo.getValue();
+                Controller.difficultyLevel = diffCombo.getValue();
                 //send to start of dungeon (room 1)
             }
         });
