@@ -1,7 +1,5 @@
 package main.frontend;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -10,16 +8,9 @@ import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.*;
 
-import javafx.scene.text.Text;
 import main.backend.Controller;
 import main.backend.characters.Character;
 import main.backend.characters.Player;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class SetUpPlayerScreen {
 
@@ -58,9 +49,7 @@ public class SetUpPlayerScreen {
         Label nameLabel = new Label("Enter Name");
         nameLabel.getStyleClass().addAll("name_label", "label");
         TextField nameField = new TextField();
-        nameField.setOnMouseClicked(event -> {
-            nameField.setStyle("-fx-background-color: #ffffff;");
-        });
+        nameField.setOnMouseClicked(event -> nameField.setStyle("-fx-background-color: #ffffff;"));
         nameField.setMaxWidth(250);
         nameField.setPromptText("Enter Player Name");
         nameField.getStyleClass().add("name_field");
@@ -185,7 +174,7 @@ public class SetUpPlayerScreen {
         Label diffLabel = new Label("Difficulty");
         diffLabel.getStyleClass().addAll("diff_label", "label");
         ComboBox<String> diffCombo = new ComboBox<>();
-        diffCombo.setPromptText("Select A Difficulty");
+        diffCombo.setPromptText("Easy");
         diffCombo.getStyleClass().add("diff_combo");
         diffCombo.getItems().addAll(
                 "Easy", "Medium", "Hard"
@@ -285,9 +274,7 @@ public class SetUpPlayerScreen {
         bottom_buttons.getStyleClass().addAll("bottom_buttons_hbox", "center");
         Button toMainScreen = new Button("Main Menu");
         toMainScreen.getStyleClass().addAll("back_button", "bottom_buttons");
-        toMainScreen.setOnAction(event -> {
-            MainScreen.setScene(WelcomeScreen.getScene());
-        });
+        toMainScreen.setOnAction(event -> MainScreen.setScene(WelcomeScreen.getScene()));
 
         Button start = new Button("Start Game");
         start.getStyleClass().addAll("start", "bottom_buttons");
@@ -297,10 +284,12 @@ public class SetUpPlayerScreen {
             } else {
                 //updates name, weapon, and difficulty for player
                 Player.name = nameField.getText();
-                //Player.weapon = weaponsCombo.getValue();
-                Controller.difficultyLevel = diffCombo.getValue();
+                if (indexW == 0) Player.weapon = "dagger";
+                else if (indexW == 1) Player.weapon = "axe";
+                else Player.weapon = "spear";
+                Controller.difficultyLevel = diffCombo.getValue() == null ? "Easy" : diffCombo.getValue();
                 Player.character = playerChar;
-                //send to start of dungeon (room 1)
+                MainScreen.setScene(FirstRoom.getScene());
             }
         });
 
