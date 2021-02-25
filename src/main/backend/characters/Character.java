@@ -4,14 +4,19 @@ import java.io.File;
 
 public class Character {
     private String name;
-    private File imagePath;
+    private String imagePath;
 
-    public Character(String name, File imagePath) {
+    public Character(String name) {
+        this.name = name;
+        imagePath = null;
+    }
+
+    public Character(String name, String imagePath) {
         this.name = name;
         this.imagePath = imagePath;
     }
 
-    public void setImagePath(File imagePath) {
+    public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
 
@@ -19,7 +24,7 @@ public class Character {
         this.name = name;
     }
 
-    public File getImagePath() {
+    public String getImagePath() {
         return imagePath;
     }
 

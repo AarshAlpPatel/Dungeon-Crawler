@@ -2,12 +2,15 @@ package main.frontend;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.*;
 
+import javafx.scene.text.Text;
 import main.backend.Controller;
 import main.backend.characters.Character;
 import main.backend.characters.Player;
@@ -20,12 +23,15 @@ import java.util.LinkedList;
 
 public class SetUpPlayerScreen {
 
-    private static int index = 0;
+    private static int indexC = 0; //character
+    private static int indexW = 0; //weapon
+    private static Character playerChar;
 
     public static Scene getScene() {
 
         //top is the customization panel and bottom are the start and back buttons
         VBox screen = new VBox();
+        Scene playerSetUp = new Scene(screen, MainScreen.length, MainScreen.height);
         screen.getStyleClass().addAll("screen", "center");
 
         //contains the entryFields and the character chooser
@@ -33,7 +39,7 @@ public class SetUpPlayerScreen {
         customization_panel.getStyleClass().addAll("customization_panel", "center");
         Pane customization_panel_back = new Pane();
         customization_panel_back.getStyleClass().addAll("customization_panel_back");
-        HBox customization_panel_hbox = new HBox(100);
+        HBox customization_panel_hbox = new HBox();
         customization_panel_hbox.getStyleClass().addAll("customization_panel_hbox", "center");
         customization_panel.getChildren().addAll(customization_panel_back, customization_panel_hbox);
 
@@ -62,20 +68,112 @@ public class SetUpPlayerScreen {
 
         StackPane weapons = new StackPane();
         weapons.getStyleClass().add("weapons");
-        VBox weaponsVBox = new VBox();
-        weaponsVBox.getStyleClass().addAll("weapons_vbox", "center", "entry_boxes");
-        Rectangle rectWeapons = new Rectangle(300, 75);
-        rectWeapons.getStyleClass().add("rect");
-        weapons.getChildren().addAll(rectWeapons, weaponsVBox);
-        Label weaponsLabel = new Label("Starting Weapon");
-        weaponsLabel.getStyleClass().addAll("weapons_label", "label");
-        ComboBox<String> weaponsCombo = new ComboBox<>();
-        weaponsCombo.getStyleClass().add("weapons_combo");
-        weaponsCombo.setPromptText("Select A Starting Weapon");
-        weaponsCombo.getItems().addAll(
-                "Weapon 1", "Weapon 2", "Weapon 3"
-        );
-        weaponsVBox.getChildren().addAll(weaponsLabel, weaponsCombo);
+        Rectangle weaponsRect = new Rectangle(450, 200);
+        weaponsRect.getStyleClass().addAll("rect", "weapons_rect");
+
+        Image backArrow = new Image("/main/design/images/arrow left.png", 16, 24, false, false);
+        ImageView arrowLeft = new ImageView(backArrow);
+        arrowLeft.setOnMouseEntered(e -> {
+            playerSetUp.setCursor(Cursor.HAND);
+            arrowLeft.setFitWidth(backArrow.getWidth() * 2);
+            arrowLeft.setFitHeight(backArrow.getHeight() * 2);
+        });
+        arrowLeft.setOnMouseExited(e -> {
+            playerSetUp.setCursor(Cursor.DEFAULT);
+            arrowLeft.setFitWidth(backArrow.getWidth());
+            arrowLeft.setFitHeight(backArrow.getHeight());
+        });
+        Image frontArrow = new Image("/main/design/images/arrow right.png", 16, 24, false, false);
+        ImageView arrowRight = new ImageView(frontArrow);
+        arrowRight.setOnMouseEntered(e -> {
+            playerSetUp.setCursor(Cursor.HAND);
+            arrowRight.setFitWidth(frontArrow.getWidth() * 2);
+            arrowRight.setFitHeight(frontArrow.getHeight() * 2);
+        });
+        arrowRight.setOnMouseExited(e -> {
+            playerSetUp.setCursor(Cursor.DEFAULT);
+            arrowRight.setFitWidth(frontArrow.getWidth());
+            arrowRight.setFitHeight(frontArrow.getHeight());
+        });
+        Image red_dagger = new Image("/main/design/images/red dagger.png");
+        Image blank_axe = new Image("/main/design/images/axe.png");
+        Image blank_spear = new Image("/main/design/images/spear.png");
+        HBox weaponAndArrows = new HBox(0, arrowLeft, arrowRight);
+        weaponAndArrows.getStyleClass().addAll("center");
+        weapons.getChildren().addAll(weaponsRect, weaponAndArrows);
+        //dagger
+        HBox dagger = new HBox(5);
+        dagger.setPadding(new Insets(0, 30, 0, 0));
+        dagger.getStyleClass().addAll("center");
+        VBox dChar = new VBox(10);
+        dChar.getStyleClass().addAll("center");
+        StackPane dSprite = new StackPane();
+        dSprite.getChildren().add(new ImageView(red_dagger));
+        Label dName = new Label("Red Dagger");
+        dName.getStyleClass().addAll("dName", "weapon_description");
+        Label dAttack = new Label("Attack: 20");
+        dAttack.getStyleClass().addAll("dAttack", "weapon_description");
+        Label dSpeed = new Label("Speed: 30");
+        dSpeed.getStyleClass().addAll("dSpeed", "weapon_description");
+        dChar.getChildren().addAll(dName, dAttack, dSpeed);
+        dagger.getChildren().addAll(dSprite, dChar);
+        //axe
+        HBox axe = new HBox(20);
+        axe.setPadding(new Insets(0, 30, 0, 0));
+        axe.getStyleClass().addAll("center");
+        VBox aChar = new VBox(10);
+        aChar.getStyleClass().addAll("center");
+        StackPane aSprite = new StackPane();
+        aSprite.getChildren().add(new ImageView(blank_axe));
+        Label aName = new Label("Axe");
+        aName.getStyleClass().addAll("aName", "weapon_description");
+        Label aAttack = new Label("Attack: 40");
+        aAttack.getStyleClass().addAll("aAttack", "weapon_description");
+        Label aSpeed = new Label("Speed: 10");
+        aSpeed.getStyleClass().addAll("aSpeed", "weapon_description");
+        aChar.getChildren().addAll(aName, aAttack, aSpeed);
+        axe.getChildren().addAll(aSprite, aChar);
+        //spear
+        HBox spear = new HBox(5);
+        spear.setPadding(new Insets(0, 30, 0, 0));
+        spear.getStyleClass().addAll("center");
+        VBox sChar = new VBox(10);
+        sChar.getStyleClass().addAll("center");
+        StackPane sSprite = new StackPane();
+        sSprite.getChildren().add(new ImageView(blank_spear));
+        Label sName = new Label("Spear");
+        sName.getStyleClass().addAll("sName", "weapon_description");
+        Label sAttack = new Label("Attack: 5");
+        sAttack.getStyleClass().addAll("sAttack", "weapon_description");
+        Label sSpeed = new Label("Speed: 50");
+        sSpeed.getStyleClass().addAll("sSpeed", "weapon_description");
+        sChar.getChildren().addAll(sName, sAttack, sSpeed);
+        spear.getChildren().addAll(sSprite, sChar);
+        weaponAndArrows.getChildren().add(1, dagger);
+        arrowLeft.setOnMouseClicked(e -> {
+            indexW--;
+            weaponAndArrows.getChildren().remove(1);
+            if (indexW < 0) {
+                indexW = 2;
+                weaponAndArrows.getChildren().add(1, spear);
+            } else if (indexW == 1) {
+                weaponAndArrows.getChildren().add(1, axe);
+            } else if (indexW == 0) {
+                weaponAndArrows.getChildren().add(1, dagger);
+            }
+        });
+        arrowRight.setOnMouseClicked(e -> {
+            indexW++;
+            weaponAndArrows.getChildren().remove(1);
+            if (indexW > 2) {
+                indexW = 0;
+                weaponAndArrows.getChildren().add(1, dagger);
+            } else if (indexW == 1) {
+                weaponAndArrows.getChildren().add(1, axe);
+            } else if (indexW == 2) {
+                weaponAndArrows.getChildren().add(1, spear);
+            }
+        });
 
         StackPane diff = new StackPane();
         VBox diffVBox = new VBox();
@@ -94,18 +192,20 @@ public class SetUpPlayerScreen {
         );
         diffVBox.getChildren().addAll(diffLabel, diffCombo);
 
-        entryFields.getChildren().addAll(name, weapons, diff);
+        entryFields.getChildren().addAll(name, diff, weapons);
 
         //vbox for choosing character look
         VBox chooseChar = new VBox(15);
+        chooseChar.setMinWidth(320);
+        chooseChar.setPadding(new Insets(0, 0, 0,10));
         chooseChar.getStyleClass().addAll("choose_character", "center");
 
         StackPane character = new StackPane();
 
-        ImageView char1 = new ImageView(new Image("/main/design/images/char1.gif"));
-        ImageView char2 = new ImageView(new Image("/main/design/images/char2.gif"));
-        ImageView char3 = new ImageView(new Image("/main/design/images/char3.gif"));
-        character.getChildren().add(char1);
+        Character char1 = new Character("Brute", "/main/design/images/char1.gif");
+        Character char2 = new Character("Magma", "/main/design/images/char2.gif");
+        Character char3 = new Character("Aqua", "/main/design/images/char3.gif");
+        character.getChildren().add(new ImageView(char1.getImagePath()));
         character.getStyleClass().add("character");
 
         StackPane navButtons = new StackPane();
@@ -118,30 +218,36 @@ public class SetUpPlayerScreen {
         Button forward = new Button(">");
         forward.getStyleClass().add("forward");
         forward.setOnAction(event -> {
-            index++;
+            indexC++;
             character.getChildren().remove(0);
-            if (index > 2) {
-                index = 0;
-                character.getChildren().add(char1);
-            } else if (index == 1) {
-                character.getChildren().add(char2);
-            } else if (index == 2) {
-                character.getChildren().add(char3);
+            if (indexC > 2) {
+                indexC = 0;
+                character.getChildren().add(new ImageView(char1.getImagePath()));
+                playerChar = char1;
+            } else if (indexC == 1) {
+                character.getChildren().add(new ImageView(char2.getImagePath()));
+                playerChar = char2;
+            } else if (indexC == 2) {
+                character.getChildren().add(new ImageView(char3.getImagePath()));
+                playerChar = char3;
             }
         });
 
         Button backward = new Button("<");
         backward.getStyleClass().add("backward");
         backward.setOnAction(event -> {
-            index--;
+            indexC--;
             character.getChildren().remove(0);
-            if (index < 0) {
-                index = 2;
-                character.getChildren().add(char3);
-            } else if (index == 1) {
-                character.getChildren().add(char2);
-            } else if (index == 0) {
-                character.getChildren().add(char1);
+            if (indexC < 0) {
+                indexC = 2;
+                character.getChildren().add(new ImageView(char3.getImagePath()));
+                playerChar = char3;
+            } else if (indexC == 1) {
+                character.getChildren().add(new ImageView(char2.getImagePath()));
+                playerChar = char2;
+            } else if (indexC == 0) {
+                character.getChildren().add(new ImageView(char1.getImagePath()));
+                playerChar = char1;
             }
         });
 
@@ -156,7 +262,7 @@ public class SetUpPlayerScreen {
                 navButtons_hbox.getChildren().remove(0);
                 navButtons_hbox.getChildren().remove(1);
                 character.getChildren().get(0).setOpacity(0.7); //change flash to image and have image change between the pictures
-                character.getChildren().add(new ImageView(new Image("/main/design/images/check.png")));
+                character.getChildren().add(new ImageView("/main/design/images/check.png"));
                 choose.setText("Uncheck");
             } else if (choose.getText().equals("Uncheck")) {
                 navButtons_hbox.getChildren().add(0, backward);
@@ -191,8 +297,9 @@ public class SetUpPlayerScreen {
             } else {
                 //updates name, weapon, and difficulty for player
                 Player.name = nameField.getText();
-                Player.weapon = weaponsCombo.getValue();
+                //Player.weapon = weaponsCombo.getValue();
                 Controller.difficultyLevel = diffCombo.getValue();
+                Player.character = playerChar;
                 //send to start of dungeon (room 1)
             }
         });
@@ -201,32 +308,9 @@ public class SetUpPlayerScreen {
 
         screen.getChildren().add(bottom_buttons);
 
-        Scene playerSetUp = new Scene(screen, MainScreen.length, MainScreen.height);
         playerSetUp.getStylesheets().add("/main/design/PlayerSetup.css");
 
         return playerSetUp;
     }
-
-//    public static Button forward(Pane character) {
-//        ArrayList<Character> characters = new ArrayList<>();
-//        characters.add(new Character("Brute", new File("/main/design/images/char1.gif")));
-//        Button forward = new Button(">");
-//        forward.getStyleClass().add("forward");
-//        forward.setOnAction(event -> {
-//            index++;
-//            character.getChildren().remove(0);
-//            ImageView sprite = new ImageView();
-//            if (index == characters.size()) {
-//                index = 0;
-//            }
-//            try {
-//                sprite.setImage(new Image(characters.get(index).getImagePath().getCanonicalPath()));
-//            } catch (IOException ioe) {
-//                System.out.println(ioe.getMessage());
-//            }
-//            character.getChildren().add(sprite);
-//        });
-//        return forward;
-//    }
 
 }
