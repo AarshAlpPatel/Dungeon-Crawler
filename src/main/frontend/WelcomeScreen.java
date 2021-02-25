@@ -17,6 +17,7 @@ public class WelcomeScreen {
         gameTitle.getStyleClass().add("game_title");
 
         Button toGame = new Button("Start Game");
+        toGame.setId("toGame");
         toGame.getStyleClass().add("button");
         toGame.setOnAction(event -> {
             MainScreen.setScene(SetUpPlayerScreen.getScene());
