@@ -53,6 +53,10 @@
     -fx-opacity: 0.7;
 }
 
+.weapons_rect {
+
+}
+
 .name_vbox {
 
 }
@@ -106,4 +110,30 @@
     -fx-arc-width: 30;
     -fx-arc-height: 30;
     -fx-opacity: 0.8;
+}
+
+.weapon_description {
+    -fx-text-alignment: center;
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+}
+
+.dName {
+    -fx-text-fill: red;
+    -fx-font-size: 20px;
+}
+
+.aName {
+    -fx-text-fill: blue;
+    -fx-font-size: 20px;
+}
+
+.sName {
+    -fx-text-fill: orange;
+    -fx-font-size: 20px;
+}
+
+.dDescription {
+    -fx-font-size: 10px;
 }
