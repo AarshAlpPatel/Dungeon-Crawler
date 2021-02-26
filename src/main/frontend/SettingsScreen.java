@@ -14,7 +14,7 @@ public class SettingsScreen {
         BorderPane screen = new BorderPane();
         screen.getStyleClass().add("screen");
 
-        Button toMainScreen = new Button("back");
+        Button toMainScreen = new Button("Return Home");
         toMainScreen.getStyleClass().add("back_button");
         toMainScreen.setOnAction(event -> {
             MainScreen.setScene(WelcomeScreen.getScene());
@@ -36,10 +36,7 @@ public class SettingsScreen {
         difficulty.setOnAction(event -> {
             Controller.difficultyLevel = difficulty.getValue();
         });
-
-        HBox top = new HBox();
-        top.setAlignment(Pos.CENTER_LEFT);
-        top.getChildren().add(toMainScreen);
+        difficulty.getStyleClass().add("combo-box-base");
 
         HBox difficultyBox = new HBox();
         difficultyBox.setAlignment(Pos.CENTER);
@@ -48,10 +45,9 @@ public class SettingsScreen {
 
         VBox middle = new VBox();
         middle.setAlignment(Pos.CENTER);
-        middle.getChildren().addAll(settingsTitle, difficultyBox);
+        middle.getChildren().addAll(settingsTitle, difficultyBox, toMainScreen);
         middle.getStyleClass().add("box");
 
-        screen.setTop(top);
         screen.setCenter(middle);
         
         Scene welcomeScreen = new Scene(screen, MainScreen.length, MainScreen.height);
