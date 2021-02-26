@@ -19,26 +19,15 @@
 
 .choice {
     -fx-text-alignment: center;
-    -fx-font-size: 40px;
-    -fx-font-weight: bold;
+    -fx-font-size: 25px;
+    -fx-font-weight: normal;
     -fx-font-family: "Times New Roman";
     -fx-fill: white;
 }
 
 .back_button {
-    -fx-text-alignment: center;
-    -fx-font-size: 25px;
-    -fx-font-weight: bold;
+    -fx-text-alignment: left;
+    -fx-font-size: 15px;
+    -fx-font-weight: normal;
     -fx-font-family: "Times New Roman";
-}
-
-.combo-box-base {
-    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, transparent;
-    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
-    -fx-background-radius: 3px, 3px, 2px, 1px;
-    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
-    -fx-text-fill: -fx-text-base-color;
-    -fx-font-size: 20px;
-    -fx-alignment: CENTER;
-    -fx-content-display: LEFT;
 }
