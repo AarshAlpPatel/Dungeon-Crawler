@@ -1,6 +1,7 @@
 package main.frontend;
 
 import javafx.application.Application;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.*;
@@ -19,6 +20,8 @@ public class MainScreen extends Application {
     public static void setScene(Scene s) {
         stage.setScene(s);
     }
+
+    //protected static Button toGame;
 
     public void start(Stage primaryStage) {
         stage = primaryStage;

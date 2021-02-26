@@ -49,6 +49,7 @@ public class SetUpPlayerScreen {
         Label nameLabel = new Label("Enter Name");
         nameLabel.getStyleClass().addAll("name_label", "label");
         TextField nameField = new TextField();
+        nameField.setId("nameField");
         nameField.setOnMouseClicked(event -> nameField.setStyle("-fx-background-color: #ffffff;"));
         nameField.setMaxWidth(250);
         nameField.setPromptText("Enter Player Name");
@@ -277,6 +278,7 @@ public class SetUpPlayerScreen {
         toMainScreen.setOnAction(event -> MainScreen.setScene(WelcomeScreen.getScene()));
 
         Button start = new Button("Start Game");
+        start.setId("start");
         start.getStyleClass().addAll("start", "bottom_buttons");
         start.setOnAction(event -> {
             if (nameField.getText().isEmpty()) {

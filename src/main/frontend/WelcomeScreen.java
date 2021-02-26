@@ -6,6 +6,8 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.scene.control.*;
 
+//import static main.frontend.MainScreen.toGame;
+
 public class WelcomeScreen {
 
     public static Scene getScene() {
