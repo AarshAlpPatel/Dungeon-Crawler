@@ -9,14 +9,26 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.*;
 
 import main.backend.Controller;
-import main.backend.characters.Character;
 import main.backend.characters.Player;
+import main.backend.characters.SpriteManager;
 
 public class SetUpPlayerScreen {
 
     private static int indexC = 0; //character
     private static int indexW = 0; //weapon
-    private static Character playerChar;
+    private static String[] characters = {
+        "/main/design/images/char1.gif",
+        "/main/design/images/char2.gif", 
+        "/main/design/images/char3.gif"
+    };
+    private static String[] weapons = {
+        "/main/design/images/red_dagger.png",
+        "/main/design/images/spear.png"
+    };
+
+    public static void createPlayer(String name) {
+        SpriteManager.createPlayer(400, 400, name, characters[indexC], weapons[indexW]);
+    }
 
     public static Scene getScene() {
 
@@ -85,7 +97,7 @@ public class SetUpPlayerScreen {
             arrowRight.setFitWidth(frontArrow.getWidth());
             arrowRight.setFitHeight(frontArrow.getHeight());
         });
-        Image red_dagger = new Image("/main/design/images/red dagger.png");
+        Image red_dagger = new Image("/main/design/images/red_dagger.png");
         Image blank_axe = new Image("/main/design/images/axe.png");
         Image blank_spear = new Image("/main/design/images/spear.png");
         HBox weaponAndArrows = new HBox(0, arrowLeft, arrowRight);
@@ -192,10 +204,7 @@ public class SetUpPlayerScreen {
 
         StackPane character = new StackPane();
 
-        Character char1 = new Character("Brute", "/main/design/images/char1.gif");
-        Character char2 = new Character("Magma", "/main/design/images/char2.gif");
-        Character char3 = new Character("Aqua", "/main/design/images/char3.gif");
-        character.getChildren().add(new ImageView(char1.getImagePath()));
+        character.getChildren().add(new ImageView(new Image(characters[indexC])));
         character.getStyleClass().add("character");
 
         StackPane navButtons = new StackPane();
@@ -212,15 +221,8 @@ public class SetUpPlayerScreen {
             character.getChildren().remove(0);
             if (indexC > 2) {
                 indexC = 0;
-                character.getChildren().add(new ImageView(char1.getImagePath()));
-                playerChar = char1;
-            } else if (indexC == 1) {
-                character.getChildren().add(new ImageView(char2.getImagePath()));
-                playerChar = char2;
-            } else if (indexC == 2) {
-                character.getChildren().add(new ImageView(char3.getImagePath()));
-                playerChar = char3;
             }
+            character.getChildren().add(new ImageView(new Image(characters[indexC])));
         });
 
         Button backward = new Button("<");
@@ -230,15 +232,8 @@ public class SetUpPlayerScreen {
             character.getChildren().remove(0);
             if (indexC < 0) {
                 indexC = 2;
-                character.getChildren().add(new ImageView(char3.getImagePath()));
-                playerChar = char3;
-            } else if (indexC == 1) {
-                character.getChildren().add(new ImageView(char2.getImagePath()));
-                playerChar = char2;
-            } else if (indexC == 0) {
-                character.getChildren().add(new ImageView(char1.getImagePath()));
-                playerChar = char1;
             }
+            character.getChildren().add(new ImageView(new Image(characters[indexC])));
         });
 
         Button choose = new Button("Choose");
@@ -285,12 +280,8 @@ public class SetUpPlayerScreen {
                 nameField.setStyle("-fx-background-color: red;");
             } else {
                 //updates name, weapon, and difficulty for player
-                Player.name = nameField.getText();
-                if (indexW == 0) Player.weapon = "dagger";
-                else if (indexW == 1) Player.weapon = "axe";
-                else Player.weapon = "spear";
+                createPlayer(nameField.getText());
                 Controller.difficultyLevel = diffCombo.getValue() == null ? "Easy" : diffCombo.getValue();
-                Player.character = playerChar;
                 MainScreen.setScene(FirstRoom.getScene());
             }
         });

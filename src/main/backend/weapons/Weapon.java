@@ -18,6 +18,25 @@ public abstract class Weapon {
     //id is the key stored in the dictionary with the weapon being its value
     protected int id;
 
+    //image of weapon
+    protected String imagePath;
+
+    //whether or not any sprite is carrying the weapon or not
+    protected boolean dropped;
+
+    protected Weapon(double x, double y, double r, int damage, double range, 
+                     double aoe, int id, String imagePath, boolean dropped) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.damage = damage;
+        this.range = range;
+        this.aoe = aoe;
+        this.id = id;
+        this.imagePath = imagePath;
+        this.dropped = dropped;
+    }
+
     public double getX() {
         return this.x;
     }
