@@ -1,17 +1,21 @@
 package main.frontend;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 
+import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
 
 public class FirstRoom {
     public static Scene getScene() {
         StackPane screen = new StackPane();
         BorderPane bPane = new BorderPane();
-        screen.getChildren().addAll(new ImageView("/main/design/images/dungeon_floor.png"), bPane);
+        ImageView floor = new ImageView("/main/design/images/dungeon_floor.png");
+        floor.setOpacity(0.5);
+        screen.getChildren().addAll(floor, bPane);
         Scene roomScene = new Scene(screen);
 
         int numHearts = 0;
@@ -19,7 +23,7 @@ public class FirstRoom {
 
         VBox healthAndCash = new VBox(5);
         HBox hearts = new HBox(2);
-        HBox cash = new HBox(60, new ImageView("/main/design/images/coin.png")); //buy upgrades or we can add more weapons later or something
+        HBox cash = new HBox(10, new ImageView("/main/design/images/coin.png")); //buy upgrades or we can add more weapons later or something
         healthAndCash.getChildren().addAll(hearts, cash);
         if (Controller.difficultyLevel.equals("Easy")) {
             numHearts = 8;
@@ -37,10 +41,12 @@ public class FirstRoom {
         }
 
         Label cashValue = new Label(amountCash.toString());
+        cashValue.getStyleClass().add("cash_value");
 
         cash.getChildren().addAll(cashValue);
 
         bPane.setTop(healthAndCash);
+        roomScene.getStylesheets().add("/main/design/FirstRoom.css");
 
         return roomScene;
     }
