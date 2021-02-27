@@ -9,8 +9,6 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.*;
 
 import main.backend.Controller;
-import main.backend.characters.Player;
-import main.backend.characters.SpriteManager;
 
 public class SetUpPlayerScreen {
 
@@ -26,11 +24,6 @@ public class SetUpPlayerScreen {
         "spear",
         "axe"
     };
-
-    private static void createPlayer(String name) {
-        System.out.println(weapons[indexW]);
-        SpriteManager.createPlayer(400, 400, name, weapons[indexW], characters[indexC]);
-    }
 
     private static String capitalize(String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
@@ -250,7 +243,7 @@ public class SetUpPlayerScreen {
                 nameField.setStyle("-fx-background-color: red;");
             } else {
                 //updates name, weapon, and difficulty for player
-                createPlayer(nameField.getText());
+                Controller.createPlayer(400, 400, nameField.getText(), weapons[indexW], characters[indexC]);
                 Controller.difficultyLevel = diffCombo.getValue() == null ? "Easy" : diffCombo.getValue();
                 MainScreen.setScene(FirstRoom.getScene());
             }

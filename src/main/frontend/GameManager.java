@@ -29,7 +29,7 @@ public class GameManager {
     public static void destroyImage(ImageView image) {
         screen.getChildren().remove(image);
     }
-
+/*
     public static void gameLoop() {
         timer = new AnimationTimer() {
             @Override
@@ -38,5 +38,5 @@ public class GameManager {
             }
         };
         timer.start();
-    }
+    } */
 }

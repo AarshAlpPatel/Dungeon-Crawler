@@ -13,7 +13,7 @@ public class Enemy extends Sprite {
 
     @Override
     public void destroy() {
-        SpriteManager.destroy(id);
+        EnemyManager.destroy(id);
         super.destroy();
     }
 
