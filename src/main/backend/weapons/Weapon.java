@@ -1,5 +1,6 @@
 package main.backend.weapons;
 
+import javafx.geometry.Point2D;
 import javafx.scene.image.*;
 import main.backend.characters.Sprite;
 import main.frontend.MainScreen;
@@ -8,7 +9,10 @@ public abstract class Weapon {
     //x for the x-axis position
     //y for the y-axis position
     //r for the angle (in degrees) between it and the positive x-axis
-    protected double x, y, r;
+    private static Point2D positiveX = new Point2D(1, 0);
+
+    protected Point2D position;
+    protected double r;
 
     //damage is the amount of damage the weapon does
     protected int damage;
@@ -28,8 +32,7 @@ public abstract class Weapon {
 
     protected Weapon(double x, double y, double r, int damage, double range, 
                      double aoe, int id, String imagePath, boolean dropped, double scale) {
-        this.x = x;
-        this.y = y;
+        this.position = new Point2D(x, y);
         this.r = r;
         this.damage = damage;
         this.range = range;
@@ -41,12 +44,8 @@ public abstract class Weapon {
         this.dropped = dropped;
     }
 
-    public double getX() {
-        return this.x;
-    }
-
-    public double getY() {
-        return this.y;
+    public Point2D getPosition() {
+        return this.position;
     }
 
     public ImageView getImage() {
@@ -61,27 +60,28 @@ public abstract class Weapon {
         return this.damage;
     }
 
-    public void move(double x, double y) {
-        this.x = x;
-        this.y = y;
-        this.image.setTranslateX(this.x - MainScreen.length/2);
-        this.image.setTranslateY(this.y - MainScreen.height/2);
+    public void move(double dx, double dy) {
+        this.position = this.position.add(dx, dy);
+        this.image.setTranslateX(this.position.getX() - MainScreen.length/2);
+        this.image.setTranslateY(this.position.getY() - MainScreen.height/2);
     }
 
-    public void follow(int x, int y) {
-        double angle = Math.atan2(y-this.y, x-this.x);
-        double anglediff = (0 - angle + 180) % 360 - 180;
-        r = anglediff;
+    public void follow(Point2D target) {
+        double angle = target.subtract(this.position).angle(positiveX);
+        if(target.getY() > this.position.getY()) {
+            r = angle;
+        } else {
+            r = -angle;
+        }
         this.image.setRotate(this.r);
     }
 
     public boolean checkCollision(Sprite s) {
-        double angle = Math.atan2(s.getY()-this.y, s.getX()-this.x);
-        double anglediff = (r - angle + 180) % 360 - 180;
-        if(anglediff > aoe || anglediff < aoe) {
+        double angle = s.getPosition().subtract(this.position).angle(positiveX);
+        if(angle > aoe || angle < aoe) {
             return false;
         }
-        return Math.hypot(Math.abs(s.getY()-this.y), Math.abs(s.getX()-this.x)) > range;
+        return s.getPosition().distance(this.position) > range;
     }
 
     public void destroy() {
