@@ -9,7 +9,6 @@ import javafx.scene.layout.*;
 import main.backend.Controller;
 
 public class Room {
-    public static Scene getScene() {
     //Current supported types include: empty
     public static Scene getScene(String type) {
         StackPane screen = new StackPane();
@@ -57,7 +56,7 @@ public class Room {
 
         bPane.setTop(healthAndCash);
         bPane.setBottom(back);
-        roomScene.getStylesheets().add("/main/design/FirstRoom.css");
+        roomScene.getStylesheets().add("/main/design/Room.css");
 
         if(type.equals("empty")) {
             GameManager.initializeEmptyRoom(screen, roomScene);
