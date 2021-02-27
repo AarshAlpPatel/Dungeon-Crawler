@@ -1,0 +1,15 @@
+.stats {
+    -fx-background-color: #dcdcdc;
+}
+
+.cash_value {
+    -fx-font-weight: bold;
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 20px;
+}
+
+.screen {
+    -fx-background-image: url("/main/design/images/dungeon_floor.png");
+    -fx-background-position: center center;
+    -fx-spacing: 50px;
+}
