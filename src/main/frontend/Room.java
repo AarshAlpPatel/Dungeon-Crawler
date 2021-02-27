@@ -5,7 +5,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
+
+import java.util.Stack;
 
 public class Room {
     //Current supported types include: empty
@@ -48,11 +51,14 @@ public class Room {
 
         cash.getChildren().addAll(cashValue);
 
-        ImageView back = new ImageView("/main/design/images/power.png");
+        StackPane back = new StackPane();
+        back.getChildren().add(new Rectangle(33, 34));
+        ImageView backImage = new ImageView("/main/design/images/power.png");
         back.setId("roomToSetup");
         back.setOnMouseClicked(event -> MainScreen.setScene(SetUpPlayerScreen.getScene()));
         back.setOnMouseEntered(e -> roomScene.setCursor(Cursor.CLOSED_HAND));
         back.setOnMouseExited(e -> roomScene.setCursor(Cursor.DEFAULT));
+        back.getChildren().add(backImage);
 
         bPane.setTop(healthAndCash);
         bPane.setBottom(back);
