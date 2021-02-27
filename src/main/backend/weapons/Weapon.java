@@ -8,14 +8,17 @@ public abstract class Weapon {
     //x for the x-axis position
     //y for the y-axis position
     //r for the angle (in degrees) between it and the positive x-axis
-    protected double x, y, r;
+    protected double x;
+    protected double y;
+    protected double r;
 
     //damage is the amount of damage the weapon does
     protected int damage;
 
     //range is the range of the weapon
     //aoe is the angle (in degrees) which the weapon effects (+- its current r)
-    protected double range, aoe;
+    protected double range;
+    protected double aoe;
 
     //id is the key stored in the dictionary with the weapon being its value
     protected int id;
@@ -64,8 +67,8 @@ public abstract class Weapon {
     public void move(double x, double y) {
         this.x = x;
         this.y = y;
-        this.image.setTranslateX(this.x - MainScreen.length/2);
-        this.image.setTranslateY(this.y - MainScreen.height/2);
+        this.image.setTranslateX(this.x - MainScreen.getLength()/2);
+        this.image.setTranslateY(this.y - MainScreen.getHeight()/2);
     }
 
     public void follow(int x, int y) {

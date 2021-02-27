@@ -33,7 +33,7 @@ public class SetUpPlayerScreen {
 
         //top is the customization panel and bottom are the start and back buttons
         VBox screen = new VBox();
-        Scene playerSetUp = new Scene(screen, MainScreen.length, MainScreen.height);
+        Scene playerSetUp = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());
         screen.getStyleClass().addAll("screen", "center");
 
         //contains the entryFields and the character chooser
@@ -105,7 +105,7 @@ public class SetUpPlayerScreen {
         //dagger
 
         HBox[] weaponBoxes = new HBox[weapons.length];
-        for(int i = 0; i < weapons.length; ++i) {
+        for (int i = 0; i < weapons.length; ++i) {
             HBox weaponBox = new HBox(5);
             weaponBox.setPadding(new Insets(0, 30, 0, 0));
             weaponBox.getStyleClass().addAll("center");
@@ -262,7 +262,11 @@ public class SetUpPlayerScreen {
             } else {
                 //updates name, weapon, and difficulty for player
                 Controller.createPlayer(400, 400, nameField.getText(), weapons[indexW], characters[indexC]);
-                Controller.difficultyLevel = diffCombo.getValue() == null ? "Easy" : diffCombo.getValue();
+                if (diffCombo.getValue() == null) {
+                    Controller.setDifficultyLevel("Easy");
+                } else {
+                    Controller.setDifficultyLevel(diffCombo.getValue());
+                }
                 MainScreen.setScene(Room.getScene("empty"));
             }
         });

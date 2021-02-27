@@ -1,11 +1,7 @@
 package test.java;
 
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.StackPane;
 import main.backend.Controller;
 import main.frontend.*;
 
@@ -14,17 +10,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
 
-
-import org.junit.jupiter.api.function.Executable;
 import org.testfx.api.FxRobot;
-import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
-import org.testfx.util.WaitForAsyncUtils;
 
-import static org.testfx.api.FxAssert.assertContext;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 import static org.testfx.api.FxToolkit.setupApplication;
@@ -75,13 +65,13 @@ public class StartGameTest extends ApplicationTest {
         verifyThat("Settings", NodeMatchers.isVisible());
         clickOn("#difficulty");
         clickOn("Easy");
-        assertEquals("Easy", Controller.difficultyLevel);
+        assertEquals("Easy", Controller.getDifficultyLevel());
         clickOn("#difficulty");
         clickOn("Medium");
-        assertEquals("Medium", Controller.difficultyLevel);
+        assertEquals("Medium", Controller.getDifficultyLevel());
         clickOn("#difficulty");
         clickOn("Hard");
-        assertEquals("Hard", Controller.difficultyLevel);
+        assertEquals("Hard", Controller.getDifficultyLevel());
         clickOn("#toMainScreen");
         verifyThat("Name of the Game", NodeMatchers.isVisible());
     }

@@ -10,7 +10,7 @@ public class WeaponManager {
 
     public static Weapon create(String weapon, double x, double y, boolean dropped) {
         Weapon newWeapon = null;
-        if(weapon.equals("dagger")) {
+        if (weapon.equals("dagger")) {
             newWeapon = new Dagger(x, y, weaponsCounter, dropped);
         } else if (weapon.equals("spear")) {
             newWeapon = new Spear(x, y, weaponsCounter, dropped);

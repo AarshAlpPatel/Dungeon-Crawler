@@ -85,14 +85,14 @@ public abstract class Sprite {
     public void move(double xDelta, double yDelta) {
         double newX = this.x + xDelta*speed;
         double newY = this.y + yDelta*speed;
-        if(newX < 20 || newX > MainScreen.length || newY < 100 || newY > MainScreen.height) {
+        if(newX < 20 || newX > MainScreen.getLength() || newY < 100 || newY > MainScreen.getHeight()) {
             return;
         }
 
         this.x = newX;
         this.y = newY;
-        this.image.setTranslateX(this.x - MainScreen.length/2);
-        this.image.setTranslateY(this.y - MainScreen.height/2);
+        this.image.setTranslateX(this.x - MainScreen.getLength()/2);
+        this.image.setTranslateY(this.y - MainScreen.getHeight()/2);
         mainWeapon.move(this.x, this.y);
     }
 
