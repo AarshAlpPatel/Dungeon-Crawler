@@ -1,6 +1,7 @@
 package main.frontend;
 
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
@@ -37,7 +38,9 @@ public class FirstRoom {
         }
 
         for (int i = 0; i < numHearts; i++) {
-            hearts.getChildren().add(new ImageView("/main/design/images/heart.png"));
+            ImageView heart = new ImageView("/main/design/images/heart.png");
+            heart.setId("heart" + i);
+            hearts.getChildren().add(heart);
         }
 
         Label cashValue = new Label(amountCash.toString());
@@ -45,7 +48,14 @@ public class FirstRoom {
 
         cash.getChildren().addAll(cashValue);
 
+        ImageView back = new ImageView("/main/design/images/power.png");
+        back.setId("roomToSetup");
+        back.setOnMouseClicked(event -> MainScreen.setScene(SetUpPlayerScreen.getScene()));
+        back.setOnMouseEntered(e -> roomScene.setCursor(Cursor.CLOSED_HAND));
+        back.setOnMouseExited(e -> roomScene.setCursor(Cursor.DEFAULT));
+
         bPane.setTop(healthAndCash);
+        bPane.setBottom(back);
         roomScene.getStylesheets().add("/main/design/FirstRoom.css");
 
         return roomScene;

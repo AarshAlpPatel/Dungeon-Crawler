@@ -23,7 +23,7 @@ public class MainScreen extends Application {
 
     //protected static Button toGame;
 
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
         Image icon = new Image("/main/design/images/icon.png");
         stage.getIcons().add(icon);

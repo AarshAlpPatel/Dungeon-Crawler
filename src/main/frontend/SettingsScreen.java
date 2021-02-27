@@ -15,6 +15,7 @@ public class SettingsScreen {
         screen.getStyleClass().add("screen");
 
         Button toMainScreen = new Button("Return Home");
+        toMainScreen.setId("toMainScreen");
         toMainScreen.getStyleClass().add("back_button");
         toMainScreen.setOnAction(event -> {
             MainScreen.setScene(WelcomeScreen.getScene());
@@ -27,6 +28,7 @@ public class SettingsScreen {
         chooseDifficulty.getStyleClass().add("choice");
 
         ComboBox<String> difficulty = new ComboBox<>();
+        difficulty.setId("difficulty");
         difficulty.getItems().addAll(
             "Easy",
             "Medium",
