@@ -60,6 +60,11 @@ public abstract class Weapon {
         return this.damage;
     }
 
+    public void move(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public void follow(int x, int y) {
         double angle = Math.atan2(y-this.y, x-this.x);
         double anglediff = (0 - angle + 180) % 360 - 180;

@@ -54,6 +54,10 @@ public abstract class Sprite {
         return name;
     }
 
+    public Weapon getMainWeapon() {
+        return mainWeapon;
+    }
+
     public void setImage(String imagePath, int maxsize) {
         this.image = new ImageView(new Image(imagePath));
         this.image.setPreserveRatio(true);
@@ -89,6 +93,7 @@ public abstract class Sprite {
         this.y = newY;
         this.image.setX(this.x);
         this.image.setY(this.y);
+        mainWeapon.move(this.x, this.y);
     }
 
     public void hit(Sprite s) {

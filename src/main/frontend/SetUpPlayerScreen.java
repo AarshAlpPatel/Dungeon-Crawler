@@ -245,7 +245,7 @@ public class SetUpPlayerScreen {
                 //updates name, weapon, and difficulty for player
                 Controller.createPlayer(400, 400, nameField.getText(), weapons[indexW], characters[indexC]);
                 Controller.difficultyLevel = diffCombo.getValue() == null ? "Easy" : diffCombo.getValue();
-                MainScreen.setScene(FirstRoom.getScene());
+                MainScreen.setScene(Room.getScene("empty"));
             }
         });
 

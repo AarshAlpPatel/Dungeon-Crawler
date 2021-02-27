@@ -16,6 +16,7 @@ public class GameManager {
         GameManager.screen = screen;
         GameManager.scene = scene;
         addImage(Player.getInstance().getImage());
+        addImage(Player.getInstance().getMainWeapon().getImage());
     }
 
     public static void clearScreen() {
@@ -28,6 +29,10 @@ public class GameManager {
 
     public static void destroyImage(ImageView image) {
         screen.getChildren().remove(image);
+    }
+
+    public static void initializeEmptyRoom(Pane screen, Scene scene) {
+        setScreen(screen, scene);
     }
 /*
     public static void gameLoop() {
