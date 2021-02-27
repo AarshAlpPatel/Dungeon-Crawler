@@ -7,14 +7,14 @@ public class Enemy extends Sprite {
 
     protected Enemy(double x, double y, double attackMultiplier, double speed, int health,
                     int regeneration, Weapon weapon, String name, String imagePath, int id) {
-        super(x, y, attackMultiplier, speed, health, regeneration, weapon, name, imagePath);
+        super(x, y, attackMultiplier, speed, health, regeneration, weapon, name, imagePath, 100);
         this.id = id;
     }
 
     @Override
     public void destroy() {
-        super.destroy();
         SpriteManager.destroy(id);
+        super.destroy();
     }
 
     public void attack(Player player) {

@@ -13,6 +13,7 @@ import javafx.scene.*;
 public class MainScreen extends Application {
     public static Stage stage;
     public static int length = 800, height = 800;
+    
     public static void main(String[] args) {
         launch(args);
     }

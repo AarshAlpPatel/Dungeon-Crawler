@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import main.backend.weapons.Weapon;
 import main.backend.weapons.WeaponManager;
+import main.frontend.GameManager;
 
 public class SpriteManager {
     private static HashMap<Integer, Enemy> enemies = new HashMap<>();
@@ -29,11 +30,12 @@ public class SpriteManager {
         Weapon weapon = WeaponManager.create(weaponName, x, y, false);
         player.setName(name);
         player.setWeapon(weapon);
-        player.setImagePath(imagePath);
+        player.setImage(imagePath, 100);
         return player;
     }
 
     public static void destroy(int id) {
+        GameManager.destroyImage(enemies.get(id).getImage());
         enemies.remove(id);
     }
 }

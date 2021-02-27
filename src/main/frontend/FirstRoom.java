@@ -1,22 +1,18 @@
 package main.frontend;
 
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
-
-import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
 
 public class FirstRoom {
     public static Scene getScene() {
         StackPane screen = new StackPane();
         BorderPane bPane = new BorderPane();
-        ImageView floor = new ImageView("/main/design/images/dungeon_floor.png");
-        floor.setOpacity(0.5);
-        screen.getChildren().addAll(floor, bPane);
+        screen.getChildren().addAll(bPane);
         Scene roomScene = new Scene(screen);
+        roomScene.getStylesheets().add("screen");
 
         int numHearts = 0;
         Integer amountCash = 0;
