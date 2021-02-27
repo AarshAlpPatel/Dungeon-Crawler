@@ -38,4 +38,8 @@ public class MainScreen extends Application {
         setScene(WelcomeScreen.getScene());
         stage.show();
     }
+
+    public static void close() {
+        stage.close();
+    }
 }

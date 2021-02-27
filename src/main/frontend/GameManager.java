@@ -58,7 +58,11 @@ public class GameManager {
     public static void generateEnemies() {
         HashMap<String, Integer> enemies = new HashMap<>();
         enemies.put("ghost", 1);
-        screen.getChildren().addAll(Controller.generateEnemies(enemies, MainScreen.getLength(), MainScreen.getHeight()));
+        screen.getChildren().addAll(Controller.generateEnemies(
+                enemies,
+                MainScreen.getLength(),
+                MainScreen.getHeight())
+        );
     }
 
     public static void gameLoop() {

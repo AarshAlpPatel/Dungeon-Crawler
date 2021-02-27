@@ -73,7 +73,7 @@ public class StartGameTest extends ApplicationTest {
         clickOn("Hard");
         assertEquals("Hard", Controller.getDifficultyLevel());
         clickOn("#toMainScreen");
-        verifyThat("Name of the Game", NodeMatchers.isVisible());
+        verifyThat("#gameTitle", NodeMatchers.isVisible());
     }
 
     @Test
@@ -174,5 +174,17 @@ public class StartGameTest extends ApplicationTest {
         verifyThat(new ImageView("main/design/images/axe.png"), NodeMatchers.isVisible());
     }
 
-    //do we want to add character customization rn?
+    @Test
+    public void testExits() {
+        clickOn("#toGame");
+        clickOn("#nameField");
+        type(KeyCode.N);
+        clickOn("Start Game");
+        int i = 0;
+        while (i < 100) {
+            press(KeyCode.D);
+            i++;
+        }
+        verifyThat("#won", NodeMatchers.isVisible());
+    }
 }

@@ -70,4 +70,8 @@ public class Player extends Sprite {
         }
         super.move(dx, dy);
     }
+
+    public static Player getPlayerObj() {
+        return playerObj;
+    }
 }
