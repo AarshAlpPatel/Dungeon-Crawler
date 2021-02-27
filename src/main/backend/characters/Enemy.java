@@ -19,7 +19,7 @@ public class Enemy extends Sprite {
 
     public void attack(Player player) {
         double dist = getDistance(player);
-        if(dist < this.mainWeapon.getRange()) {
+        if (dist < this.mainWeapon.getRange()) {
             this.hit(player);
         }
     }

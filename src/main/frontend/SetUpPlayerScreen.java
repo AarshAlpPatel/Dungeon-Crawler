@@ -37,13 +37,13 @@ public class SetUpPlayerScreen {
         screen.getStyleClass().addAll("screen", "center");
 
         //contains the entryFields and the character chooser
-        StackPane customization_panel = new StackPane();
-        customization_panel.getStyleClass().addAll("customization_panel", "center");
-        Pane customization_panel_back = new Pane();
-        customization_panel_back.getStyleClass().addAll("customization_panel_back");
-        HBox customization_panel_hbox = new HBox();
-        customization_panel_hbox.getStyleClass().addAll("customization_panel_hbox", "center");
-        customization_panel.getChildren().addAll(customization_panel_back, customization_panel_hbox);
+        StackPane customizationPanel = new StackPane();
+        customizationPanel.getStyleClass().addAll("customization_panel", "center");
+        Pane customizationPanelBack = new Pane();
+        customizationPanelBack.getStyleClass().addAll("customization_panel_back");
+        HBox customizationPanelHbox = new HBox();
+        customizationPanelHbox.getStyleClass().addAll("customization_panel_hbox", "center");
+        customizationPanel.getChildren().addAll(customizationPanelBack, customizationPanelHbox);
 
         //entry fields for name, weapon, and difficulty
         VBox entryFields = new VBox();
@@ -165,7 +165,7 @@ public class SetUpPlayerScreen {
         //vbox for choosing character look
         VBox chooseChar = new VBox(15);
         chooseChar.setMinWidth(320);
-        chooseChar.setPadding(new Insets(0, 0, 0,10));
+        chooseChar.setPadding(new Insets(0, 0, 0, 10));
         chooseChar.getStyleClass().addAll("choose_character", "center");
 
         StackPane character = new StackPane();
@@ -176,9 +176,9 @@ public class SetUpPlayerScreen {
         StackPane navButtons = new StackPane();
         Rectangle rectNav = new Rectangle(150, 50);
         rectNav.getStyleClass().addAll("rect", "center");
-        HBox navButtons_hbox = new HBox(15); //flip through character skins
-        navButtons.getChildren().addAll(rectNav, navButtons_hbox);
-        navButtons_hbox.getStyleClass().addAll("nav_buttons_hbox", "center");
+        HBox navButtonsHbox = new HBox(15); //flip through character skins
+        navButtons.getChildren().addAll(rectNav, navButtonsHbox);
+        navButtonsHbox.getStyleClass().addAll("nav_buttons_hbox", "center");
 
         Image forwardChar = new Image("/main/design/images/arrow right.png", 16, 24, false, false);
         ImageView forward = new ImageView(forwardChar);
@@ -211,20 +211,21 @@ public class SetUpPlayerScreen {
         Button choose = new Button("Choose");
         choose.setId("choose");
         choose.getStyleClass().add("choose");
-        navButtons_hbox.getChildren().addAll(backward, choose, forward);
+        navButtonsHbox.getChildren().addAll(backward, choose, forward);
         choose.setOnAction(event -> {
             //add the checkmark and change text (checks or unchecks based on getText)
             if (choose.getText().equals("Choose")) {
                 forward.setDisable(true);
                 backward.setDisable(true);
-                navButtons_hbox.getChildren().remove(0);
-                navButtons_hbox.getChildren().remove(1);
-                character.getChildren().get(0).setOpacity(0.7); //change flash to image and have image change between the pictures
+                navButtonsHbox.getChildren().remove(0);
+                navButtonsHbox.getChildren().remove(1);
+                //change flash to image and have image change between the pictures
+                character.getChildren().get(0).setOpacity(0.7);
                 character.getChildren().add(new ImageView("/main/design/images/check.png"));
                 choose.setText("Uncheck");
             } else if (choose.getText().equals("Uncheck")) {
-                navButtons_hbox.getChildren().add(0, backward);
-                navButtons_hbox.getChildren().add(2, forward);
+                navButtonsHbox.getChildren().add(0, backward);
+                navButtonsHbox.getChildren().add(2, forward);
                 character.getChildren().remove(1);
                 character.getChildren().get(0).setOpacity(1);
                 forward.setDisable(false);
@@ -235,12 +236,12 @@ public class SetUpPlayerScreen {
 
         chooseChar.getChildren().addAll(character, navButtons);
 
-        customization_panel_hbox.getChildren().addAll(chooseChar, entryFields);
+        customizationPanelHbox.getChildren().addAll(chooseChar, entryFields);
 
-        screen.getChildren().add(customization_panel);
+        screen.getChildren().add(customizationPanel);
 
-        HBox bottom_buttons = new HBox(50);
-        bottom_buttons.getStyleClass().addAll("bottom_buttons_hbox", "center");
+        HBox bottomButtons = new HBox(50);
+        bottomButtons.getStyleClass().addAll("bottom_buttons_hbox", "center");
         Button toMainScreen = new Button("Main Menu");
         toMainScreen.getStyleClass().addAll("back_button", "bottom_buttons");
         toMainScreen.setOnAction(event -> MainScreen.setScene(WelcomeScreen.getScene()));
@@ -271,9 +272,9 @@ public class SetUpPlayerScreen {
             }
         });
 
-        bottom_buttons.getChildren().addAll(toMainScreen, start);
+        bottomButtons.getChildren().addAll(toMainScreen, start);
 
-        screen.getChildren().add(bottom_buttons);
+        screen.getChildren().add(bottomButtons);
 
         playerSetUp.getStylesheets().add("/main/design/PlayerSetup.css");
 

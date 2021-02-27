@@ -7,8 +7,10 @@ import main.frontend.MainScreen;
 
 public abstract class Sprite {
     protected Point2D position;
-    protected double attackMultiplier, speed;
-    protected int health, regeneration;
+    protected double attackMultiplier;
+    protected double speed;
+    protected int regeneration;
+    protected int health;
     protected Weapon mainWeapon;
     protected String name;
     protected ImageView image;
@@ -81,21 +83,22 @@ public abstract class Sprite {
     public void move(double dx, double dy) {
         dx *= speed;
         dy *= speed;
-        if(this.position.getX()+dx < 20 || this.position.getX()+dx > MainScreen.getLength() ||
-           this.position.getY()+dy < 100 || this.position.getY()+dy > MainScreen.getHeight()) {
+        if (this.position.getX() + dx < 20 || this.position.getX() + dx > MainScreen.getLength()
+                || this.position.getY() + dy < 100
+                || this.position.getY() + dy > MainScreen.getHeight()) {
             System.out.println("INVALID POSITION");
             return;
         }
 
         this.position = this.position.add(dx, dy);
-        this.image.setTranslateX(this.position.getX() - (double)MainScreen.getLength() / 2);
-        this.image.setTranslateY(this.position.getY() - (double)MainScreen.getHeight() / 2);
+        this.image.setTranslateX(this.position.getX() - (double) MainScreen.getLength() / 2);
+        this.image.setTranslateY(this.position.getY() - (double) MainScreen.getHeight() / 2);
         mainWeapon.move(dx, dy);
     }
 
     public void hit(Sprite s) {
         s.health -= this.attackMultiplier * this.mainWeapon.getDamage();
-        if(s.health < 0) {
+        if (s.health < 0) {
             s.destroy();
         }
     }

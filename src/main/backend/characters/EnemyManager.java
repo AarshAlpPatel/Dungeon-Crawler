@@ -10,7 +10,7 @@ public class EnemyManager {
 
     public static Enemy create(double x, double y, String name) {
         Enemy newEnemy = null;
-        if(name.equals("ghost")) {
+        if (name.equals("ghost")) {
             newEnemy = new Ghost(x, y, enemyCounter);
         } else {
             throw new IllegalArgumentException("Enemy name not recognized");

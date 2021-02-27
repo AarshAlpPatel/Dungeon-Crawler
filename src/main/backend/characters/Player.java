@@ -8,7 +8,10 @@ import main.backend.weapons.Weapon;
 public class Player extends Sprite {
     private static Player playerObj = null;
     private Weapon backupWeapon = null;
-    private boolean moveNorth = false, moveWest = false, moveSouth = false, moveEast = false;
+    private boolean moveNorth = false;
+    private boolean moveWest = false;
+    private boolean moveSouth = false;
+    private boolean moveEast = false;
 
     private Player() {
         this(400, 400, 1, 1.0, 100, 5, null, null, "/main/design/images/char1.gif");
@@ -24,7 +27,7 @@ public class Player extends Sprite {
     }
 
     public void switchWeapons() {
-        if(this.backupWeapon != null) {
+        if (this.backupWeapon != null) {
             Weapon tmp = this.mainWeapon;
             this.mainWeapon = this.backupWeapon;
             this.backupWeapon = tmp;
@@ -32,36 +35,37 @@ public class Player extends Sprite {
     }
 
     public static Player getInstance() {
-        if(playerObj == null) {
+        if (playerObj == null) {
             playerObj = new Player();
         }
         return playerObj;
     }
 
     public void setDirection(String key, boolean b) {
-        if(key.equals("W")) {
+        if (key.equals("W")) {
             moveNorth = b;
-        } else if(key.equals("A")) {
+        } else if (key.equals("A")) {
             moveWest = b;
-        } else if(key.equals("S")) {
+        } else if (key.equals("S")) {
             moveSouth = b;
-        } else if(key.equals("D")) {
+        } else if (key.equals("D")) {
             moveEast = b;
         }
     }
 
     public void move() {
-        double dx = 0, dy = 0;
-        if(moveNorth) {
+        double dx = 0;
+        double dy = 0;
+        if (moveNorth) {
             --dy;
         }
-        if(moveSouth) {
+        if (moveSouth) {
             ++dy;
         }
-        if(moveWest) {
+        if (moveWest) {
             --dx;
         }
-        if(moveEast) {
+        if (moveEast) {
             ++dx;
         }
         super.move(dx, dy);

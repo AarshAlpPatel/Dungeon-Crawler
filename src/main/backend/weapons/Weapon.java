@@ -62,13 +62,13 @@ public abstract class Weapon {
 
     public void move(double dx, double dy) {
         this.position = this.position.add(dx, dy);
-        this.image.setTranslateX(this.position.getX() - MainScreen.getLength()/2);
-        this.image.setTranslateY(this.position.getY() - MainScreen.getHeight()/2);
+        this.image.setTranslateX(this.position.getX() - MainScreen.getLength() / 2);
+        this.image.setTranslateY(this.position.getY() - MainScreen.getHeight() / 2);
     }
 
     public void follow(Point2D target) {
         double angle = target.subtract(this.position).angle(positiveX);
-        if(target.getY() > this.position.getY()) {
+        if (target.getY() > this.position.getY()) {
             r = angle;
         } else {
             r = -angle;
@@ -78,7 +78,7 @@ public abstract class Weapon {
 
     public boolean checkCollision(Sprite s) {
         double angle = s.getPosition().subtract(this.position).angle(positiveX);
-        if(angle > aoe || angle < aoe) {
+        if (angle > aoe || angle < aoe) {
             return false;
         }
         return s.getPosition().distance(this.position) > range;
