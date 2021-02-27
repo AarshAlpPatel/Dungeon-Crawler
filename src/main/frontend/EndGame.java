@@ -5,20 +5,25 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import main.backend.characters.Player;
 
 public class EndGame {
     public static Scene getScene() {
         BorderPane screen = new BorderPane();
-        Scene endGame = new Scene(screen, MainScreen.length, MainScreen.height);
+        Scene endGame = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());
 
         Player.getPlayerObj().setDirection("A", true);
         Player.getPlayerObj().move();
 
+        VBox wonBox = new VBox(10);
+        wonBox.setId("wonBox");
+        ImageView phelps = new ImageView("main/design/images/spongebob strong.gif");
         Label won = new Label("Congrats You Won!");
         won.setId("won");
         won.getStyleClass().add("wonLabel");
+
+        wonBox.getChildren().addAll(phelps, won);
 
         ImageView wonToMain = new ImageView("/main/design/images/power.png");
         wonToMain.setId("wonToWelcome");
@@ -26,7 +31,7 @@ public class EndGame {
         wonToMain.setOnMouseEntered(e -> endGame.setCursor(Cursor.CLOSED_HAND));
         wonToMain.setOnMouseExited(e -> endGame.setCursor(Cursor.DEFAULT));
         
-        screen.setCenter(won);
+        screen.setCenter(wonBox);
         screen.setTop(wonToMain);
 
         endGame.getStylesheets().add("/main/design/EndGame.css");

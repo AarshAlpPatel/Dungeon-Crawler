@@ -84,14 +84,11 @@ public abstract class Sprite {
     public void move(double dx, double dy) {
         dx *= speed;
         dy *= speed;
-        if(this.position.getX()+dx < 20 || this.position.getX()+dx > MainScreen.length ||
-           this.position.getY()+dy < 100 || this.position.getY()+dy > MainScreen.height) {
-            System.out.println("EDGE OF SCREEN");
-            MainScreen.setScene(EndGame.getScene());
         if (this.position.getX() + dx < 20 || this.position.getX() + dx > MainScreen.getLength()
                 || this.position.getY() + dy < 100
                 || this.position.getY() + dy > MainScreen.getHeight()) {
-            System.out.println("INVALID POSITION");
+            System.out.println("EDGE OF SCREEN");
+            MainScreen.setScene(EndGame.getScene());
             return;
         }
 

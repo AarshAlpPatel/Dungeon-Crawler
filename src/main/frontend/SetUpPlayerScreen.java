@@ -112,7 +112,9 @@ public class SetUpPlayerScreen {
             VBox dChar = new VBox(10);
             dChar.getStyleClass().addAll("center");
             StackPane dSprite = new StackPane();
-            dSprite.getChildren().add(new ImageView(new Image("/main/design/images/" + weapons[i] + ".png")));
+            dSprite.getChildren().add(
+                    new ImageView(new Image("/main/design/images/" + weapons[i] + ".png"))
+            );
             Label dName = new Label(capitalize(weapons[i]));
             dName.getStyleClass().addAll("dName", "weapon_description");
             Label dAttack = new Label("Attack: 20");
@@ -262,7 +264,9 @@ public class SetUpPlayerScreen {
                 //throw new IllegalArgumentException("Name cannot start with a space.");
             } else {
                 //updates name, weapon, and difficulty for player
-                Controller.createPlayer(400, 400, nameField.getText(), weapons[indexW], characters[indexC]);
+                Controller.createPlayer(
+                        400, 400, nameField.getText(), weapons[indexW], characters[indexC]
+                );
                 if (diffCombo.getValue() == null) {
                     Controller.setDifficultyLevel("Easy");
                 } else {
