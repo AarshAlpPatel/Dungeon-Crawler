@@ -88,16 +88,6 @@ public class StartGameTest extends ApplicationTest {
     }
 
     @Test
-    public void testDefaultDifficulty() throws Exception {
-        clickOn("#toGame");
-        clickOn("#nameField");
-        type(KeyCode.N);
-        clickOn("#start");
-        verifyThat("500", NodeMatchers.isNotNull());
-        clickOn("#roomToSetup");
-    }
-
-    @Test
     public void testEasyDiff() {
         clickOn("#toGame");
         clickOn("#nameField");
@@ -138,6 +128,47 @@ public class StartGameTest extends ApplicationTest {
         for (int i = 0; i < 6; i++) {
             verifyThat("#heart" + i, NodeMatchers.isVisible());
         }
+    }
+
+    @Test
+    public void testDefaultDifficulty() throws Exception {
+        //easy
+        clickOn("Settings");
+        clickOn("#difficulty");
+        clickOn("Easy");
+        clickOn("#toMainScreen");
+        clickOn("#toGame");
+        clickOn("#nameField");
+        type(KeyCode.N);
+        clickOn("#start");
+        verifyThat("500", NodeMatchers.isNotNull());
+        clickOn("#roomToSetup");
+
+        //medium
+        clickOn("#mainMenu");
+        clickOn("Settings");
+        clickOn("#difficulty");
+        clickOn("Medium");
+        clickOn("#toMainScreen");
+        clickOn("#toGame");
+        clickOn("#nameField");
+        type(KeyCode.N);
+        clickOn("#start");
+        verifyThat("400", NodeMatchers.isNotNull());
+        clickOn("#roomToSetup");
+
+        //hard
+        clickOn("Main Menu");
+        clickOn("Settings");
+        clickOn("#difficulty");
+        clickOn("Hard");
+        clickOn("#toMainScreen");
+        clickOn("#toGame");
+        clickOn("#nameField");
+        type(KeyCode.N);
+        clickOn("#start");
+        verifyThat("300", NodeMatchers.isNotNull());
+        clickOn("#roomToSetup");
     }
 
     @Test
@@ -187,4 +218,8 @@ public class StartGameTest extends ApplicationTest {
         }
         verifyThat("#won", NodeMatchers.isVisible());
     }
+
+    //correct weapon displayed test
+    //correct sprite displayed test
+
 }

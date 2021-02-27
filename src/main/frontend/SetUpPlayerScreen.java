@@ -155,7 +155,7 @@ public class SetUpPlayerScreen {
         diffLabel.getStyleClass().addAll("diff_label", "label");
         ComboBox<String> diffCombo = new ComboBox<>();
         diffCombo.setId("diffCombo");
-        diffCombo.setPromptText("Default (Easy)");
+        diffCombo.setPromptText("Default (" + Controller.getDifficultyLevel() + ")");
         diffCombo.getStyleClass().add("diff_combo");
         diffCombo.getItems().addAll(
                 "Easy", "Medium", "Hard"
@@ -245,6 +245,7 @@ public class SetUpPlayerScreen {
         HBox bottomButtons = new HBox(50);
         bottomButtons.getStyleClass().addAll("bottom_buttons_hbox", "center");
         Button toMainScreen = new Button("Main Menu");
+        toMainScreen.setId("mainMenu");
         toMainScreen.getStyleClass().addAll("back_button", "bottom_buttons");
         toMainScreen.setOnAction(event -> MainScreen.setScene(WelcomeScreen.getScene()));
 
@@ -267,9 +268,7 @@ public class SetUpPlayerScreen {
                 Controller.createPlayer(
                         400, 400, nameField.getText(), weapons[indexW], characters[indexC]
                 );
-                if (diffCombo.getValue() == null) {
-                    Controller.setDifficultyLevel("Easy");
-                } else {
+                if (diffCombo.getValue() != null) {
                     Controller.setDifficultyLevel(diffCombo.getValue());
                 }
                 MainScreen.setScene(Room.getScene("empty"));
