@@ -104,13 +104,13 @@
     -fx-opacity: 0.8;
 }
 
-.backward {
-    -fx-text-fill: black;
-    -fx-background-color: grey;
-    -fx-arc-width: 30;
-    -fx-arc-height: 30;
-    -fx-opacity: 0.8;
-}
+/*.backward {*/
+/*    -fx-text-fill: black;*/
+/*    -fx-background-color: grey;*/
+/*    -fx-arc-width: 30;*/
+/*    -fx-arc-height: 30;*/
+/*    -fx-opacity: 0.8;*/
+/*}*/
 
 .weapon_description {
     -fx-text-alignment: center;
