@@ -14,6 +14,8 @@ public class WeaponManager {
             newWeapon = new Dagger(x, y, weaponsCounter, dropped);
         } else if (weapon.equals("spear")) {
             newWeapon = new Spear(x, y, weaponsCounter, dropped);
+        } else if (weapon.equals("axe")) {
+            newWeapon = new Axe(x, y, weaponsCounter, dropped);
         } else {
             throw new IllegalArgumentException("Weapon name not recognized");
         }

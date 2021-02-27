@@ -74,10 +74,11 @@ public class SetUpPlayerScreen {
 
         Image backArrow = new Image("/main/design/images/arrow left.png", 16, 24, false, false);
         ImageView arrowLeft = new ImageView(backArrow);
+        arrowLeft.setId("backwardWeapon");
         arrowLeft.setOnMouseEntered(e -> {
             playerSetUp.setCursor(Cursor.HAND);
-            arrowLeft.setFitWidth(backArrow.getWidth() * 2);
-            arrowLeft.setFitHeight(backArrow.getHeight() * 2);
+            arrowLeft.setFitWidth(backArrow.getWidth() * 1.5);
+            arrowLeft.setFitHeight(backArrow.getHeight() * 1.5);
         });
         arrowLeft.setOnMouseExited(e -> {
             playerSetUp.setCursor(Cursor.DEFAULT);
@@ -86,10 +87,11 @@ public class SetUpPlayerScreen {
         });
         Image frontArrow = new Image("/main/design/images/arrow right.png", 16, 24, false, false);
         ImageView arrowRight = new ImageView(frontArrow);
+        arrowRight.setId("forwardWeapon");
         arrowRight.setOnMouseEntered(e -> {
             playerSetUp.setCursor(Cursor.HAND);
-            arrowRight.setFitWidth(frontArrow.getWidth() * 2);
-            arrowRight.setFitHeight(frontArrow.getHeight() * 2);
+            arrowRight.setFitWidth(frontArrow.getWidth() * 1.5);
+            arrowRight.setFitHeight(frontArrow.getHeight() * 1.5);
         });
         arrowRight.setOnMouseExited(e -> {
             playerSetUp.setCursor(Cursor.DEFAULT);
@@ -150,7 +152,8 @@ public class SetUpPlayerScreen {
         Label diffLabel = new Label("Difficulty");
         diffLabel.getStyleClass().addAll("diff_label", "label");
         ComboBox<String> diffCombo = new ComboBox<>();
-        diffCombo.setPromptText("Easy");
+        diffCombo.setId("diffCombo");
+        diffCombo.setPromptText("Default (Easy)");
         diffCombo.getStyleClass().add("diff_combo");
         diffCombo.getItems().addAll(
                 "Easy", "Medium", "Hard"
@@ -173,13 +176,16 @@ public class SetUpPlayerScreen {
         StackPane navButtons = new StackPane();
         Rectangle rectNav = new Rectangle(150, 50);
         rectNav.getStyleClass().addAll("rect", "center");
-        HBox navButtons_hbox = new HBox(5); //flip through character skins
+        HBox navButtons_hbox = new HBox(15); //flip through character skins
         navButtons.getChildren().addAll(rectNav, navButtons_hbox);
         navButtons_hbox.getStyleClass().addAll("nav_buttons_hbox", "center");
 
-        Button forward = new Button(">");
-        forward.getStyleClass().add("forward");
-        forward.setOnAction(event -> {
+        Image forwardChar = new Image("/main/design/images/arrow right.png", 16, 24, false, false);
+        ImageView forward = new ImageView(forwardChar);
+        forward.setId("forwardChar");
+        forward.setOnMouseEntered(e -> playerSetUp.setCursor(Cursor.CLOSED_HAND));
+        forward.setOnMouseExited(e -> playerSetUp.setCursor(Cursor.DEFAULT));
+        forward.setOnMouseClicked(e -> {
             indexC++;
             character.getChildren().remove(0);
             if (indexC > 2) {
@@ -188,9 +194,12 @@ public class SetUpPlayerScreen {
             character.getChildren().add(new ImageView(new Image(characters[indexC])));
         });
 
-        Button backward = new Button("<");
-        backward.getStyleClass().add("backward");
-        backward.setOnAction(event -> {
+        Image backwardChar = new Image("/main/design/images/arrow left.png", 16, 24, false, false);
+        ImageView backward = new ImageView(backwardChar);
+        backward.setId("backwardChar");
+        backward.setOnMouseEntered(e -> playerSetUp.setCursor(Cursor.CLOSED_HAND));
+        backward.setOnMouseExited(e -> playerSetUp.setCursor(Cursor.DEFAULT));
+        backward.setOnMouseClicked(e -> {
             indexC--;
             character.getChildren().remove(0);
             if (indexC < 0) {
@@ -200,6 +209,7 @@ public class SetUpPlayerScreen {
         });
 
         Button choose = new Button("Choose");
+        choose.setId("choose");
         choose.getStyleClass().add("choose");
         navButtons_hbox.getChildren().addAll(backward, choose, forward);
         choose.setOnAction(event -> {
@@ -240,7 +250,15 @@ public class SetUpPlayerScreen {
         start.getStyleClass().addAll("start", "bottom_buttons");
         start.setOnAction(event -> {
             if (nameField.getText().isEmpty()) {
-                nameField.setStyle("-fx-background-color: red;");
+                nameField.setStyle("-fx-background-color: #8a0202;");
+                nameField.clear();
+                nameField.setPromptText("No Name Entered");
+                //throw new NoNameException("No name entered");
+            } else if (nameField.getText().charAt(0) == ' ') {
+                nameField.setStyle("-fx-background-color: #8a0202;");
+                nameField.clear();
+                nameField.setPromptText("Name can't Start with a Space");
+                //throw new IllegalArgumentException("Name cannot start with a space.");
             } else {
                 //updates name, weapon, and difficulty for player
                 Controller.createPlayer(400, 400, nameField.getText(), weapons[indexW], characters[indexC]);
