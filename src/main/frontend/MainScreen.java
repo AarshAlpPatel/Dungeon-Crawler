@@ -1,9 +1,7 @@
 package main.frontend;
 
 import javafx.application.Application;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.*;
 import javafx.scene.*;
 
@@ -13,6 +11,7 @@ import javafx.scene.*;
 public class MainScreen extends Application {
     public static Stage stage;
     public static int length = 800, height = 800;
+    
     public static void main(String[] args) {
         launch(args);
     }

@@ -6,23 +6,24 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
-
-import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
 
 public class Room {
     public static Scene getScene() {
+    //Current supported types include: empty
+    public static Scene getScene(String type) {
         StackPane screen = new StackPane();
         BorderPane bPane = new BorderPane();
-        ImageView floor = new ImageView("/main/design/images/dungeon_floor.png");
-        floor.setOpacity(0.5);
-        screen.getChildren().addAll(floor, bPane);
-        Scene roomScene = new Scene(screen);
+        screen.getChildren().addAll(bPane);
+        Scene roomScene = new Scene(screen, MainScreen.length, MainScreen.height);
+        screen.getStyleClass().add("screen");
+        roomScene.getStylesheets().addAll("/main/design/Room.css");
 
         int numHearts = 0;
         Integer amountCash = 0;
 
         VBox healthAndCash = new VBox(5);
+        healthAndCash.getStyleClass().add("stats");
         HBox hearts = new HBox(2);
         HBox cash = new HBox(10, new ImageView("/main/design/images/coin.png")); //buy upgrades or we can add more weapons later or something
         healthAndCash.getChildren().addAll(hearts, cash);
@@ -57,6 +58,12 @@ public class Room {
         bPane.setTop(healthAndCash);
         bPane.setBottom(back);
         roomScene.getStylesheets().add("/main/design/FirstRoom.css");
+
+        if(type.equals("empty")) {
+            GameManager.initializeEmptyRoom(screen, roomScene);
+        } else {
+            throw new IllegalArgumentException("Room type not supported.");
+        }
 
         return roomScene;
     }
