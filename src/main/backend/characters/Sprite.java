@@ -3,6 +3,7 @@ package main.backend.characters;
 import javafx.geometry.Point2D;
 import javafx.scene.image.*;
 import main.backend.weapons.Weapon;
+import main.frontend.EndGame;
 import main.frontend.MainScreen;
 
 public abstract class Sprite {
@@ -83,7 +84,8 @@ public abstract class Sprite {
         dy *= speed;
         if(this.position.getX()+dx < 20 || this.position.getX()+dx > MainScreen.length ||
            this.position.getY()+dy < 100 || this.position.getY()+dy > MainScreen.height) {
-            System.out.println("INVALID POSITION");
+            System.out.println("EDGE OF SCREEN");
+            MainScreen.setScene(EndGame.getScene());
             return;
         }
 

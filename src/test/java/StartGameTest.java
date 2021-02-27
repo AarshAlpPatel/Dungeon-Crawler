@@ -1,11 +1,7 @@
 package test.java;
 
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.StackPane;
 import main.backend.Controller;
 import main.frontend.*;
 
@@ -14,17 +10,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
 
-
-import org.junit.jupiter.api.function.Executable;
 import org.testfx.api.FxRobot;
-import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
-import org.testfx.util.WaitForAsyncUtils;
 
-import static org.testfx.api.FxAssert.assertContext;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 import static org.testfx.api.FxToolkit.setupApplication;
@@ -83,7 +73,7 @@ public class StartGameTest extends ApplicationTest {
         clickOn("Hard");
         assertEquals("Hard", Controller.difficultyLevel);
         clickOn("#toMainScreen");
-        verifyThat("Name of the Game", NodeMatchers.isVisible());
+        verifyThat("#gameTitle", NodeMatchers.isVisible());
     }
 
     @Test
@@ -184,5 +174,17 @@ public class StartGameTest extends ApplicationTest {
         verifyThat(new ImageView("main/design/images/axe.png"), NodeMatchers.isVisible());
     }
 
-    //do we want to add character customization rn?
+    @Test
+    public void testExits() {
+        clickOn("#toGame");
+        clickOn("#nameField");
+        type(KeyCode.N);
+        clickOn("Start Game");
+        int i = 0;
+        while (i < 100) {
+            press(KeyCode.D);
+            i++;
+        }
+        verifyThat("#won", NodeMatchers.isVisible());
+    }
 }

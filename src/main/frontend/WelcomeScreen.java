@@ -6,8 +6,6 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.scene.control.*;
 
-//import static main.frontend.MainScreen.toGame;
-
 public class WelcomeScreen {
 
     public static Scene getScene() {
@@ -15,7 +13,8 @@ public class WelcomeScreen {
         screen.setAlignment(Pos.CENTER);
         screen.getStyleClass().add("screen");
 
-        Text gameTitle = new Text("Name of the Game");
+        Text gameTitle = new Text("Warrior's Legacy");
+        gameTitle.setId("gameTitle");
         gameTitle.getStyleClass().add("game_title");
 
         Button toGame = new Button("New Game");
