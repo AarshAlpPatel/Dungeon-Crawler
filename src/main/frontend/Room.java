@@ -10,7 +10,7 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
 
-public class FirstRoom {
+public class Room {
     public static Scene getScene() {
         StackPane screen = new StackPane();
         BorderPane bPane = new BorderPane();
