@@ -22,6 +22,5 @@ public class Enemy extends Sprite {
         if(dist < this.mainWeapon.getRange()) {
             this.hit(player);
         }
-        this.move((player.getX()-this.x)/dist, (player.getY()-this.y)/dist);
     }
 }

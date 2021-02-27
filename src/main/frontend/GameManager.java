@@ -3,9 +3,9 @@ package main.frontend;
 import java.util.*;
 
 import javafx.event.*;
+import javafx.geometry.Point2D;
 import javafx.scene.input.*;
 import javafx.animation.*;
-import javafx.scene.*;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
@@ -15,6 +15,7 @@ public class GameManager {
     private static AnimationTimer timer;
     private static Pane screen = new StackPane();
     private static Scene scene;
+    private static Point2D mousePosition;
 
     private static void setKeybinds() {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -27,9 +28,15 @@ public class GameManager {
                 Controller.setDirection(event.getCode().toString(), false);
             }
         });
+        scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                mousePosition = new Point2D(event.getSceneX(), event.getSceneY());
+            }
+        });
     }
 
     public static void setScreen(Pane screen, Scene scene) {
+        mousePosition = new Point2D(400, 400);
         GameManager.screen = screen;
         GameManager.scene = scene;
         screen.getChildren().addAll(Controller.getPlayerImage());
@@ -58,7 +65,7 @@ public class GameManager {
         timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                Controller.run();
+                Controller.run(mousePosition);
             }
         };
         timer.start();

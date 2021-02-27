@@ -2,6 +2,7 @@ package main.backend;
 
 import java.util.*;
 
+import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import main.backend.characters.*;
 import main.backend.weapons.*;
@@ -54,7 +55,8 @@ public class Controller {
         Player.getInstance().setDirection(key, b);
     }
 
-    public static void run() {
+    public static void run(Point2D mousePosition) {
         Player.getInstance().move();
+        Player.getInstance().getMainWeapon().follow(mousePosition);
     }
 }

@@ -1,11 +1,12 @@
 package main.backend.characters;
 
+import javafx.geometry.Point2D;
 import javafx.scene.image.*;
 import main.backend.weapons.Weapon;
 import main.frontend.MainScreen;
 
 public abstract class Sprite {
-    protected double x, y;
+    protected Point2D position;
     protected double attackMultiplier, speed;
     protected int health, regeneration;
     protected Weapon mainWeapon;
@@ -15,8 +16,7 @@ public abstract class Sprite {
     protected Sprite(double x, double y, double attackMultiplier, double speed, 
                      int health, int regeneration, Weapon weapon, String name, 
                      String imagePath, int maxsize) {
-        this.x = x;
-        this.y = y;
+        this.position = new Point2D(x, y);
         this.attackMultiplier = attackMultiplier;
         this.speed = speed;
         this.health = health;
@@ -26,12 +26,8 @@ public abstract class Sprite {
         setImage(imagePath, maxsize, x, y);
     }
 
-    public double getX() {
-        return this.x;
-    }
-
-    public double getY() {
-        return this.y;
+    public Point2D getPosition() {
+        return this.position;
     }
 
     public double getAttackMultiplier() {
@@ -79,21 +75,22 @@ public abstract class Sprite {
     }
 
     public double getDistance(Sprite s) {
-        return Math.hypot(Math.abs(s.getY()-this.y), Math.abs(s.getX()-this.x));
+        return this.position.distance(s.position);
     }
 
-    public void move(double xDelta, double yDelta) {
-        double newX = this.x + xDelta*speed;
-        double newY = this.y + yDelta*speed;
-        if(newX < 20 || newX > MainScreen.getLength() || newY < 100 || newY > MainScreen.getHeight()) {
+    public void move(double dx, double dy) {
+        dx *= speed;
+        dy *= speed;
+        if(this.position.getX()+dx < 20 || this.position.getX()+dx > MainScreen.getLength() ||
+           this.position.getY()+dy < 100 || this.position.getY()+dy > MainScreen.getHeight()) {
+            System.out.println("INVALID POSITION");
             return;
         }
 
-        this.x = newX;
-        this.y = newY;
-        this.image.setTranslateX(this.x - MainScreen.getLength()/2);
-        this.image.setTranslateY(this.y - MainScreen.getHeight()/2);
-        mainWeapon.move(this.x, this.y);
+        this.position = this.position.add(dx, dy);
+        this.image.setTranslateX(this.position.getX() - (double)MainScreen.getLength() / 2);
+        this.image.setTranslateY(this.position.getY() - (double)MainScreen.getHeight() / 2);
+        mainWeapon.move(dx, dy);
     }
 
     public void hit(Sprite s) {
