@@ -23,7 +23,7 @@ public abstract class Sprite {
         this.regeneration = regeneration;
         this.mainWeapon = weapon;
         this.name = name;
-        setImage(imagePath, maxsize);
+        setImage(imagePath, maxsize, x, y);
     }
 
     public double getX() {
@@ -58,7 +58,7 @@ public abstract class Sprite {
         return mainWeapon;
     }
 
-    public void setImage(String imagePath, int maxsize) {
+    public void setImage(String imagePath, int maxsize, double x, double y) {
         this.image = new ImageView(new Image(imagePath));
         this.image.setPreserveRatio(true);
         this.image.setFitHeight(maxsize);
@@ -85,14 +85,14 @@ public abstract class Sprite {
     public void move(double xDelta, double yDelta) {
         double newX = this.x + xDelta*speed;
         double newY = this.y + yDelta*speed;
-        if(newX < 0 || newX > MainScreen.length || newY < 0 || newY > MainScreen.height) {
+        if(newX < 20 || newX > MainScreen.length || newY < 100 || newY > MainScreen.height) {
             return;
         }
 
         this.x = newX;
         this.y = newY;
-        this.image.setX(this.x);
-        this.image.setY(this.y);
+        this.image.setTranslateX(this.x - MainScreen.length/2);
+        this.image.setTranslateY(this.y - MainScreen.height/2);
         mainWeapon.move(this.x, this.y);
     }
 

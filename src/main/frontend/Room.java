@@ -1,5 +1,6 @@
 package main.frontend;
 
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
@@ -51,6 +52,7 @@ public class Room {
         } else {
             throw new IllegalArgumentException("Room type not supported.");
         }
+        GameManager.gameLoop();
 
         return roomScene;
     }

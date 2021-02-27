@@ -8,10 +8,7 @@ import main.backend.weapons.Weapon;
 public class Player extends Sprite {
     private static Player playerObj = null;
     private Weapon backupWeapon = null;
-    public enum Orientation {
-        NORTH, EAST, SOUTH, WEST;
-    }
-    private Orientation direction;
+    private boolean moveNorth = false, moveWest = false, moveSouth = false, moveEast = false;
 
     private Player() {
         this(400, 400, 1, 1.0, 100, 5, null, null, "/main/design/images/char1.gif");
@@ -41,24 +38,32 @@ public class Player extends Sprite {
         return playerObj;
     }
 
-    public void setDirection(Orientation direction) {
-        this.direction = direction;
+    public void setDirection(String key, boolean b) {
+        if(key.equals("W")) {
+            moveNorth = b;
+        } else if(key.equals("A")) {
+            moveWest = b;
+        } else if(key.equals("S")) {
+            moveSouth = b;
+        } else if(key.equals("D")) {
+            moveEast = b;
+        }
     }
 
     public void move() {
-        switch(direction) {
-            case NORTH:
-                super.move(0, -1);
-                break;
-            case EAST:
-                super.move(1, 0);
-                break;
-            case SOUTH:
-                super.move(0, 1);
-                break;
-            case WEST:
-                super.move(-1, 0);
-                break;
+        double dx = 0, dy = 0;
+        if(moveNorth) {
+            --dy;
         }
+        if(moveSouth) {
+            ++dy;
+        }
+        if(moveWest) {
+            --dx;
+        }
+        if(moveEast) {
+            ++dx;
+        }
+        super.move(dx, dy);
     }
 }

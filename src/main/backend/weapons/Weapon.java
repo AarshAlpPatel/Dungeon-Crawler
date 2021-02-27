@@ -2,6 +2,7 @@ package main.backend.weapons;
 
 import javafx.scene.image.*;
 import main.backend.characters.Sprite;
+import main.frontend.MainScreen;
 
 public abstract class Weapon {
     //x for the x-axis position
@@ -63,6 +64,8 @@ public abstract class Weapon {
     public void move(double x, double y) {
         this.x = x;
         this.y = y;
+        this.image.setTranslateX(this.x - MainScreen.length/2);
+        this.image.setTranslateY(this.y - MainScreen.height/2);
     }
 
     public void follow(int x, int y) {
