@@ -8,7 +8,15 @@ import main.backend.characters.*;
 import main.backend.weapons.*;
 
 public class Controller {
-    public static String difficultyLevel = "Easy";
+    private static String difficultyLevel = "Easy";
+
+    public static String getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    public static void setDifficultyLevel(String val) {
+        difficultyLevel = val;
+    }
     
     public static Player createPlayer(double x, double y, String name, String weaponName,
                                       String imagePath) {
@@ -27,12 +35,13 @@ public class Controller {
         return images;
     }
 
-    public static ArrayList<ImageView> generateEnemies(HashMap<String,Integer> enemies, int maxX, int maxY) {
+    public static ArrayList<ImageView> generateEnemies(HashMap<String,
+                                                        Integer> enemies, int maxX, int maxY) {
         ArrayList<ImageView> images = new ArrayList<>();
-        for(Map.Entry<String,Integer> enemy : enemies.entrySet()) {
-            for(int i = 0; i < enemy.getValue(); i++) {
-                double x = Math.random()*maxX;
-                double y = Math.random()*maxY;
+        for (Map.Entry<String, Integer> enemy : enemies.entrySet()) {
+            for (int i = 0; i < enemy.getValue(); i++) {
+                double x = Math.random() * maxX;
+                double y = Math.random() * maxY;
                 Enemy e = EnemyManager.create(x, y, enemy.getKey());
                 images.add(e.getImage());
                 images.add(e.getMainWeapon().getImage());

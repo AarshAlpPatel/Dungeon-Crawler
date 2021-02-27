@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import main.backend.Controller;
-import javafx.scene.robot.Robot;
 
 public class GameManager {
     private static AnimationTimer timer;
@@ -57,9 +56,9 @@ public class GameManager {
     }
 
     public static void generateEnemies() {
-        HashMap<String,Integer> enemies = new HashMap<>();
+        HashMap<String, Integer> enemies = new HashMap<>();
         enemies.put("ghost", 1);
-        screen.getChildren().addAll(Controller.generateEnemies(enemies, MainScreen.length, MainScreen.height));
+        screen.getChildren().addAll(Controller.generateEnemies(enemies, MainScreen.getLength(), MainScreen.getHeight()));
     }
 
     public static void gameLoop() {

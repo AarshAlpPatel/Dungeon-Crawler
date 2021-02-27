@@ -10,7 +10,6 @@ public abstract class Weapon {
     //y for the y-axis position
     //r for the angle (in degrees) between it and the positive x-axis
     private static Point2D positiveX = new Point2D(1, 0);
-
     protected Point2D position;
     protected double r;
 
@@ -19,7 +18,8 @@ public abstract class Weapon {
 
     //range is the range of the weapon
     //aoe is the angle (in degrees) which the weapon effects (+- its current r)
-    protected double range, aoe;
+    protected double range;
+    protected double aoe;
 
     //id is the key stored in the dictionary with the weapon being its value
     protected int id;
@@ -62,13 +62,13 @@ public abstract class Weapon {
 
     public void move(double dx, double dy) {
         this.position = this.position.add(dx, dy);
-        this.image.setTranslateX(this.position.getX() - MainScreen.length/2);
-        this.image.setTranslateY(this.position.getY() - MainScreen.height/2);
+        this.image.setTranslateX(this.position.getX() - MainScreen.getLength() / 2);
+        this.image.setTranslateY(this.position.getY() - MainScreen.getHeight() / 2);
     }
 
     public void follow(Point2D target) {
         double angle = target.subtract(this.position).angle(positiveX);
-        if(target.getY() > this.position.getY()) {
+        if (target.getY() > this.position.getY()) {
             r = angle;
         } else {
             r = -angle;
@@ -78,7 +78,7 @@ public abstract class Weapon {
 
     public boolean checkCollision(Sprite s) {
         double angle = s.getPosition().subtract(this.position).angle(positiveX);
-        if(angle > aoe || angle < aoe) {
+        if (angle > aoe || angle < aoe) {
             return false;
         }
         return s.getPosition().distance(this.position) > range;

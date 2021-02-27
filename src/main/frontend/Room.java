@@ -1,6 +1,5 @@
 package main.frontend;
 
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -14,7 +13,7 @@ public class Room {
         StackPane screen = new StackPane();
         BorderPane bPane = new BorderPane();
         screen.getChildren().addAll(bPane);
-        Scene roomScene = new Scene(screen, MainScreen.length, MainScreen.height);
+        Scene roomScene = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());
         screen.getStyleClass().add("screen");
         roomScene.getStylesheets().addAll("/main/design/Room.css");
 
@@ -24,12 +23,13 @@ public class Room {
         VBox healthAndCash = new VBox(5);
         healthAndCash.getStyleClass().add("stats");
         HBox hearts = new HBox(2);
-        HBox cash = new HBox(10, new ImageView("/main/design/images/coin.png")); //buy upgrades or we can add more weapons later or something
+        //buy upgrades or we can add more weapons later or something
+        HBox cash = new HBox(10, new ImageView("/main/design/images/coin.png"));
         healthAndCash.getChildren().addAll(hearts, cash);
-        if (Controller.difficultyLevel.equals("Easy")) {
+        if (Controller.getDifficultyLevel().equals("Easy")) {
             numHearts = 8;
             amountCash = 500;
-        } else if (Controller.difficultyLevel.equals("Medium")) {
+        } else if (Controller.getDifficultyLevel().equals("Medium")) {
             numHearts = 7;
             amountCash = 400;
         } else {
@@ -58,7 +58,7 @@ public class Room {
         bPane.setBottom(back);
         roomScene.getStylesheets().add("/main/design/Room.css");
 
-        if(type.equals("empty")) {
+        if (type.equals("empty")) {
             GameManager.initializeEmptyRoom(screen, roomScene);
         } else {
             throw new IllegalArgumentException("Room type not supported.");

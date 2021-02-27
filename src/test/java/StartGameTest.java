@@ -65,13 +65,13 @@ public class StartGameTest extends ApplicationTest {
         verifyThat("Settings", NodeMatchers.isVisible());
         clickOn("#difficulty");
         clickOn("Easy");
-        assertEquals("Easy", Controller.difficultyLevel);
+        assertEquals("Easy", Controller.getDifficultyLevel());
         clickOn("#difficulty");
         clickOn("Medium");
-        assertEquals("Medium", Controller.difficultyLevel);
+        assertEquals("Medium", Controller.getDifficultyLevel());
         clickOn("#difficulty");
         clickOn("Hard");
-        assertEquals("Hard", Controller.difficultyLevel);
+        assertEquals("Hard", Controller.getDifficultyLevel());
         clickOn("#toMainScreen");
         verifyThat("#gameTitle", NodeMatchers.isVisible());
     }

@@ -9,8 +9,9 @@ import javafx.scene.*;
  * MainScreen contains the main window and changes between scenes.
  */
 public class MainScreen extends Application {
-    public static Stage stage;
-    public static int length = 800, height = 800;
+    private static Stage stage;
+    private static int length = 800;
+    private static int height = 800;
     
     public static void main(String[] args) {
         launch(args);
@@ -19,6 +20,16 @@ public class MainScreen extends Application {
     public static void setScene(Scene s) {
         stage.setScene(s);
     }
+
+    public static int getLength() {
+        return length;
+    }
+
+    public static int getHeight() {
+        return height;
+    }
+
+    //protected static Button toGame;
 
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;

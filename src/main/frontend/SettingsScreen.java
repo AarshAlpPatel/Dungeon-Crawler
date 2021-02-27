@@ -34,9 +34,9 @@ public class SettingsScreen {
             "Medium",
             "Hard"
         );
-        difficulty.setValue(Controller.difficultyLevel);
+        difficulty.setValue(Controller.getDifficultyLevel());
         difficulty.setOnAction(event -> {
-            Controller.difficultyLevel = difficulty.getValue();
+            Controller.setDifficultyLevel(difficulty.getValue());
         });
         difficulty.getStyleClass().add("combo-box-base");
 
@@ -52,7 +52,7 @@ public class SettingsScreen {
 
         screen.setCenter(middle);
         
-        Scene welcomeScreen = new Scene(screen, MainScreen.length, MainScreen.height);
+        Scene welcomeScreen = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());
         welcomeScreen.getStylesheets().add("/main/design/SettingsScreen.css");
 
         return welcomeScreen;
