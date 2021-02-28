@@ -3,6 +3,7 @@ package test.java;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import main.backend.Controller;
+import main.backend.characters.Player;
 import main.frontend.*;
 
 import javafx.stage.Stage;
@@ -212,7 +213,7 @@ public class StartGameTest extends ApplicationTest {
         type(KeyCode.N);
         clickOn("Start Game");
         int i = 0;
-        while (i < 100) {
+        while (Player.getPlayerObj().getPosition().getX() < MainScreen.getLength()) {
             press(KeyCode.D);
             i++;
         }
