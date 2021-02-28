@@ -217,16 +217,16 @@ public class StartGameTest extends ApplicationTest {
 
     //@Test
     //public void testExits() {
-        //clickOn("#toGame");
-        //clickOn("#nameField");
-        //type(KeyCode.N);
-        //clickOn("Start Game");
-        //int i = 0;
-        //while (Player.getPlayerObj().getPosition().getX() < MainScreen.getLength()) {
-            //press(KeyCode.D);
-            //i++;
-        //}
-        //verifyThat("#won", NodeMatchers.isVisible());
+    //clickOn("#toGame");
+    //clickOn("#nameField");
+    //type(KeyCode.N);
+    //clickOn("Start Game");
+    //int i = 0;
+    //while (Player.getPlayerObj().getPosition().getX() < MainScreen.getLength()) {
+    //press(KeyCode.D);
+    // i++;
+    //}
+    //verifyThat("#won", NodeMatchers.isVisible());
     //}
 
     //correct weapon displayed test
