@@ -24,7 +24,8 @@ public class Controller {
         Weapon weapon = WeaponManager.create(weaponName, x, y, false);
         player.setName(name);
         player.setWeapon(weapon);
-        player.setImage(imagePath, 100, 400, 400);
+        player.setPosition(new Point2D(x, y));
+        player.setImage(imagePath, 100);
         return player;
     }
 
@@ -49,6 +50,10 @@ public class Controller {
         }
 
         return images;
+    }
+
+    public static void setPlayerPosition(double x, double y) {
+        Player.getInstance().setPosition(new Point2D(x, y));
     }
 
     public static void setDirection(String key, boolean b) {

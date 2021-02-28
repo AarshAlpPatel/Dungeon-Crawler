@@ -40,6 +40,7 @@ public class GameManager {
         GameManager.screen = screen;
         GameManager.scene = scene;
         screen.getChildren().addAll(Controller.getPlayerImage());
+        Controller.setPlayerPosition(400, 400);
         setKeybinds();
     }
 

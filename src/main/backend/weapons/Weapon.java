@@ -60,6 +60,12 @@ public abstract class Weapon {
         return this.damage;
     }
 
+    public void setPosition(Point2D position) {
+        this.position = position;
+        this.image.setTranslateX(this.position.getX() - MainScreen.getLength() / 2);
+        this.image.setTranslateY(this.position.getY() - MainScreen.getHeight() / 2);
+    }
+
     public void move(double dx, double dy) {
         this.position = this.position.add(dx, dy);
         this.image.setTranslateX(this.position.getX() - MainScreen.getLength() / 2);

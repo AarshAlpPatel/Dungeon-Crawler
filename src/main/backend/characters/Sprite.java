@@ -26,7 +26,7 @@ public abstract class Sprite {
         this.regeneration = regeneration;
         this.mainWeapon = weapon;
         this.name = name;
-        setImage(imagePath, maxsize, x, y);
+        setImage(imagePath, maxsize);
     }
 
     public Point2D getPosition() {
@@ -57,11 +57,20 @@ public abstract class Sprite {
         return mainWeapon;
     }
 
-    public void setImage(String imagePath, int maxsize, double x, double y) {
+    public void setPosition(Point2D position) {
+        this.position = position;
+        this.image.setTranslateX(this.position.getX() - (double) MainScreen.getLength() / 2);
+        this.image.setTranslateY(this.position.getY() - (double) MainScreen.getHeight() / 2);
+        mainWeapon.setPosition(position);
+    } 
+
+    public void setImage(String imagePath, int maxsize) {
         this.image = new ImageView(new Image(imagePath));
         this.image.setPreserveRatio(true);
         this.image.setFitHeight(maxsize);
         this.image.setFitWidth(maxsize);
+        this.image.setTranslateX(this.position.getX() - (double) MainScreen.getLength() / 2);
+        this.image.setTranslateY(this.position.getY() - (double) MainScreen.getHeight() / 2);
     }
 
     public void setName(String name) {
