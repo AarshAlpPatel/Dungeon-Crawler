@@ -29,75 +29,28 @@ public class SetUpPlayerScreen {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
-    public static Scene getScene() {
+    private static ImageView setArrow(String imagePath, String id, Scene playerSetUp) {
+        Image arrow = new Image(imagePath, 16, 24, false, false);
+        ImageView direction = new ImageView(arrow);
+        direction.setId(id);
+        direction.setOnMouseEntered(e -> {
+            playerSetUp.setCursor(Cursor.HAND);
+            direction.setFitWidth(arrow.getWidth() * 1.5);
+            direction.setFitHeight(arrow.getHeight() * 1.5);
+        });
+        return direction;
+    }
 
-        //top is the customization panel and bottom are the start and back buttons
-        VBox screen = new VBox();
-        Scene playerSetUp = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());
-        screen.getStyleClass().addAll("screen", "center");
-
-        //contains the entryFields and the character chooser
-        StackPane customizationPanel = new StackPane();
-        customizationPanel.getStyleClass().addAll("customization_panel", "center");
-        Pane customizationPanelBack = new Pane();
-        customizationPanelBack.getStyleClass().addAll("customization_panel_back");
-        HBox customizationPanelHbox = new HBox();
-        customizationPanelHbox.getStyleClass().addAll("customization_panel_hbox", "center");
-        customizationPanel.getChildren().addAll(customizationPanelBack, customizationPanelHbox);
-
-        //entry fields for name, weapon, and difficulty
-        VBox entryFields = new VBox();
-        entryFields.getStyleClass().addAll("entry_fields", "center");
-
-        //enter name -- Start Game button checks if its blank
-        StackPane name = new StackPane();
-        name.getStyleClass().addAll("name", "center");
-        VBox nameVBox = new VBox();
-        Rectangle rectName = new Rectangle(300, 75);
-        rectName.getStyleClass().add("rect");
-        name.getChildren().addAll(rectName, nameVBox);
-        nameVBox.getStyleClass().addAll("name_vbox", "center", "entry_boxes");
-        Label nameLabel = new Label("Enter Name");
-        nameLabel.getStyleClass().addAll("name_label", "label");
-        TextField nameField = new TextField();
-        nameField.setId("nameField");
-        nameField.setOnMouseClicked(event -> nameField.setStyle("-fx-background-color: #ffffff;"));
-        nameField.setMaxWidth(250);
-        nameField.setPromptText("Enter Player Name");
-        nameField.getStyleClass().add("name_field");
-        nameVBox.getChildren().addAll(nameLabel, nameField);
-
+    private static Pane setWeaponsPane(Scene playerSetUp) {
         StackPane weaponsPane = new StackPane();
         weaponsPane.getStyleClass().add("weapons");
         Rectangle weaponsRect = new Rectangle(450, 200);
         weaponsRect.getStyleClass().addAll("rect", "weapons_rect");
 
-        Image backArrow = new Image("/main/design/images/arrow left.png", 16, 24, false, false);
-        ImageView arrowLeft = new ImageView(backArrow);
-        arrowLeft.setId("backwardWeapon");
-        arrowLeft.setOnMouseEntered(e -> {
-            playerSetUp.setCursor(Cursor.HAND);
-            arrowLeft.setFitWidth(backArrow.getWidth() * 1.5);
-            arrowLeft.setFitHeight(backArrow.getHeight() * 1.5);
-        });
-        arrowLeft.setOnMouseExited(e -> {
-            playerSetUp.setCursor(Cursor.DEFAULT);
-            arrowLeft.setFitWidth(backArrow.getWidth());
-            arrowLeft.setFitHeight(backArrow.getHeight());
-        });
-        Image frontArrow = new Image("/main/design/images/arrow right.png", 16, 24, false, false);
-        ImageView arrowRight = new ImageView(frontArrow);
-        arrowRight.setId("forwardWeapon");
-        arrowRight.setOnMouseEntered(e -> {
-            playerSetUp.setCursor(Cursor.HAND);
-            arrowRight.setFitWidth(frontArrow.getWidth() * 1.5);
-            arrowRight.setFitHeight(frontArrow.getHeight() * 1.5);
-        });
-        arrowRight.setOnMouseExited(e -> {
-            playerSetUp.setCursor(Cursor.DEFAULT);
-            arrowRight.setFitWidth(frontArrow.getWidth());
-            arrowRight.setFitHeight(frontArrow.getHeight());
-        });
+        ImageView arrowLeft = setArrow("/main/design/images/arrow left.png",
+                                       "backwardWeapon", playerSetUp);
+        ImageView arrowRight = setArrow("/main/design/images/arrow right.png",
+                                        "forwardWeapon", playerSetUp);
 
         HBox weaponAndArrows = new HBox(0, arrowLeft, arrowRight);
         weaponAndArrows.getStyleClass().addAll("center");
@@ -144,6 +97,28 @@ public class SetUpPlayerScreen {
             weaponAndArrows.getChildren().add(1, weaponBoxes[indexW]);
         });
 
+        return weaponsPane;
+    }
+
+    private static ImageView setChar(String imagePath, 
+                Scene playerSetUp, StackPane character, int add) {
+        Image imageChar = new Image(imagePath, 16, 24, false, false);
+        ImageView direction = new ImageView(imageChar);
+        direction.setId("forwardChar");
+        direction.setOnMouseEntered(e -> playerSetUp.setCursor(Cursor.CLOSED_HAND));
+        direction.setOnMouseExited(e -> playerSetUp.setCursor(Cursor.DEFAULT));
+        direction.setOnMouseClicked(e -> {
+            indexC += add;
+            character.getChildren().remove(0);
+            if (indexC > 2) {
+                indexC = 0;
+            }
+            character.getChildren().add(new ImageView(new Image(characters[indexC])));
+        });
+        return direction;
+    }
+
+    private static Pane setDiffPane(ComboBox<String> diffCombo) {
         StackPane diff = new StackPane();
         VBox diffVBox = new VBox();
         diffVBox.getStyleClass().addAll("diff_vbox", "center", "entry_boxes");
@@ -153,6 +128,51 @@ public class SetUpPlayerScreen {
         diff.getChildren().addAll(rectDiff, diffVBox);
         Label diffLabel = new Label("Difficulty");
         diffLabel.getStyleClass().addAll("diff_label", "label");
+        diffVBox.getChildren().addAll(diffLabel, diffCombo);
+        return diff;
+    }
+    
+    private static Pane setNamePane(TextField nameField) {
+        StackPane name = new StackPane();
+        name.getStyleClass().addAll("name", "center");
+        VBox nameVBox = new VBox();
+        Rectangle rectName = new Rectangle(300, 75);
+        rectName.getStyleClass().add("rect");
+        name.getChildren().addAll(rectName, nameVBox);
+        nameVBox.getStyleClass().addAll("name_vbox", "center", "entry_boxes");
+        Label nameLabel = new Label("Enter Name");
+        nameLabel.getStyleClass().addAll("name_label", "label");
+        nameVBox.getChildren().addAll(nameLabel, nameField);
+        return name;
+    }
+
+    public static Scene getScene() {
+        //top is the customization panel and bottom are the start and back buttons
+        VBox screen = new VBox();
+        Scene playerSetUp = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());
+        screen.getStyleClass().addAll("screen", "center");
+
+        //contains the entryFields and the character chooser
+        StackPane customizationPanel = new StackPane();
+        customizationPanel.getStyleClass().addAll("customization_panel", "center");
+        Pane customizationPanelBack = new Pane();
+        customizationPanelBack.getStyleClass().addAll("customization_panel_back");
+        HBox customizationPanelHbox = new HBox();
+        customizationPanelHbox.getStyleClass().addAll("customization_panel_hbox", "center");
+        customizationPanel.getChildren().addAll(customizationPanelBack, customizationPanelHbox);
+
+        //entry fields for name, weapon, and difficulty
+        VBox entryFields = new VBox();
+        entryFields.getStyleClass().addAll("entry_fields", "center");
+
+        //enter name -- Start Game button checks if its blank
+        TextField nameField = new TextField();
+        nameField.setId("nameField");
+        nameField.setOnMouseClicked(event -> nameField.setStyle("-fx-background-color: #ffffff;"));
+        nameField.setMaxWidth(250);
+        nameField.setPromptText("Enter Player Name");
+        nameField.getStyleClass().add("name_field");
+
         ComboBox<String> diffCombo = new ComboBox<>();
         diffCombo.setId("diffCombo");
         diffCombo.setPromptText("Default (" + Controller.getDifficultyLevel() + ")");
@@ -160,9 +180,10 @@ public class SetUpPlayerScreen {
         diffCombo.getItems().addAll(
                 "Easy", "Medium", "Hard"
         );
-        diffVBox.getChildren().addAll(diffLabel, diffCombo);
 
-        entryFields.getChildren().addAll(name, diff, weaponsPane);
+        entryFields.getChildren().addAll(setNamePane(nameField),
+                                         setDiffPane(diffCombo),
+                                         setWeaponsPane(playerSetUp));
 
         //vbox for choosing character look
         VBox chooseChar = new VBox(15);
@@ -182,33 +203,10 @@ public class SetUpPlayerScreen {
         navButtons.getChildren().addAll(rectNav, navButtonsHbox);
         navButtonsHbox.getStyleClass().addAll("nav_buttons_hbox", "center");
 
-        Image forwardChar = new Image("/main/design/images/arrow right.png", 16, 24, false, false);
-        ImageView forward = new ImageView(forwardChar);
-        forward.setId("forwardChar");
-        forward.setOnMouseEntered(e -> playerSetUp.setCursor(Cursor.CLOSED_HAND));
-        forward.setOnMouseExited(e -> playerSetUp.setCursor(Cursor.DEFAULT));
-        forward.setOnMouseClicked(e -> {
-            indexC++;
-            character.getChildren().remove(0);
-            if (indexC > 2) {
-                indexC = 0;
-            }
-            character.getChildren().add(new ImageView(new Image(characters[indexC])));
-        });
-
-        Image backwardChar = new Image("/main/design/images/arrow left.png", 16, 24, false, false);
-        ImageView backward = new ImageView(backwardChar);
-        backward.setId("backwardChar");
-        backward.setOnMouseEntered(e -> playerSetUp.setCursor(Cursor.CLOSED_HAND));
-        backward.setOnMouseExited(e -> playerSetUp.setCursor(Cursor.DEFAULT));
-        backward.setOnMouseClicked(e -> {
-            indexC--;
-            character.getChildren().remove(0);
-            if (indexC < 0) {
-                indexC = 2;
-            }
-            character.getChildren().add(new ImageView(new Image(characters[indexC])));
-        });
+        ImageView forward = setChar("/main/design/images/arrow right.png",
+                                    playerSetUp, character, 1);
+        ImageView backward = setChar("/main/design/images/arrow left.png",
+                                     playerSetUp, character, -1);
 
         Button choose = new Button("Choose");
         choose.setId("choose");

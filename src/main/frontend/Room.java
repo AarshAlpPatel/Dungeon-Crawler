@@ -8,8 +8,6 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
 
-import java.util.Stack;
-
 public class Room {
     //Current supported types include: empty
     public static Scene getScene(String type) {
