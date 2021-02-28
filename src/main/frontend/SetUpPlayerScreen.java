@@ -101,10 +101,10 @@ public class SetUpPlayerScreen {
     }
 
     private static ImageView setChar(String imagePath, 
-                Scene playerSetUp, StackPane character, int add) {
+                Scene playerSetUp, StackPane character, int add, String id) {
         Image imageChar = new Image(imagePath, 16, 24, false, false);
         ImageView direction = new ImageView(imageChar);
-        direction.setId("forwardChar");
+        direction.setId(id);
         direction.setOnMouseEntered(e -> playerSetUp.setCursor(Cursor.CLOSED_HAND));
         direction.setOnMouseExited(e -> playerSetUp.setCursor(Cursor.DEFAULT));
         direction.setOnMouseClicked(e -> {
@@ -112,6 +112,9 @@ public class SetUpPlayerScreen {
             character.getChildren().remove(0);
             if (indexC > 2) {
                 indexC = 0;
+            }
+            if (indexC < 0) {
+                indexC = 2;
             }
             character.getChildren().add(new ImageView(new Image(characters[indexC])));
         });
@@ -204,9 +207,9 @@ public class SetUpPlayerScreen {
         navButtonsHbox.getStyleClass().addAll("nav_buttons_hbox", "center");
 
         ImageView forward = setChar("/main/design/images/arrow right.png",
-                                    playerSetUp, character, 1);
+                                    playerSetUp, character, 1, "forwardChar");
         ImageView backward = setChar("/main/design/images/arrow left.png",
-                                     playerSetUp, character, -1);
+                                     playerSetUp, character, -1, "backwardChar");
 
         Button choose = new Button("Choose");
         choose.setId("choose");
