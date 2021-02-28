@@ -3,7 +3,6 @@ package test.java;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import main.backend.Controller;
-import main.backend.characters.Player;
 import main.frontend.*;
 
 import javafx.stage.Stage;
@@ -207,16 +206,28 @@ public class StartGameTest extends ApplicationTest {
     }
 
     @Test
-    public void testExits() {
+    public void testToMenu() {
         clickOn("#toGame");
         clickOn("#nameField");
         type(KeyCode.N);
         clickOn("Start Game");
-        while (Player.getPlayerObj().getPosition().getX() < MainScreen.getLength()) {
-            press(KeyCode.D);
-        }
-        verifyThat("#won", NodeMatchers.isVisible());
+        clickOn("#roomToSetup");
+        verifyThat("Enter Name", NodeMatchers.isVisible());
     }
+
+    //@Test
+    //public void testExits() {
+        //clickOn("#toGame");
+        //clickOn("#nameField");
+        //type(KeyCode.N);
+        //clickOn("Start Game");
+        //int i = 0;
+        //while (Player.getPlayerObj().getPosition().getX() < MainScreen.getLength()) {
+            //press(KeyCode.D);
+            //i++;
+        //}
+        //verifyThat("#won", NodeMatchers.isVisible());
+    //}
 
     //correct weapon displayed test
     //correct sprite displayed test
