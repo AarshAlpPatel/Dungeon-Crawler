@@ -2,10 +2,18 @@ package main.backend.rooms;
 
 import java.util.*;
 
+import javafx.scene.image.ImageView;
+import main.backend.Controller;
+
 public class RoomManager {
     private static int MAX_ROOMS = 16;
+    private static double DOOR_WIDTH = 100;
     private static Room current;
     private static ArrayList<Room> rooms;
+
+    public static double getDoorWidth() {
+        return DOOR_WIDTH;
+    }
 
     private static String returnRandomType(int level) {
         if(Math.random() < 0.8/level) {
@@ -26,6 +34,8 @@ public class RoomManager {
             return new PotionRoom();
         } else if (type.equals("weapon")) {
             return new WeaponRoom();
+        } else if (type.equals("boss")) {
+            return new BossRoom(); 
         } else {
             return new EnemyRoom(type);
         }
@@ -75,11 +85,21 @@ public class RoomManager {
         }
     }
 
-    public static void changeRoom() {
-        //implement logic for changing rooms
+    public static boolean validMove(double x, double y) {
+        return current.validMove(x, y);
     }
 
-    public static void checkDoor(int x, int y) {
-        //implement logic to check for a door on a wall
+    public static ArrayList<ImageView> getCurrentRoomImages() {
+        return current.getImages();
+    }
+
+    public static void checkEdge(double x, double y) {
+        Room next = current.checkEdge(x, y);
+        if (next == null) {
+            return;
+        } else if (current.getClear()) {
+            current = next;
+            Controller.changeRoom();
+        }
     }
 }

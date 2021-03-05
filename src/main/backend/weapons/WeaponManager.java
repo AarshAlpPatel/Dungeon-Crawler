@@ -2,8 +2,6 @@ package main.backend.weapons;
 
 import java.util.HashMap;
 
-import main.frontend.GameManager;
-
 public class WeaponManager {
     private static HashMap<Integer, Weapon> weapons = new HashMap<>();
     private static int weaponsCounter = 0;
@@ -23,8 +21,8 @@ public class WeaponManager {
         ++weaponsCounter;
         return newWeapon;
     }
+
     public static void destroy(int id) {
-        GameManager.destroyImage(weapons.get(id).getImage());
         weapons.remove(id);
     }
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.geometry.Point2D;
 import javafx.scene.image.*;
 import main.backend.exceptions.EdgeOfScreen;
+import main.backend.rooms.RoomManager;
 import main.backend.weapons.Weapon;
 import main.frontend.EndGame;
 import main.frontend.MainScreen;
@@ -99,10 +100,8 @@ public abstract class Sprite {
     public void move(double dx, double dy) {
         dx *= speed;
         dy *= speed;
-        if (this.position.getX() + dx < 20 || this.position.getX() + dx > MainScreen.getLength()
-                || this.position.getY() + dy < 100
-                || this.position.getY() + dy > MainScreen.getHeight()) {
-            throw new EdgeOfScreen("Edge of screen");
+        if(!RoomManager.validMove(this.position.getX()+dx, this.position.getY()+dy)) {
+            return;
         }
 
         this.position = this.position.add(dx, dy);

@@ -36,8 +36,8 @@ public class Controller {
         return player;
     }
 
-    public static ArrayList<ImageView> getPlayerImage() {
-        return Player.getInstance().getImage();
+    public static ArrayList<ImageView> getCurrentRoomImages() {
+        return RoomManager.getCurrentRoomImages();
     }
 
     public static void setPlayerPosition(double x, double y) {
@@ -60,5 +60,9 @@ public class Controller {
 
     public static void destroyImage(ArrayList<ImageView> images) {
         GameManager.destroyImage(images);
+    }
+
+    public static void changeRoom() {
+        GameManager.changeRoom();
     }
 }
