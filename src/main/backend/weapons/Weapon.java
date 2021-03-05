@@ -82,14 +82,6 @@ public abstract class Weapon {
         this.image.setRotate(this.r);
     }
 
-    public boolean checkCollision(Sprite s) {
-        double angle = s.getPosition().subtract(this.position).angle(positiveX);
-        if (angle > aoe || angle < aoe) {
-            return false;
-        }
-        return s.getPosition().distance(this.position) > range;
-    }
-
     public void destroy() {
         WeaponManager.destroy(id);
     }

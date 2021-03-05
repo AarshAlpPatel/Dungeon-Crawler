@@ -107,13 +107,6 @@ public abstract class Sprite {
         mainWeapon.move(dx, dy);
     }
 
-    public void hit(Sprite s) {
-        s.health -= this.attackMultiplier * this.mainWeapon.getDamage();
-        if (s.health < 0) {
-            s.destroy();
-        }
-    }
-
     public void destroy() {
         this.mainWeapon.destroy();
     }

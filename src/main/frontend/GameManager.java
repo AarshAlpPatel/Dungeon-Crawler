@@ -56,16 +56,6 @@ public class GameManager {
         setScreen(screen, scene);
     }
 
-    public static void generateEnemies() {
-        HashMap<String, Integer> enemies = new HashMap<>();
-        enemies.put("ghost", 1);
-        screen.getChildren().addAll(Controller.generateEnemies(
-                enemies,
-                MainScreen.getLength(),
-                MainScreen.getHeight())
-        );
-    }
-
     public static void gameLoop() {
         timer = new AnimationTimer() {
             @Override

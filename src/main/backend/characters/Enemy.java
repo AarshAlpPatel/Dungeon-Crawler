@@ -10,17 +10,4 @@ public class Enemy extends Sprite {
         super(x, y, attackMultiplier, speed, health, regeneration, weapon, name, imagePath, 100);
         this.id = id;
     }
-
-    @Override
-    public void destroy() {
-        EnemyManager.destroy(id);
-        super.destroy();
-    }
-
-    public void attack(Player player) {
-        double dist = getDistance(player);
-        if (dist < this.mainWeapon.getRange()) {
-            this.hit(player);
-        }
-    }
 }
