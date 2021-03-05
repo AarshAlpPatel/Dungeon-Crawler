@@ -5,10 +5,16 @@ import java.util.*;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import main.backend.characters.*;
+import main.backend.rooms.RoomManager;
 import main.backend.weapons.*;
 
 public class Controller {
     private static String difficultyLevel = "Easy";
+    private static int level = 1;
+
+    public static int getLevel() {
+        return level;
+    }
 
     public static String getDifficultyLevel() {
         return difficultyLevel;
@@ -47,5 +53,10 @@ public class Controller {
     public static void run(Point2D mousePosition) {
         Player.getInstance().move();
         Player.getInstance().getMainWeapon().follow(mousePosition);
+    }
+
+    public static void initializeLevel() {
+        setPlayerPosition(400, 400);
+        RoomManager.createRooms(level);
     }
 }

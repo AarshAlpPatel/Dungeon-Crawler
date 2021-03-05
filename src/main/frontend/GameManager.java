@@ -6,7 +6,7 @@ import javafx.event.*;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
 import javafx.animation.*;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import main.backend.Controller;
@@ -35,25 +35,26 @@ public class GameManager {
         });
     }
 
-    public static void setScreen(Pane screen, Scene scene) {
+    public static void clearScreen() {
+        Node p = screen.getChildren().get(0);
+        screen.getChildren().clear();
+        screen.getChildren().add(p);
+    }
+
+    public static void initializeRoom(Pane screen, Scene scene) {
         mousePosition = new Point2D(400, 400);
         GameManager.screen = screen;
         GameManager.scene = scene;
-        screen.getChildren().addAll(Controller.getPlayerImage());
-        Controller.setPlayerPosition(400, 400);
         setKeybinds();
-    }
-
-    public static void clearScreen() {
-        screen.getChildren().clear();
     }
 
     public static void destroyImage(ImageView image) {
         screen.getChildren().remove(image);
     }
 
-    public static void initializeEmptyRoom(Pane screen, Scene scene) {
-        setScreen(screen, scene);
+    public static void initializeLevel(int level) {
+        screen.getChildren().addAll(Controller.getPlayerImage());
+        Controller.initializeLevel();
     }
 
     public static void gameLoop() {

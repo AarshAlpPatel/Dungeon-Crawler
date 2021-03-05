@@ -9,8 +9,7 @@ import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
 
 public class Room {
-    //Current supported types include: empty
-    public static Scene getScene(String type) {
+    public static Scene getScene() {
         StackPane screen = new StackPane();
         BorderPane bPane = new BorderPane();
         screen.getChildren().addAll(bPane);
@@ -62,11 +61,7 @@ public class Room {
         bPane.setBottom(back);
         roomScene.getStylesheets().add("/main/design/Room.css");
 
-        if (type.equals("empty")) {
-            GameManager.initializeEmptyRoom(screen, roomScene);
-        } else {
-            throw new IllegalArgumentException("Room type not supported.");
-        }
+        GameManager.initializeRoom(screen, roomScene);
         GameManager.gameLoop();
 
         return roomScene;

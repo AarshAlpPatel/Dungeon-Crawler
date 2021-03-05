@@ -1,5 +1,6 @@
 package main.backend.characters;
 
+import main.backend.exceptions.EdgeOfScreen;
 import main.backend.weapons.Weapon;
 
 /**
@@ -68,7 +69,11 @@ public class Player extends Sprite {
         if (moveEast) {
             ++dx;
         }
-        super.move(dx, dy);
+        try {
+            super.move(dx, dy);
+        } catch(EdgeOfScreen e) {
+            //check if door here
+        }
     }
 
     public static Player getPlayerObj() {

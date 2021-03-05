@@ -272,7 +272,7 @@ public class SetUpPlayerScreen {
                 if (diffCombo.getValue() != null) {
                     Controller.setDifficultyLevel(diffCombo.getValue());
                 }
-                MainScreen.setScene(Room.getScene("empty"));
+                MainScreen.setScene(Room.getScene());
             }
         });
 
