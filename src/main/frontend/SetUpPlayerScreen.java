@@ -66,7 +66,7 @@ public class SetUpPlayerScreen {
             dChar.getStyleClass().addAll("center");
             StackPane dSprite = new StackPane();
             dSprite.getChildren().add(
-                    new ImageView(new Image("/main/design/images/" + weapons[i] + ".png"))
+                    new ImageView(new Image("/main/design/images/" + weapons[i] + "-angle.png"))
             );
             Label dName = new Label(capitalize(weapons[i]));
             dName.getStyleClass().addAll("dName", "weapon_description");
