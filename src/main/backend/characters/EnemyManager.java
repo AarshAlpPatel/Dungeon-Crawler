@@ -1,12 +1,17 @@
 package main.backend.characters;
 
-import java.util.HashMap;
+import java.util.*;
 
-import main.frontend.GameManager;
+import javafx.scene.image.ImageView;
+import main.backend.Controller;
 
 public class EnemyManager {
-    private HashMap<Integer, Enemy> enemies = new HashMap<>();
-    private int enemyCounter = 1;
+    private Enemy[] enemies;
+    private int enemyCounter = 0;
+
+    public EnemyManager(int enemies) {
+        this.enemies = new Enemy[enemies];
+    }
 
     public Enemy create(double x, double y, String name) {
         Enemy newEnemy = null;
@@ -16,18 +21,29 @@ public class EnemyManager {
             throw new IllegalArgumentException("Enemy name not recognized");
         }
 
-        enemies.put(enemyCounter, newEnemy);
+        enemies[enemyCounter] = newEnemy;
         ++enemyCounter;
         return newEnemy;
     }
 
     public void destroy(int id) {
-        GameManager.destroyImage(enemies.get(id).getImage());
-        enemies.get(id).destroy();
-        enemies.remove(id);
+        Controller.destroyImage(enemies[id].getImage());
+        enemies[id].destroy();
+        enemies[id] = null;
+        --enemyCounter;
     }
 
     public boolean clear() {
-        return enemies.size() == 0;
+        return enemyCounter == 0;
+    }
+
+    public ArrayList<ImageView> getImages() {
+        ArrayList<ImageView> images = new ArrayList<>(enemyCounter*2);
+        for(Enemy enemy : enemies) {
+            if (enemy != null) {
+                images.addAll(enemy.getImage());
+            }
+        }
+        return images;
     }
 }

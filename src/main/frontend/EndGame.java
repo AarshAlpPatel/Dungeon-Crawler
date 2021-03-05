@@ -13,8 +13,8 @@ public class EndGame {
         BorderPane screen = new BorderPane();
         Scene endGame = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());
 
-        Player.getPlayerObj().setDirection("A", true);
-        Player.getPlayerObj().move();
+        Player.getInstance().setDirection("A", true);
+        Player.getInstance().move();
 
         VBox wonBox = new VBox(10);
         wonBox.setId("wonBox");

@@ -48,16 +48,17 @@ public class GameManager {
         setKeybinds();
     }
 
-    public static void destroyImage(ImageView image) {
-        screen.getChildren().remove(image);
+    public static void destroyImage(ArrayList<ImageView> images) {
+        screen.getChildren().removeAll(images);
     }
 
-    public static void initializeLevel(int level) {
+    public static void initializeLevel() {
         screen.getChildren().addAll(Controller.getPlayerImage());
         Controller.initializeLevel();
     }
 
     public static void gameLoop() {
+        initializeLevel();
         timer = new AnimationTimer() {
             @Override
             public void handle(long l) {

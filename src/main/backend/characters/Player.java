@@ -75,8 +75,4 @@ public class Player extends Sprite {
             //check if door here
         }
     }
-
-    public static Player getPlayerObj() {
-        return playerObj;
-    }
 }

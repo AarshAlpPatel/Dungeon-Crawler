@@ -2,41 +2,21 @@ package main.backend.rooms;
 
 import java.util.ArrayList;
 
-import main.backend.characters.EnemyManager;
+import javafx.scene.image.ImageView;
 
 enum Door {
     NORTH, WEST, SOUTH, EAST;
 }
 
-public class Room {
-    private static int MAX_CONNECTIONS = 4;
-    private Room[] connections;
+public abstract class Room {
+    protected static int MAX_CONNECTIONS = 4;
+    protected Room[] connections;
 
-    private String type;
-    private boolean clear;
-    private EnemyManager enemies;
+    protected boolean clear;
 
-    public Room(String type) {
+    protected Room() {
         this.connections = new Room[MAX_CONNECTIONS];
-        this.type = type;
         this.clear = false;
-        this.enemies = new EnemyManager();
-    }
-
-    public Room getConnection(Door direction) {
-        return connections[direction.ordinal()];
-    }
-
-    public boolean[] getConnections() {
-        boolean[] hasConnection = new boolean[connections.length];
-        for(int i = 0; i < connections.length; ++i) {
-            hasConnection[i] = (connections[i] != null);
-        }
-        return hasConnection;
-    }
-
-    public String getType() {
-        return this.type;
     }
 
     public boolean getClear() {
@@ -58,20 +38,11 @@ public class Room {
         return true;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public void setClearTrue() {
         this.clear = true;
     }
 
-    public boolean fullyConnected() {
-        for(Room room : connections) {
-            if(room == null) {
-                return false;
-            }
-        }
-        return true;
-    }
+    public abstract ArrayList<ImageView> getImages();
+
+    public abstract void enter();
 }

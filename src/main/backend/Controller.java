@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import main.backend.characters.*;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.*;
+import main.frontend.GameManager;
 
 public class Controller {
     private static String difficultyLevel = "Easy";
@@ -36,10 +37,7 @@ public class Controller {
     }
 
     public static ArrayList<ImageView> getPlayerImage() {
-        ArrayList<ImageView> images = new ArrayList<>();
-        images.add(Player.getInstance().getImage());
-        images.add(Player.getInstance().getMainWeapon().getImage());
-        return images;
+        return Player.getInstance().getImage();
     }
 
     public static void setPlayerPosition(double x, double y) {
@@ -58,5 +56,9 @@ public class Controller {
     public static void initializeLevel() {
         setPlayerPosition(400, 400);
         RoomManager.createRooms(level);
+    }
+
+    public static void destroyImage(ArrayList<ImageView> images) {
+        GameManager.destroyImage(images);
     }
 }

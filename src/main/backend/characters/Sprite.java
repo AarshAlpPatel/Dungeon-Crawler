@@ -1,5 +1,7 @@
 package main.backend.characters;
 
+import java.util.ArrayList;
+
 import javafx.geometry.Point2D;
 import javafx.scene.image.*;
 import main.backend.exceptions.EdgeOfScreen;
@@ -46,8 +48,11 @@ public abstract class Sprite {
         return this.regeneration;
     }
 
-    public ImageView getImage() {
-        return image;
+    public ArrayList<ImageView> getImage() {
+        ArrayList<ImageView> images = new ArrayList<>();
+        images.add(this.image);
+        images.add(this.mainWeapon.getImage());
+        return images;
     }
 
     public String getName() {
