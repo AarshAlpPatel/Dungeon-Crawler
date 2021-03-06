@@ -8,6 +8,7 @@ import main.backend.characters.*;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.*;
 import main.frontend.GameManager;
+import main.backend.rooms.*;
 
 public class Controller {
     private static String difficultyLevel = "Easy";
@@ -62,7 +63,21 @@ public class Controller {
         GameManager.destroyImage(images);
     }
 
-    public static void changeRoom() {
+    public static void changeRoom(Door direction) {
+        switch(direction) {
+            case NORTH:
+                setPlayerPosition(400, 150);
+                break;
+            case SOUTH:
+                setPlayerPosition(400, 750);
+                break;
+            case EAST:
+                setPlayerPosition(50, 400);
+                break;
+            case WEST:
+                setPlayerPosition(750, 400);
+                break;
+        }
         GameManager.changeRoom();
     }
 }

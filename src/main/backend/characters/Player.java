@@ -1,6 +1,7 @@
 package main.backend.characters;
 
 import main.backend.exceptions.EdgeOfScreen;
+import main.backend.rooms.RoomManager;
 import main.backend.weapons.Weapon;
 
 /**
@@ -72,7 +73,7 @@ public class Player extends Sprite {
         try {
             super.move(dx, dy);
         } catch(EdgeOfScreen e) {
-            //check if door here
+            RoomManager.checkEdge(this.position.getX()+dx, this.position.getY()+dy);
         }
     }
 }

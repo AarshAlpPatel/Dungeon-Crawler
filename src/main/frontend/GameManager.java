@@ -53,8 +53,8 @@ public class GameManager {
     }
 
     public static void initializeLevel() {
-        screen.getChildren().addAll(Controller.getCurrentRoomImages());
         Controller.initializeLevel();
+        screen.getChildren().addAll(Controller.getCurrentRoomImages());
     }
 
     public static void changeRoom() {
