@@ -3,6 +3,7 @@ package main.backend.characters;
 import java.util.ArrayList;
 
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.*;
 import main.backend.exceptions.EdgeOfScreen;
 import main.backend.rooms.RoomManager;
@@ -19,6 +20,7 @@ public abstract class Sprite {
     protected Weapon mainWeapon;
     protected String name;
     protected ImageView image;
+    protected Rectangle2D hitbox;
 
     protected Sprite(double x, double y, double attackMultiplier, double speed, 
                      int health, int regeneration, Weapon weapon, String name, 
@@ -31,6 +33,7 @@ public abstract class Sprite {
         this.mainWeapon = weapon;
         this.name = name;
         setImage(imagePath, maxsize);
+        hitbox = new Rectangle2D(x, y, this.image.getFitWidth(), this.image.getFitHeight());
     }
 
     public Point2D getPosition() {
@@ -47,6 +50,14 @@ public abstract class Sprite {
 
     public int getRegeneration() {
         return this.regeneration;
+    }
+
+    public double getHeight() {
+        return this.image.getFitHeight();
+    }
+
+    public double getWidth() {
+        return this.image.getFitWidth();
     }
 
     public ArrayList<ImageView> getImage() {

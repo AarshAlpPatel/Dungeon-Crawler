@@ -8,6 +8,7 @@ import main.backend.characters.*;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.*;
 import main.frontend.GameManager;
+import main.frontend.MainScreen;
 import main.backend.rooms.*;
 
 public class Controller {
@@ -66,18 +67,66 @@ public class Controller {
     public static void changeRoom(Door direction) {
         switch(direction) {
             case NORTH:
-                setPlayerPosition(400, 150);
-                break;
-            case SOUTH:
-                setPlayerPosition(400, 750);
-                break;
-            case EAST:
-                setPlayerPosition(50, 400);
+                setPlayerPosition(MainScreen.getLength()/2,
+                                  getMaxY()-50);
                 break;
             case WEST:
-                setPlayerPosition(750, 400);
+                setPlayerPosition(getMaxX()-50, 
+                    (MainScreen.getHeight()+MainScreen.getMinY())/2);
+                break;
+            case SOUTH:
+                setPlayerPosition(MainScreen.getLength()/2,
+                                  getMinY()+50);
+                break;
+            case EAST:
+                setPlayerPosition(getMinX()+50,
+                    (MainScreen.getHeight()+MainScreen.getMinY())/2);
                 break;
         }
         GameManager.changeRoom();
+    }
+
+    public static double getMinX() {
+        return MainScreen.getMinX() +
+               MainScreen.getWallWidth() +
+               Player.getInstance().getWidth()/2;
+    }
+
+    public static double getMinY() {
+        return MainScreen.getMinY() + 
+               MainScreen.getWallWidth() + 
+               Player.getInstance().getHeight()/2;
+    }
+
+    public static double getMaxX() {
+        return MainScreen.getLength() -
+               MainScreen.getWallWidth() -
+               Player.getInstance().getWidth()/2;
+    }
+
+    public static double getMaxY() {
+        return MainScreen.getHeight() -
+               MainScreen.getWallWidth() -
+               Player.getInstance().getHeight()/2;
+    }
+
+    public static double getMidY() {
+        return MainScreen.getMidY();
+    }
+
+    public static double getMidX() {
+        return MainScreen.getMidX();
+    }
+
+    public static double getLength() {
+        return MainScreen.getLength();
+    }
+
+    public static double getHeight() {
+        return MainScreen.getHeight();
+    }
+
+    public static boolean[] getConnections() {
+        return RoomManager.getConnections();
     }
 }

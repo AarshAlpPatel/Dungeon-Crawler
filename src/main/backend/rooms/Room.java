@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
 import main.backend.exceptions.EdgeOfScreen;
-import main.frontend.MainScreen;
+import main.backend.Controller;
 
 public abstract class Room {
     protected static int MAX_CONNECTIONS = 4;
@@ -24,22 +24,23 @@ public abstract class Room {
     public Room getNextRoom(Door direction) {
         return connections[direction.ordinal()];
     }
+
     public Door checkEdge(double x, double y) {
-        if (x <= MainScreen.getMinX()+5 
-            && y >= MainScreen.getMidY()-RoomManager.getDoorWidth()/2
-            && y <= MainScreen.getMidY()+RoomManager.getDoorWidth()/2) {
+        if (x <= Controller.getMinX()
+            && y >= Controller.getMidY()-RoomManager.getDoorWidth()/2
+            && y <= Controller.getMidY()+RoomManager.getDoorWidth()/2) {
             return Door.WEST;
-        } else if (x >= MainScreen.getMaxX()-5
-                   && y >= MainScreen.getMidY()-RoomManager.getDoorWidth()/2
-                   && y <= MainScreen.getMidY()+RoomManager.getDoorWidth()/2) {
+        } else if (x >= Controller.getMaxX()
+                   && y >= Controller.getMidY()-RoomManager.getDoorWidth()/2
+                   && y <= Controller.getMidY()+RoomManager.getDoorWidth()/2) {
             return Door.EAST;
-        } else if (y <= MainScreen.getMinY()+5 
-                   && x >= MainScreen.getMidX()-RoomManager.getDoorWidth()/2
-                   && x <= MainScreen.getMidX()+RoomManager.getDoorWidth()/2) {
+        } else if (y <= Controller.getMinY()
+                   && x >= Controller.getMidX()-RoomManager.getDoorWidth()/2
+                   && x <= Controller.getMidX()+RoomManager.getDoorWidth()/2) {
             return Door.NORTH;
-        } else if (y >= MainScreen.getMaxY()-5
-                   && x >= MainScreen.getMidX()-RoomManager.getDoorWidth()/2
-                   && x <= MainScreen.getMidX()+RoomManager.getDoorWidth()/2) {
+        } else if (y >= Controller.getMaxY()
+                   && x >= Controller.getMidX()-RoomManager.getDoorWidth()/2
+                   && x <= Controller.getMidX()+RoomManager.getDoorWidth()/2) {
             return Door.SOUTH;
         } else {
             return null;
@@ -83,11 +84,19 @@ public abstract class Room {
 
     //in anticipation of walls
     public boolean validMove(double x, double y) {
-        if (x < MainScreen.getMinX() || x > MainScreen.getLength()
-            || y < MainScreen.getMinY() || y > MainScreen.getHeight()) {
+        if (x < Controller.getMinX() || x > Controller.getLength()
+            || y < Controller.getMinY() || y > Controller.getHeight()) {
             throw new EdgeOfScreen("Edge of screen");
         }
         return true;
+    }
+
+    public boolean[] getConnections() {
+        boolean[] conns = new boolean[connections.length];
+        for(int i = 0; i < connections.length; ++i) {
+            conns[i] = connections[i] != null;
+        }
+        return conns;
     }
 
     public abstract ArrayList<ImageView> getImages();

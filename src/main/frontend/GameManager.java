@@ -35,12 +35,6 @@ public class GameManager {
         });
     }
 
-    public static void clearScreen() {
-        Node p = screen.getChildren().get(0);
-        screen.getChildren().clear();
-        screen.getChildren().add(p);
-    }
-
     public static void initializeRoom(Pane screen, Scene scene) {
         mousePosition = new Point2D(400, 400);
         GameManager.screen = screen;
@@ -55,11 +49,13 @@ public class GameManager {
     public static void initializeLevel() {
         Controller.initializeLevel();
         screen.getChildren().addAll(Controller.getCurrentRoomImages());
+        Room.drawDoors(Controller.getConnections());
     }
 
     public static void changeRoom() {
-        clearScreen();
+        Room.reset();
         screen.getChildren().addAll(Controller.getCurrentRoomImages());
+        Room.drawDoors(Controller.getConnections());
     }
 
     public static void gameLoop() {

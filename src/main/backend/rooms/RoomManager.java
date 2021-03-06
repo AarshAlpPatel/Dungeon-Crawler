@@ -100,10 +100,14 @@ public class RoomManager {
     public static void checkEdge(double x, double y) {
         Door direction = current.checkEdge(x, y);
         if (direction != null && current.getClear()) {
-            System.out.println("CHANGE ROOM");
             Room next = current.getNextRoom(direction);
             current = next;
             Controller.changeRoom(direction);
+            current.enter();
         }
+    }
+
+    public static boolean[] getConnections() {
+        return current.getConnections();
     }
 }

@@ -10,11 +10,12 @@ import javafx.scene.*;
  */
 public class MainScreen extends Application {
     private static Stage stage;
-    private static double LENGTH = 800;
-    private static double HEIGHT = 800;
-    private static double MIN_X = 20;
-    private static double MIN_Y = 100;
-    private static double WALL_WIDTH = 10;
+    private static final double LENGTH = 800;
+    private static final double HEIGHT = 800;
+    private static final double MIN_X = 0;
+    private static final double MIN_Y = 50;
+    private static final double WALL_WIDTH = 10;
+    private static final double DOOR_WIDTH = 100;
     
     public static void main(String[] args) {
         launch(args);
@@ -36,20 +37,12 @@ public class MainScreen extends Application {
         return HEIGHT;
     }
 
-    public static double getMaxX() {
-        return LENGTH - WALL_WIDTH;
-    }
-
-    public static double getMaxY() {
-        return HEIGHT - WALL_WIDTH;
-    }
-
     public static double getMinX() {
-        return MIN_X + WALL_WIDTH;
+        return MIN_X;
     }
 
     public static double getMinY() {
-        return MIN_Y + WALL_WIDTH;
+        return MIN_Y;
     }
 
     public static double getMidX() {
@@ -58,6 +51,10 @@ public class MainScreen extends Application {
 
     public static double getMidY() {
         return (HEIGHT-MIN_Y)/2 + MIN_Y;
+    }
+
+    public static double getDoorWidth() {
+        return DOOR_WIDTH;
     }
 
     //protected static Button toGame;
