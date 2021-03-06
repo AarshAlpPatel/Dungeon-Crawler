@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.*;
+import main.backend.Controller;
 import main.backend.exceptions.EdgeOfScreen;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.Weapon;
 import main.frontend.EndGame;
-import main.frontend.MainScreen;
 
 public abstract class Sprite {
     protected Point2D position;
@@ -53,11 +53,11 @@ public abstract class Sprite {
     }
 
     public double getHeight() {
-        return this.image.getFitHeight();
+        return this.image.boundsInParentProperty().get().getHeight();
     }
 
     public double getWidth() {
-        return this.image.getFitWidth();
+        return this.image.boundsInParentProperty().get().getWidth();
     }
 
     public ArrayList<ImageView> getImage() {
@@ -77,8 +77,8 @@ public abstract class Sprite {
 
     public void setPosition(Point2D position) {
         this.position = position;
-        this.image.setTranslateX(this.position.getX() - (double) MainScreen.getLength() / 2);
-        this.image.setTranslateY(this.position.getY() - (double) MainScreen.getHeight() / 2);
+        this.image.setTranslateX(this.position.getX() - (double) Controller.getLength() / 2);
+        this.image.setTranslateY(this.position.getY() - (double) Controller.getHeight() / 2);
         mainWeapon.setPosition(position);
     } 
 
@@ -87,8 +87,8 @@ public abstract class Sprite {
         this.image.setPreserveRatio(true);
         this.image.setFitHeight(maxsize);
         this.image.setFitWidth(maxsize);
-        this.image.setTranslateX(this.position.getX() - (double) MainScreen.getLength() / 2);
-        this.image.setTranslateY(this.position.getY() - (double) MainScreen.getHeight() / 2);
+        this.image.setTranslateX(this.position.getX() - (double) Controller.getLength() / 2);
+        this.image.setTranslateY(this.position.getY() - (double) Controller.getHeight() / 2);
     }
 
     public void setName(String name) {
@@ -116,8 +116,8 @@ public abstract class Sprite {
         }
 
         this.position = this.position.add(dx, dy);
-        this.image.setTranslateX(this.position.getX() - (double) MainScreen.getLength() / 2);
-        this.image.setTranslateY(this.position.getY() - (double) MainScreen.getHeight() / 2);
+        this.image.setTranslateX(this.position.getX() - (double) Controller.getLength() / 2);
+        this.image.setTranslateY(this.position.getY() - (double) Controller.getHeight() / 2);
         mainWeapon.move(dx, dy);
     }
 

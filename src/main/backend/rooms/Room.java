@@ -84,8 +84,8 @@ public abstract class Room {
 
     //in anticipation of walls
     public boolean validMove(double x, double y) {
-        if (x < Controller.getMinX() || x > Controller.getLength()
-            || y < Controller.getMinY() || y > Controller.getHeight()) {
+        if (x < Controller.getMinX() || x > Controller.getMaxX()
+            || y < Controller.getMinY() || y > Controller.getMaxY()) {
             throw new EdgeOfScreen("Edge of screen");
         }
         return true;
