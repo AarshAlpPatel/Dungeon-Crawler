@@ -53,6 +53,7 @@ public class Room {
         for(int i = 0; i < connections.length; ++i) {
             if (connections[i]) {
                 screen.getChildren().add(doors[i]);
+                doors[i].setId("door" + i);
             }
         }
     }
