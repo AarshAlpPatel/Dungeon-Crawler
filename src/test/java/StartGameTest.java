@@ -2,13 +2,17 @@ package test.java;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
+import main.backend.characters.Player;
 import main.frontend.*;
 
 import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import org.testfx.api.FxRobot;
@@ -215,13 +219,15 @@ public class StartGameTest extends ApplicationTest {
         verifyThat("Enter Name", NodeMatchers.isVisible());
     }
 
+
+
     //@Test
     //public void testExits() {
     //clickOn("#toGame");
     //clickOn("#nameField");
     //type(KeyCode.N);
     //clickOn("Start Game");
-    //int i = 0;
+    //int i = 0;dw
     //while (Player.getPlayerObj().getPosition().getX() < MainScreen.getLength()) {
     //press(KeyCode.D);
     // i++;
@@ -231,5 +237,9 @@ public class StartGameTest extends ApplicationTest {
 
     //correct weapon displayed test
     //correct sprite displayed test
+    //verify 6 room path
+    //verify door takes you to new room
+    //verify able to go back to old room
+    //
 
 }

@@ -51,7 +51,7 @@ public class RoomManager {
     }
 
     public static void createRooms(int level) {
-        ArrayList<String> types = new ArrayList<>(MAX_ROOMS-2); //not including start room and boss room
+        ArrayList<String> types = new ArrayList<>(MAX_ROOMS - 2); //not including start room and boss room
         current = createRoom("empty");
         current.enter();
         types.add("shop");
@@ -60,7 +60,7 @@ public class RoomManager {
         types.add("weapon");
         types.add("empty");
         types.add("empty");
-        for(int i = 6; i < MAX_ROOMS-2; ++i) {
+        for(int i = 6; i < MAX_ROOMS - 2; ++i) {
             types.add(returnRandomType(level));
         }
         Collections.shuffle(types);

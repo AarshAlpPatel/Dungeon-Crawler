@@ -72,8 +72,8 @@ public class Player extends Sprite {
         }
         try {
             super.move(dx, dy);
-        } catch(EdgeOfScreen e) {
-            RoomManager.checkEdge(this.position.getX()+dx, this.position.getY()+dy);
+        } catch (EdgeOfScreen e) {
+            RoomManager.checkEdge(this.position.getX() + dx, this.position.getY() + dy);
         }
     }
 }
