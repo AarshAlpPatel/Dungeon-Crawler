@@ -36,6 +36,8 @@ public class RoomManager {
             return new WeaponRoom();
         } else if (type.equals("boss")) {
             return new BossRoom(); 
+        } else if (type.equals("end")) {
+            return new EndRoom();
         } else {
             return new EnemyRoom(type);
         }
@@ -69,18 +71,20 @@ public class RoomManager {
             Room newRoom = createRoom(types.get(i));
             tmp = setConnection(tmp, newRoom);
         }
-        Room newRoom = createRoom("boss");
-        setConnection(tmp, newRoom);
+        Room bossRoom = createRoom("boss");
+        setConnection(tmp, bossRoom);
+        Room endRoom = createRoom("end");
+        setConnection(bossRoom, endRoom);
 
         for(int i = 6; i < 9; ++i) {
-            newRoom = createRoom(types.get(i));
+            Room newRoom = createRoom(types.get(i));
             setConnection(current, newRoom);
         }
 
         for(int i = 9; i < types.size(); ++i) {
             boolean added = false;
             while(!added) {
-                newRoom = createRoom(types.get(i));
+                Room newRoom = createRoom(types.get(i));
                 int randomRoom = (int)(Math.random() * rooms.size());
                 if(setConnection(rooms.get(randomRoom), newRoom) != null) {
                     break;
@@ -104,6 +108,7 @@ public class RoomManager {
             current = next;
             Controller.changeRoom(direction);
             current.enter();
+            System.out.println(current.getClass());
         }
     }
 

@@ -65,6 +65,11 @@ public class GameManager {
         timer.stop();
     }
 
+    public static void endGame() {
+        stopGameLoop();
+        MainScreen.setScene(EndGame.getScene());
+    }
+
     public static void gameLoop() {
         initializeLevel();
         if (timer == null) {

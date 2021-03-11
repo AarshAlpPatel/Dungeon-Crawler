@@ -39,7 +39,9 @@ public class Controller {
     }
 
     public static ArrayList<ImageView> getCurrentRoomImages() {
-        return RoomManager.getCurrentRoomImages();
+        ArrayList<ImageView> images = RoomManager.getCurrentRoomImages();
+        images.addAll(Player.getInstance().getImage());
+        return images;
     }
 
     public static void setPlayerPosition(double x, double y) {
@@ -128,5 +130,9 @@ public class Controller {
 
     public static boolean[] getConnections() {
         return RoomManager.getConnections();
+    }
+
+    public static void endGame() {
+        GameManager.endGame();
     }
 }
