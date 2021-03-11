@@ -28,19 +28,23 @@ public abstract class Room {
     public Door checkEdge(double x, double y) {
         if (x <= Controller.getMinX()
             && y >= Controller.getMidY()-RoomManager.getDoorWidth()/2
-            && y <= Controller.getMidY()+RoomManager.getDoorWidth()/2) {
+            && y <= Controller.getMidY()+RoomManager.getDoorWidth()/2
+            && connections[Door.WEST.ordinal()] != null) {
             return Door.WEST;
         } else if (x >= Controller.getMaxX()
                    && y >= Controller.getMidY()-RoomManager.getDoorWidth()/2
-                   && y <= Controller.getMidY()+RoomManager.getDoorWidth()/2) {
+                   && y <= Controller.getMidY()+RoomManager.getDoorWidth()/2
+                   && connections[Door.EAST.ordinal()] != null) {
             return Door.EAST;
         } else if (y <= Controller.getMinY()
                    && x >= Controller.getMidX()-RoomManager.getDoorWidth()/2
-                   && x <= Controller.getMidX()+RoomManager.getDoorWidth()/2) {
+                   && x <= Controller.getMidX()+RoomManager.getDoorWidth()/2
+                   && connections[Door.NORTH.ordinal()] != null) {
             return Door.NORTH;
         } else if (y >= Controller.getMaxY()
                    && x >= Controller.getMidX()-RoomManager.getDoorWidth()/2
-                   && x <= Controller.getMidX()+RoomManager.getDoorWidth()/2) {
+                   && x <= Controller.getMidX()+RoomManager.getDoorWidth()/2
+                   && connections[Door.SOUTH.ordinal()] != null) {
             return Door.SOUTH;
         } else {
             return null;

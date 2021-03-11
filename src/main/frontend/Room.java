@@ -113,7 +113,10 @@ public class Room {
         back.getChildren().add(new Rectangle(33, 34));
         ImageView backImage = new ImageView("/main/design/images/power.png");
         back.setId("roomToSetup");
-        back.setOnMouseClicked(event -> MainScreen.setScene(SetUpPlayerScreen.getScene()));
+        back.setOnMouseClicked(event -> {
+            MainScreen.setScene(SetUpPlayerScreen.getScene());
+            GameManager.stopGameLoop();
+        });
         back.setOnMouseEntered(e -> roomScene.setCursor(Cursor.CLOSED_HAND));
         back.setOnMouseExited(e -> roomScene.setCursor(Cursor.DEFAULT));
         back.getChildren().add(backImage);

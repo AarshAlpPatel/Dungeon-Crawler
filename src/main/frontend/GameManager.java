@@ -58,14 +58,23 @@ public class GameManager {
         Room.drawDoors(Controller.getConnections());
     }
 
+    public static void stopGameLoop() {
+        if (timer == null) {
+            return;
+        }
+        timer.stop();
+    }
+
     public static void gameLoop() {
         initializeLevel();
-        timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                Controller.run(mousePosition);
-            }
-        };
+        if (timer == null) {
+            timer = new AnimationTimer() {
+                @Override
+                public void handle(long l) {
+                    Controller.run(mousePosition);
+                }
+            };
+        }
         timer.start();
     }
 }
