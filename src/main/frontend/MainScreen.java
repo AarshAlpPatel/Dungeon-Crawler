@@ -23,6 +23,8 @@ public class MainScreen extends Application {
 
     public static void setScene(Scene s) {
         stage.setScene(s);
+        Image defaultCursor = new Image("/main/design/images/cursors/default_cursor.png");
+        s.setCursor(new ImageCursor(defaultCursor));
     }
 
     public static double getWallWidth() {

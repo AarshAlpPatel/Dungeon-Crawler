@@ -2,6 +2,7 @@ package main.frontend;
 
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
@@ -34,7 +35,7 @@ public class SetUpPlayerScreen {
         ImageView direction = new ImageView(arrow);
         direction.setId(id);
         direction.setOnMouseEntered(e -> {
-            playerSetUp.setCursor(Cursor.HAND);
+            playerSetUp.setCursor(new ImageCursor(new Image("/main/design/images/cursors/custom_click.png")));
             direction.setFitWidth(arrow.getWidth() * 1.5);
             direction.setFitHeight(arrow.getHeight() * 1.5);
         });
@@ -105,8 +106,10 @@ public class SetUpPlayerScreen {
         Image imageChar = new Image(imagePath, 16, 24, false, false);
         ImageView direction = new ImageView(imageChar);
         direction.setId(id);
-        direction.setOnMouseEntered(e -> playerSetUp.setCursor(Cursor.CLOSED_HAND));
-        direction.setOnMouseExited(e -> playerSetUp.setCursor(Cursor.DEFAULT));
+        direction.setOnMouseEntered(e ->
+                playerSetUp.setCursor(new ImageCursor(new Image("/main/design/images/cursors/default_cursor.png"))));
+        direction.setOnMouseExited(e ->
+                playerSetUp.setCursor(new ImageCursor(new Image("/main/design/images/cursors/custom_click.png"))));
         direction.setOnMouseClicked(e -> {
             indexC += add;
             character.getChildren().remove(0);

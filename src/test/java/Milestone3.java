@@ -42,6 +42,17 @@ public class Milestone3 extends ApplicationTest {
     }
 
     @Test
+    public void checkForFourExits() {
+        clickOn("#toGame");
+        clickOn("#nameField");
+        type(KeyCode.N);
+        clickOn("Start Game");
+        for (int i = 0; i < 4; i++) {
+            verifyThat("#door" + i, NodeMatchers.isVisible());
+        }
+    }
+
+    @Test
     public void testEastRoom() {
         clickOn("#toGame");
         clickOn("#nameField");
@@ -102,17 +113,6 @@ public class Milestone3 extends ApplicationTest {
     }
 
     @Test
-    public void checkForFourExits() {
-        clickOn("#toGame");
-        clickOn("#nameField");
-        type(KeyCode.N);
-        clickOn("Start Game");
-        for (int i = 0; i < 4; i++) {
-            verifyThat("#door" + i, NodeMatchers.isVisible());
-        }
-    }
-
-    @Test
     public void testStopAtWall() {
         clickOn("#toGame");
         clickOn("#nameField");
@@ -139,16 +139,12 @@ public class Milestone3 extends ApplicationTest {
         clickOn("#nameField");
         type(KeyCode.N);
         clickOn("Start Game");
-        int index = 0;
         while (Player.getInstance().getPosition().getX() > Controller.getMidX() - 1) {
             press(KeyCode.D);
-            index++;
         }
         release(KeyCode.D);
-        index = 0;
         while (Player.getInstance().getPosition().getX() < Controller.getMidX()) {
             press(KeyCode.A);
-            index++;
         }
         release(KeyCode.A);
         for (int i = 0; i < 4; i++) {

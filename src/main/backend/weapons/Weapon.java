@@ -24,6 +24,9 @@ public abstract class Weapon {
     //id is the key stored in the dictionary with the weapon being its value
     protected int id;
 
+    //raw image of the image, original size
+    protected Image imageRaw;
+
     //image of weapon
     protected ImageView image;
 
@@ -38,7 +41,8 @@ public abstract class Weapon {
         this.range = range;
         this.aoe = aoe;
         this.id = id;
-        this.image = new ImageView(new Image(imagePath));
+        this.imageRaw = new Image(imagePath);
+        this.image = new ImageView(this.imageRaw);
         this.image.setScaleX(scale);
         this.image.setScaleY(scale);
         this.dropped = dropped;
@@ -50,6 +54,10 @@ public abstract class Weapon {
 
     public ImageView getImage() {
         return this.image;
+    }
+
+    public Image getImageRaw() {
+        return this.imageRaw;
     }
 
     public double getRange() {

@@ -20,7 +20,11 @@ public class GameManager {
     private static void setKeybinds() {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
-                Controller.setDirection(event.getCode().toString(), true);
+                if (event.getCode() == KeyCode.H) {
+                    MainScreen.setScene(InventoryScreen.getScene());
+                } else {
+                    Controller.setDirection(event.getCode().toString(), true);
+                }
             }
         });
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {

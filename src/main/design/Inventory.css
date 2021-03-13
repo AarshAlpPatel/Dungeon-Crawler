@@ -1,0 +1,35 @@
+.inventoryBack {
+    -fx-background-color: #2a6666;
+    -fx-opacity: 0.5;
+}
+
+.screen {
+    -fx-background-image: url("/main/design/images/dungeon.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.center {
+    -fx-alignment: center;
+}
+
+.exit_button {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Bernard MT Condensed";
+    -fx-min-width: 175px;
+    -fx-background-color: red;
+}
+
+.rectangle_slot {
+    -fx-arc-height: 10px;
+    -fx-arc-width: 10px;
+    /*-fx-effect: innershadow(gaussian, black, 0, 0, 0, 1);*/
+}
+
+.cash_num {
+    -fx-text-fill: white;
+    -fx-font-size: 17px;
+    -fx-font-family: "Bernard MT Condensed";
+    -fx-font-weight: bold;
+}
