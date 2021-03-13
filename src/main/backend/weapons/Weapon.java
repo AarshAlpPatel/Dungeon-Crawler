@@ -2,6 +2,8 @@ package main.backend.weapons;
 
 import javafx.geometry.Point2D;
 import main.backend.collidables.Collidable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import main.frontend.MainScreen;
 
 public abstract class Weapon extends Collidable {
@@ -43,17 +45,11 @@ public abstract class Weapon extends Collidable {
         this.id = id;
         this.imageRaw = new Image(imagePath);
         this.image = new ImageView(this.imageRaw);
-        this.image.setScaleX(scale);
-        this.image.setScaleY(scale);
         this.dropped = dropped;
     }
 
     public Point2D getPosition() {
         return this.position;
-    }
-
-    public ImageView getImage() {
-        return this.image;
     }
 
     public Image getImageRaw() {
