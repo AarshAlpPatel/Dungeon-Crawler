@@ -3,7 +3,9 @@ package main.backend.rooms;
 import java.util.*;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
+import main.backend.characters.Sprite;
 
 public class RoomManager {
     private static int MAX_ROOMS = 16;
@@ -36,6 +38,8 @@ public class RoomManager {
             return new WeaponRoom();
         } else if (type.equals("boss")) {
             return new BossRoom(); 
+        } else if (type.equals("end")) {
+            return new EndRoom();
         } else {
             return new EnemyRoom(type);
         }
@@ -51,9 +55,10 @@ public class RoomManager {
     }
 
     public static void createRooms(int level) {
-        ArrayList<String> types = new ArrayList<>(MAX_ROOMS - 2); //not including start room and boss room
+        ArrayList<String> types = new ArrayList<>(MAX_ROOMS);
         current = createRoom("empty");
         current.enter();
+        rooms.add(current);
         types.add("shop");
         types.add("potion");
         types.add("weapon");
@@ -69,32 +74,44 @@ public class RoomManager {
             Room newRoom = createRoom(types.get(i));
             tmp = setConnection(tmp, newRoom);
         }
-        Room newRoom = createRoom("boss");
-        setConnection(tmp, newRoom);
+        Room lastRoom = tmp;
 
         for(int i = 6; i < 9; ++i) {
-            newRoom = createRoom(types.get(i));
+            Room newRoom = createRoom(types.get(i));
             setConnection(current, newRoom);
         }
 
         for(int i = 9; i < types.size(); ++i) {
             boolean added = false;
             while(!added) {
-                newRoom = createRoom(types.get(i));
+                Room newRoom = createRoom(types.get(i));
                 int randomRoom = (int)(Math.random() * rooms.size());
                 if(setConnection(rooms.get(randomRoom), newRoom) != null) {
                     break;
                 }
             }
         }
+
+        Room bossRoom = createRoom("boss");
+        setConnection(lastRoom, bossRoom);
+        Room endRoom = createRoom("end");
+        setConnection(bossRoom, endRoom);
+        
+        for(Room r : rooms) {
+            r.setWalls();
+        }
     }
 
-    public static boolean validMove(double x, double y) {
-        return current.validMove(x, y);
+    public static boolean validMove(double x, double y, Sprite s) {
+        return current.validMove(x, y, s);
     }
 
     public static ArrayList<ImageView> getCurrentRoomImages() {
         return current.getImages();
+    }
+
+    public static ArrayList<Rectangle> getCurrentRoomWalls() {
+        return current.getWalls();
     }
 
     public static void checkEdge(double x, double y) {
@@ -104,6 +121,7 @@ public class RoomManager {
             current = next;
             Controller.changeRoom(direction);
             current.enter();
+            System.out.println(current.getClass());
         }
     }
 

@@ -6,15 +6,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import main.backend.characters.Player;
 
 public class EndGame {
     public static Scene getScene() {
         BorderPane screen = new BorderPane();
         Scene endGame = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());
-
-        Player.getInstance().setDirection("A", true);
-        Player.getInstance().move();
 
         VBox wonBox = new VBox(10);
         wonBox.setId("wonBox");

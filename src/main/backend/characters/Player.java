@@ -1,6 +1,7 @@
 package main.backend.characters;
 
 import main.backend.exceptions.EdgeOfScreen;
+import main.backend.exceptions.WallCollision;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.Weapon;
 
@@ -17,7 +18,7 @@ public class Player extends Sprite {
     private Integer cash;
 
     private Player() {
-        this(400, 400, 1, 1.0, 100, 5, null, null, "/main/design/images/char1.gif");
+        this(400, 400, 1, 4.0, 100, 5, null, null, "/main/design/images/char1.gif");
     }
 
     private Player(double x, double y, double attackMultiplier, double speed,
@@ -41,6 +42,22 @@ public class Player extends Sprite {
         return backupWeapon;
     }
 
+    public void setMoveNorth(boolean b) {
+        moveNorth = b;
+    }
+
+    public void setMoveWest(boolean b) {
+        moveWest = b;
+    }
+
+    public void setMoveSouth(boolean b) {
+        moveSouth = b;
+    }
+
+    public void setMoveEast(boolean b) {
+        moveEast = b;
+    }
+
     public void switchWeapons() {
         if (this.backupWeapon != null) {
             Weapon tmp = this.mainWeapon;
@@ -54,18 +71,6 @@ public class Player extends Sprite {
             playerObj = new Player();
         }
         return playerObj;
-    }
-
-    public void setDirection(String key, boolean b) {
-        if (key.equals("W")) {
-            moveNorth = b;
-        } else if (key.equals("A")) {
-            moveWest = b;
-        } else if (key.equals("S")) {
-            moveSouth = b;
-        } else if (key.equals("D")) {
-            moveEast = b;
-        }
     }
 
     public void move() {
@@ -86,7 +91,10 @@ public class Player extends Sprite {
         try {
             super.move(dx, dy);
         } catch (EdgeOfScreen e) {
+            System.out.println(e);
             RoomManager.checkEdge(this.position.getX() + dx, this.position.getY() + dy);
+        } catch (WallCollision e) {
+            System.out.println(e);
         }
     }
 }

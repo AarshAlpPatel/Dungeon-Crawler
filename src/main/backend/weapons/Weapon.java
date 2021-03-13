@@ -1,11 +1,10 @@
 package main.backend.weapons;
 
 import javafx.geometry.Point2D;
-import javafx.scene.image.*;
-import main.backend.characters.Sprite;
+import main.backend.collidables.Collidable;
 import main.frontend.MainScreen;
 
-public abstract class Weapon {
+public abstract class Weapon extends Collidable {
     //x for the x-axis position
     //y for the y-axis position
     //r for the angle (in degrees) between it and the positive x-axis
@@ -34,7 +33,8 @@ public abstract class Weapon {
     protected boolean dropped;
 
     protected Weapon(double x, double y, double r, int damage, double range, 
-                     double aoe, int id, String imagePath, boolean dropped, double scale) {
+                     double aoe, int id, String imagePath, boolean dropped, int maxsize) {
+        super(x, y, maxsize, imagePath);
         this.position = new Point2D(x, y);
         this.r = r;
         this.damage = damage;
@@ -68,16 +68,9 @@ public abstract class Weapon {
         return this.damage;
     }
 
-    public void setPosition(Point2D position) {
+    public void move(Point2D position) {
         this.position = position;
-        this.image.setTranslateX(this.position.getX() - MainScreen.getLength() / 2);
-        this.image.setTranslateY(this.position.getY() - MainScreen.getHeight() / 2);
-    }
-
-    public void move(double dx, double dy) {
-        this.position = this.position.add(dx, dy);
-        this.image.setTranslateX(this.position.getX() - MainScreen.getLength() / 2);
-        this.image.setTranslateY(this.position.getY() - MainScreen.getHeight() / 2);
+        super.setPosition(position);
     }
 
     public void follow(Point2D target) {
@@ -87,7 +80,7 @@ public abstract class Weapon {
         } else {
             r = -angle;
         }
-        this.image.setRotate(this.r);
+        super.setRotate(this.r);
     }
 
     public void destroy() {

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
 import main.backend.characters.EnemyManager;
-import main.backend.characters.Player;
 
 public class EnemyRoom extends Room {
     private EnemyManager enemies;
@@ -26,7 +25,6 @@ public class EnemyRoom extends Room {
     @Override
     public ArrayList<ImageView> getImages() {
         ArrayList<ImageView> images = new ArrayList<>();
-        images.addAll(Player.getInstance().getImage());
         //images.addAll(enemies.getImages());
         return images;
     }

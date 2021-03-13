@@ -1,10 +1,10 @@
 package main.backend.rooms;
 
 import java.util.ArrayList;
-
 import javafx.scene.image.ImageView;
+import main.backend.Controller;
 
-public class WeaponRoom extends Room {
+public class EndRoom extends Room {
     @Override
     public ArrayList<ImageView> getImages() {
         return new ArrayList<>();
@@ -13,5 +13,6 @@ public class WeaponRoom extends Room {
     @Override
     public void enter() {
         setClearTrue();
+        Controller.endGame();
     }
 }
