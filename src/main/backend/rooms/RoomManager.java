@@ -8,8 +8,8 @@ import main.backend.Controller;
 import main.backend.characters.Sprite;
 
 public class RoomManager {
-    private static int MAX_ROOMS = 16;
-    private static double DOOR_WIDTH = 100;
+    private static final int MAX_ROOMS = 16;
+    private static final double DOOR_WIDTH = 100;
     private static Room current;
     private static ArrayList<Room> rooms = new ArrayList<>();
 
@@ -18,9 +18,9 @@ public class RoomManager {
     }
 
     private static String returnRandomType(int level) {
-        if(Math.random() < 0.8/level) {
+        if (Math.random() < 0.8 / level) {
             return "easy";
-        } else if(Math.random() < 1-(level/10)) {
+        } else if (Math.random() < 1 - (level / 10)) {
             return "medium";
         } else {
             return "hard";
@@ -46,7 +46,7 @@ public class RoomManager {
     }
 
     private static Room setConnection(Room from, Room newRoom) {
-        if(!from.setRandomConnection(newRoom)) {
+        if (!from.setRandomConnection(newRoom)) {
             return null;
         } else {
             rooms.add(newRoom);
@@ -65,28 +65,28 @@ public class RoomManager {
         types.add("weapon");
         types.add("empty");
         types.add("empty");
-        for(int i = 6; i < MAX_ROOMS - 2; ++i) {
+        for (int i = 6; i < MAX_ROOMS - 2; ++i) {
             types.add(returnRandomType(level));
         }
         Collections.shuffle(types);
         Room tmp = current;
-        for(int i = 0; i < 6; ++i) {
+        for (int i = 0; i < 6; ++i) {
             Room newRoom = createRoom(types.get(i));
             tmp = setConnection(tmp, newRoom);
         }
         Room lastRoom = tmp;
 
-        for(int i = 6; i < 9; ++i) {
+        for (int i = 6; i < 9; ++i) {
             Room newRoom = createRoom(types.get(i));
             setConnection(current, newRoom);
         }
 
-        for(int i = 9; i < types.size(); ++i) {
+        for (int i = 9; i < types.size(); ++i) {
             boolean added = false;
-            while(!added) {
+            while (!added) {
                 Room newRoom = createRoom(types.get(i));
-                int randomRoom = (int)(Math.random() * rooms.size());
-                if(setConnection(rooms.get(randomRoom), newRoom) != null) {
+                int randomRoom = (int) (Math.random() * rooms.size());
+                if (setConnection(rooms.get(randomRoom), newRoom) != null) {
                     break;
                 }
             }
@@ -97,7 +97,7 @@ public class RoomManager {
         Room endRoom = createRoom("end");
         setConnection(bossRoom, endRoom);
         
-        for(Room r : rooms) {
+        for (Room r : rooms) {
             r.setWalls();
         }
     }

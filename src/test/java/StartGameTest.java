@@ -2,9 +2,7 @@ package test.java;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
-import main.backend.characters.Player;
 import main.frontend.*;
 
 import javafx.stage.Stage;
@@ -12,7 +10,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import org.testfx.api.FxRobot;

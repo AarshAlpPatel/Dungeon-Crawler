@@ -99,7 +99,7 @@ public abstract class Sprite extends Collidable {
         double x = this.position.getX() + dx;
         double y = this.position.getY() + dy;
         super.setPosition(new Point2D(x, y));
-        if(!RoomManager.validMove(x, y, this)) {
+        if (!RoomManager.validMove(x, y, this)) {
             System.out.println("INVALID MOVE");
             super.setPosition(this.position);
             return;

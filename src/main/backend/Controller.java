@@ -49,7 +49,7 @@ public class Controller {
      * @param y the player's y-position
      * @param name the player's name
      * @param weaponName the player's weapon
-     * @param imagePath 
+     * @param imagePath path to image file
      * @return the Player object
      */
     public static Player createPlayer(double x, double y, String name, String weaponName,
@@ -80,8 +80,8 @@ public class Controller {
 
     /**
      * Sets the player's (x, y) position.
-     * @param x 
-     * @param y
+     * @param x horizontal position
+     * @param y vertical position
      */
     public static void setPlayerPosition(double x, double y) {
         Player.getInstance().setPosition(new Point2D(x, y));
@@ -114,23 +114,25 @@ public class Controller {
     }
 
     public static void changeRoom(Door direction) {
-        switch(direction) {
-            case NORTH:
-                setPlayerPosition(MainScreen.getLength()/2,
-                                  getMaxPlayerY()-50);
-                break;
-            case WEST:
-                setPlayerPosition(getMaxPlayerX()-50, 
-                    (MainScreen.getHeight()+MainScreen.getMinY())/2);
-                break;
-            case SOUTH:
-                setPlayerPosition(MainScreen.getLength()/2,
-                                  getMinPlayerY()+50);
-                break;
-            case EAST:
-                setPlayerPosition(getMinPlayerX()+50,
-                    (MainScreen.getHeight()+MainScreen.getMinY())/2);
-                break;
+        switch (direction) {
+        case NORTH:
+            setPlayerPosition(MainScreen.getLength() / 2,
+                    getMaxPlayerY() - 50);
+            break;
+        case WEST:
+            setPlayerPosition(getMaxPlayerX() - 50,
+                    (MainScreen.getHeight() + MainScreen.getMinY()) / 2);
+            break;
+        case SOUTH:
+            setPlayerPosition(MainScreen.getLength() / 2,
+                    getMinPlayerY() + 50);
+            break;
+        case EAST:
+            setPlayerPosition(getMinPlayerX() + 50,
+                    (MainScreen.getHeight() + MainScreen.getMinY()) / 2);
+            break;
+        default:
+            break;
         }
         GameManager.changeRoom();
     }
@@ -144,27 +146,27 @@ public class Controller {
     }
 
     public static double getMinPlayerX() {
-        return MainScreen.getMinX() +
-               MainScreen.getWallWidth() +
-               Player.getInstance().getWidth()/2;
+        return MainScreen.getMinX()
+                + MainScreen.getWallWidth()
+                + Player.getInstance().getWidth() / 2;
     }
 
     public static double getMinPlayerY() {
-        return MainScreen.getMinY() + 
-               MainScreen.getWallWidth() + 
-               Player.getInstance().getHeight()/2;
+        return MainScreen.getMinY()
+                + MainScreen.getWallWidth()
+                + Player.getInstance().getHeight() / 2;
     }
 
     public static double getMaxPlayerX() {
-        return MainScreen.getLength() -
-               MainScreen.getWallWidth() -
-               Player.getInstance().getWidth()/2;
+        return MainScreen.getLength()
+                - MainScreen.getWallWidth()
+                - Player.getInstance().getWidth() / 2;
     }
 
     public static double getMaxPlayerY() {
-        return MainScreen.getHeight() -
-               MainScreen.getWallWidth() -
-               Player.getInstance().getHeight()/2;
+        return MainScreen.getHeight()
+                - MainScreen.getWallWidth()
+                - Player.getInstance().getHeight() / 2;
     }
 
     public static double getMidY() {

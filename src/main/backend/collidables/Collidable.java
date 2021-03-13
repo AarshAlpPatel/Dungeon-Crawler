@@ -14,13 +14,13 @@ public abstract class Collidable extends Displayable {
 
     /**
      * used exclusively to create walls
-     * @param x
-     * @param y
-     * @param length
-     * @param height
-     * @param imagePath
-     * @param translateX
-     * @param translateY
+     * @param x initial x position of image
+     * @param y initial y position of image
+     * @param length length of image
+     * @param height height of image
+     * @param imagePath file path to image
+     * @param translateX how much to move horizontally
+     * @param translateY how much to move vertically
      */
     protected Collidable(double x, double y, double length, double height,
                          String imagePath, double translateX, double translateY) {
@@ -35,9 +35,9 @@ public abstract class Collidable extends Displayable {
         super(x, y, maxsize, imagePath);
         double imageWidth = image.getBoundsInParent().getWidth();
         double imageHeight = image.getBoundsInParent().getHeight();
-        offsetX = imageWidth/2;
-        offsetY = imageHeight/2;
-        box = new Rectangle(x - offsetX, y-offsetY, imageWidth, imageHeight);
+        offsetX = imageWidth / 2;
+        offsetY = imageHeight / 2;
+        box = new Rectangle(x - offsetX, y - offsetY, imageWidth, imageHeight);
         box.setTranslateX(x - Controller.getLength() / 2);
         box.setTranslateY(y - Controller.getHeight() / 2);
         this.box.setFill(Color.GREEN);

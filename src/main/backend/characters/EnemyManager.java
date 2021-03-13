@@ -38,8 +38,8 @@ public class EnemyManager {
     }
 
     public ArrayList<ImageView> getImages() {
-        ArrayList<ImageView> images = new ArrayList<>(enemyCounter*2);
-        for(Enemy enemy : enemies) {
+        ArrayList<ImageView> images = new ArrayList<>(enemyCounter * 2);
+        for (Enemy enemy : enemies) {
             if (enemy != null) {
                 images.addAll(enemy.getImage());
             }

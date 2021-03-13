@@ -2,7 +2,6 @@ package main.backend.weapons;
 
 import javafx.geometry.Point2D;
 import main.backend.collidables.Collidable;
-import main.frontend.MainScreen;
 
 public abstract class Weapon extends Collidable {
     //x for the x-axis position
