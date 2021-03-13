@@ -51,7 +51,7 @@ public class StartGameTest extends ApplicationTest {
         clickOn("#toGame");
         verifyThat("Enter Name", NodeMatchers.isVisible());
         verifyThat("Difficulty", NodeMatchers.isVisible());
-        verifyThat(new ImageView("/main/design/images/dagger.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("/main/design/images/dagger-angle.png"), NodeMatchers.isVisible());
         verifyThat(new ImageView("/main/design/images/char1.gif"), NodeMatchers.isVisible());
         verifyThat("Dagger", NodeMatchers.isVisible());
         verifyThat("Choose", NodeMatchers.isVisible());
@@ -196,17 +196,17 @@ public class StartGameTest extends ApplicationTest {
     @Test
     public void testWeaponToggle() {
         clickOn("#toGame");
-        verifyThat(new ImageView("main/design/images/dagger.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/dagger-angle.png"), NodeMatchers.isVisible());
         clickOn("#forwardWeapon");
-        verifyThat(new ImageView("main/design/images/spear.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/spear-angle.png"), NodeMatchers.isVisible());
         clickOn("#forwardWeapon");
-        verifyThat(new ImageView("main/design/images/axe.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/axe-angle.png"), NodeMatchers.isVisible());
         clickOn("#backwardWeapon");
-        verifyThat(new ImageView("main/design/images/spear.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/spear-angle.png"), NodeMatchers.isVisible());
         clickOn("#backwardWeapon");
-        verifyThat(new ImageView("main/design/images/dagger.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/dagger-angle.png"), NodeMatchers.isVisible());
         clickOn("#backwardWeapon");
-        verifyThat(new ImageView("main/design/images/axe.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/axe-angle.png"), NodeMatchers.isVisible());
     }
 
     @Test
