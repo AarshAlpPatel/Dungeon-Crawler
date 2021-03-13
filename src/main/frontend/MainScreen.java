@@ -15,7 +15,7 @@ public class MainScreen extends Application {
     private static final double MIN_X = 0;
     private static final double MIN_Y = 50;
     private static final double WALL_WIDTH = 10;
-    private static final double DOOR_WIDTH = 100;
+    private static final double DOOR_WIDTH = 200;
     
     public static void main(String[] args) {
         launch(args);

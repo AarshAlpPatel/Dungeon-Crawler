@@ -1,6 +1,7 @@
 package main.backend.characters;
 
 import main.backend.exceptions.EdgeOfScreen;
+import main.backend.exceptions.WallCollision;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.Weapon;
 
@@ -77,7 +78,10 @@ public class Player extends Sprite {
         try {
             super.move(dx, dy);
         } catch (EdgeOfScreen e) {
+            System.out.println(e);
             RoomManager.checkEdge(this.position.getX() + dx, this.position.getY() + dy);
+        } catch (WallCollision e) {
+            System.out.println(e);
         }
     }
 }

@@ -3,15 +3,12 @@ package main.backend.characters;
 import java.util.ArrayList;
 
 import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.image.*;
-import main.backend.Controller;
-import main.backend.exceptions.EdgeOfScreen;
+import main.backend.collidables.Collidable;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.Weapon;
-import main.frontend.EndGame;
 
-public abstract class Sprite {
+public abstract class Sprite extends Collidable {
     protected Point2D position;
     protected double attackMultiplier;
     protected double speed;
@@ -19,12 +16,11 @@ public abstract class Sprite {
     protected int health;
     protected Weapon mainWeapon;
     protected String name;
-    protected ImageView image;
-    protected Rectangle2D hitbox;
 
     protected Sprite(double x, double y, double attackMultiplier, double speed, 
                      int health, int regeneration, Weapon weapon, String name, 
                      String imagePath, int maxsize) {
+        super(x, y, maxsize, imagePath);
         this.position = new Point2D(x, y);
         this.attackMultiplier = attackMultiplier;
         this.speed = speed;
@@ -32,8 +28,6 @@ public abstract class Sprite {
         this.regeneration = regeneration;
         this.mainWeapon = weapon;
         this.name = name;
-        setImage(imagePath, maxsize);
-        hitbox = new Rectangle2D(x, y, this.image.getFitWidth(), this.image.getFitHeight());
     }
 
     public Point2D getPosition() {
@@ -60,10 +54,12 @@ public abstract class Sprite {
         return this.image.boundsInParentProperty().get().getWidth();
     }
 
+    @Override
     public ArrayList<ImageView> getImage() {
-        ArrayList<ImageView> images = new ArrayList<>();
-        images.add(this.image);
-        images.add(this.mainWeapon.getImage());
+        System.out.println("GET IMAGE");
+        ArrayList<ImageView> images = super.getImage();
+        images.addAll(this.mainWeapon.getImage());
+        System.out.println(images.size());
         return images;
     }
 
@@ -75,20 +71,11 @@ public abstract class Sprite {
         return mainWeapon;
     }
 
+    @Override
     public void setPosition(Point2D position) {
         this.position = position;
-        this.image.setTranslateX(this.position.getX() - (double) Controller.getLength() / 2);
-        this.image.setTranslateY(this.position.getY() - (double) Controller.getHeight() / 2);
+        super.setPosition(position);
         mainWeapon.setPosition(position);
-    } 
-
-    public void setImage(String imagePath, int maxsize) {
-        this.image = new ImageView(new Image(imagePath));
-        this.image.setPreserveRatio(true);
-        this.image.setFitHeight(maxsize);
-        this.image.setFitWidth(maxsize);
-        this.image.setTranslateX(this.position.getX() - (double) Controller.getLength() / 2);
-        this.image.setTranslateY(this.position.getY() - (double) Controller.getHeight() / 2);
     }
 
     public void setName(String name) {
@@ -111,14 +98,18 @@ public abstract class Sprite {
     public void move(double dx, double dy) {
         dx *= speed;
         dy *= speed;
-        if(!RoomManager.validMove(this.position.getX()+dx, this.position.getY()+dy)) {
+        double x = this.position.getX() + dx;
+        double y = this.position.getY() + dy;
+        super.setPosition(new Point2D(x, y));
+        if(!RoomManager.validMove(x, y, this)) {
+            System.out.println("INVALID MOVE");
+            super.setPosition(this.position);
             return;
         }
 
         this.position = this.position.add(dx, dy);
-        this.image.setTranslateX(this.position.getX() - (double) Controller.getLength() / 2);
-        this.image.setTranslateY(this.position.getY() - (double) Controller.getHeight() / 2);
-        mainWeapon.move(dx, dy);
+        super.setPosition(this.position);
+        mainWeapon.move(this.position);
     }
 
     public void destroy() {

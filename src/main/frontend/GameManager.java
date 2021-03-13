@@ -77,7 +77,7 @@ public class GameManager {
     public static void initializeLevel() {
         Controller.initializeLevel();    //initializes the backend to a new level
         screen.getChildren().addAll(Controller.getCurrentRoomImages());    //initialize sprites on screen
-        Room.drawDoors(Controller.getConnections());    //draws the doors on a room
+        screen.getChildren().addAll(Controller.getCurrentRoomWalls());
     }
 
     /**
@@ -86,7 +86,7 @@ public class GameManager {
     public static void changeRoom() {
         Room.reset();    //clear all the sprites in the current room from the screen
         screen.getChildren().addAll(Controller.getCurrentRoomImages());    //initialize sprites on screen
-        Room.drawDoors(Controller.getConnections());    //draws the doors on a room
+        screen.getChildren().addAll(Controller.getCurrentRoomWalls());
     }
 
     /**

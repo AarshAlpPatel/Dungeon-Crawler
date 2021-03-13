@@ -4,6 +4,7 @@ import java.util.*;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import main.backend.characters.*;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.*;
@@ -58,7 +59,7 @@ public class Controller {
         player.setName(name);
         player.setWeapon(weapon);
         player.setPosition(new Point2D(x, y));
-        player.setImage(imagePath, 100);
+        player.setImage(imagePath);
         return player;
     }
 
@@ -69,8 +70,13 @@ public class Controller {
      */
     public static ArrayList<ImageView> getCurrentRoomImages() {
         ArrayList<ImageView> images = RoomManager.getCurrentRoomImages();
+        System.out.println("get player image");
         images.addAll(Player.getInstance().getImage());
         return images;
+    }
+
+    public static ArrayList<Rectangle> getCurrentRoomWalls() {
+        return RoomManager.getCurrentRoomWalls();
     }
 
     /**
@@ -112,18 +118,18 @@ public class Controller {
         switch(direction) {
             case NORTH:
                 setPlayerPosition(MainScreen.getLength()/2,
-                                  getMaxY()-50);
+                                  getMaxPlayerY()-50);
                 break;
             case WEST:
-                setPlayerPosition(getMaxX()-50, 
+                setPlayerPosition(getMaxPlayerX()-50, 
                     (MainScreen.getHeight()+MainScreen.getMinY())/2);
                 break;
             case SOUTH:
                 setPlayerPosition(MainScreen.getLength()/2,
-                                  getMinY()+50);
+                                  getMinPlayerY()+50);
                 break;
             case EAST:
-                setPlayerPosition(getMinX()+50,
+                setPlayerPosition(getMinPlayerX()+50,
                     (MainScreen.getHeight()+MainScreen.getMinY())/2);
                 break;
         }
@@ -131,24 +137,32 @@ public class Controller {
     }
 
     public static double getMinX() {
+        return MainScreen.getMinX();
+    }
+
+    public static double getMinY() {
+        return MainScreen.getMinY();
+    }
+
+    public static double getMinPlayerX() {
         return MainScreen.getMinX() +
                MainScreen.getWallWidth() +
                Player.getInstance().getWidth()/2;
     }
 
-    public static double getMinY() {
+    public static double getMinPlayerY() {
         return MainScreen.getMinY() + 
                MainScreen.getWallWidth() + 
                Player.getInstance().getHeight()/2;
     }
 
-    public static double getMaxX() {
+    public static double getMaxPlayerX() {
         return MainScreen.getLength() -
                MainScreen.getWallWidth() -
                Player.getInstance().getWidth()/2;
     }
 
-    public static double getMaxY() {
+    public static double getMaxPlayerY() {
         return MainScreen.getHeight() -
                MainScreen.getWallWidth() -
                Player.getInstance().getHeight()/2;
@@ -168,6 +182,14 @@ public class Controller {
 
     public static double getHeight() {
         return MainScreen.getHeight();
+    }
+
+    public static double getDoorWidth() {
+        return MainScreen.getDoorWidth();
+    }
+
+    public static double getWallWidth() {
+        return MainScreen.getWallWidth();
     }
 
     public static boolean[] getConnections() {

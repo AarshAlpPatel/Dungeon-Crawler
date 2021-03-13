@@ -3,12 +3,17 @@ package main.backend.rooms;
 import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import main.backend.exceptions.EdgeOfScreen;
+import main.backend.exceptions.WallCollision;
 import main.backend.Controller;
+import main.backend.characters.Sprite;
+import main.backend.collidables.WallManager;
 
 public abstract class Room {
     protected static int MAX_CONNECTIONS = 4;
     protected Room[] connections;
+    protected WallManager walls;
 
     protected boolean clear;
 
@@ -26,22 +31,22 @@ public abstract class Room {
     }
 
     public Door checkEdge(double x, double y) {
-        if (x <= Controller.getMinX() + 5
+        if (x <= Controller.getMinPlayerX() + 5
             && y >= Controller.getMidY()-RoomManager.getDoorWidth()/2
             && y <= Controller.getMidY()+RoomManager.getDoorWidth()/2
             && connections[Door.WEST.ordinal()] != null) {
             return Door.WEST;
-        } else if (x >= Controller.getMaxX() - 5
+        } else if (x >= Controller.getMaxPlayerX() - 5
                    && y >= Controller.getMidY()-RoomManager.getDoorWidth()/2
                    && y <= Controller.getMidY()+RoomManager.getDoorWidth()/2
                    && connections[Door.EAST.ordinal()] != null) {
             return Door.EAST;
-        } else if (y <= Controller.getMinY() + 5
+        } else if (y <= Controller.getMinPlayerY() + 5
                    && x >= Controller.getMidX()-RoomManager.getDoorWidth()/2
                    && x <= Controller.getMidX()+RoomManager.getDoorWidth()/2
                    && connections[Door.NORTH.ordinal()] != null) {
             return Door.NORTH;
-        } else if (y >= Controller.getMaxY() - 5
+        } else if (y >= Controller.getMaxPlayerY() - 5
                    && x >= Controller.getMidX()-RoomManager.getDoorWidth()/2
                    && x <= Controller.getMidX()+RoomManager.getDoorWidth()/2
                    && connections[Door.SOUTH.ordinal()] != null) {
@@ -86,11 +91,17 @@ public abstract class Room {
         this.clear = true;
     }
 
+    public ArrayList<Rectangle> getWalls() {
+        return walls.getWalls();
+    }
+
     //in anticipation of walls
-    public boolean validMove(double x, double y) {
-        if (x < Controller.getMinX() || x > Controller.getMaxX()
-            || y < Controller.getMinY() || y > Controller.getMaxY()) {
-            throw new EdgeOfScreen("Edge of screen");
+    public boolean validMove(double x, double y, Sprite s) {
+        if (walls.checkCollisions(s)) {
+            throw new WallCollision("Hit a wall");
+        } else if (x < Controller.getMinX() || x > Controller.getLength()
+            || y < Controller.getMinY() || y > Controller.getHeight()) {
+            throw new EdgeOfScreen("Moving past edge of screen");
         }
         return true;
     }
@@ -101,6 +112,10 @@ public abstract class Room {
             conns[i] = connections[i] != null;
         }
         return conns;
+    }
+
+    public void setWalls() {
+        walls = new WallManager(4, getConnections());
     }
 
     public abstract ArrayList<ImageView> getImages();

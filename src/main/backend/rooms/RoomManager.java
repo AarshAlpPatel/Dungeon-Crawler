@@ -3,7 +3,9 @@ package main.backend.rooms;
 import java.util.*;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
+import main.backend.characters.Sprite;
 
 public class RoomManager {
     private static int MAX_ROOMS = 16;
@@ -53,9 +55,10 @@ public class RoomManager {
     }
 
     public static void createRooms(int level) {
-        ArrayList<String> types = new ArrayList<>(MAX_ROOMS - 2); //not including start room and boss room
+        ArrayList<String> types = new ArrayList<>(MAX_ROOMS);
         current = createRoom("empty");
         current.enter();
+        rooms.add(current);
         types.add("shop");
         types.add("potion");
         types.add("weapon");
@@ -91,14 +94,22 @@ public class RoomManager {
                 }
             }
         }
+        
+        for(Room r : rooms) {
+            r.setWalls();
+        }
     }
 
-    public static boolean validMove(double x, double y) {
-        return current.validMove(x, y);
+    public static boolean validMove(double x, double y, Sprite s) {
+        return current.validMove(x, y, s);
     }
 
     public static ArrayList<ImageView> getCurrentRoomImages() {
         return current.getImages();
+    }
+
+    public static ArrayList<Rectangle> getCurrentRoomWalls() {
+        return current.getWalls();
     }
 
     public static void checkEdge(double x, double y) {
