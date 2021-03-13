@@ -1,7 +1,6 @@
 package main.backend.weapons;
 
 import javafx.geometry.Point2D;
-import javafx.scene.image.*;
 import main.backend.collidables.Collidable;
 import main.frontend.MainScreen;
 
@@ -49,12 +48,6 @@ public abstract class Weapon extends Collidable {
 
     public int getDamage() {
         return this.damage;
-    }
-
-    public void setPosition(Point2D position) {
-        this.position = position;
-        this.image.setTranslateX(this.position.getX() - MainScreen.getLength() / 2);
-        this.image.setTranslateY(this.position.getY() - MainScreen.getHeight() / 2);
     }
 
     public void move(Point2D position) {

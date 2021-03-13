@@ -70,7 +70,6 @@ public class Controller {
      */
     public static ArrayList<ImageView> getCurrentRoomImages() {
         ArrayList<ImageView> images = RoomManager.getCurrentRoomImages();
-        System.out.println("get player image");
         images.addAll(Player.getInstance().getImage());
         return images;
     }

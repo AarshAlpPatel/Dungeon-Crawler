@@ -74,10 +74,7 @@ public class RoomManager {
             Room newRoom = createRoom(types.get(i));
             tmp = setConnection(tmp, newRoom);
         }
-        Room bossRoom = createRoom("boss");
-        setConnection(tmp, bossRoom);
-        Room endRoom = createRoom("end");
-        setConnection(bossRoom, endRoom);
+        Room lastRoom = tmp;
 
         for(int i = 6; i < 9; ++i) {
             Room newRoom = createRoom(types.get(i));
@@ -94,6 +91,11 @@ public class RoomManager {
                 }
             }
         }
+
+        Room bossRoom = createRoom("boss");
+        setConnection(lastRoom, bossRoom);
+        Room endRoom = createRoom("end");
+        setConnection(bossRoom, endRoom);
         
         for(Room r : rooms) {
             r.setWalls();

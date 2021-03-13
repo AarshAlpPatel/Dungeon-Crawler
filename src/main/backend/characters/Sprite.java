@@ -56,10 +56,8 @@ public abstract class Sprite extends Collidable {
 
     @Override
     public ArrayList<ImageView> getImage() {
-        System.out.println("GET IMAGE");
         ArrayList<ImageView> images = super.getImage();
         images.addAll(this.mainWeapon.getImage());
-        System.out.println(images.size());
         return images;
     }
 
@@ -75,7 +73,7 @@ public abstract class Sprite extends Collidable {
     public void setPosition(Point2D position) {
         this.position = position;
         super.setPosition(position);
-        mainWeapon.setPosition(position);
+        mainWeapon.move(position);
     }
 
     public void setName(String name) {
