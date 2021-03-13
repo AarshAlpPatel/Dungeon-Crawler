@@ -11,53 +11,87 @@ import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import main.backend.Controller;
 
+/**
+ * Manages the game loop.
+ * All communication from the backend to the frontend comes through the GameManager.
+ */
 public class GameManager {
-    private static AnimationTimer timer;
-    private static Pane screen = new StackPane();
-    private static Scene scene;
-    private static Point2D mousePosition;
+    private static AnimationTimer timer;    //controls the game loop, running at 60 fps
+    private static Pane screen = new StackPane();    //reference to the current room screen
+    private static Scene scene;    //reference to the current room scene
+    private static Point2D mousePosition;    //monitors where the mouse is located on the screen
 
+    /**
+     * Sets all the keybinds for player actions.
+     */
     private static void setKeybinds() {
+        //event for when a key is pressed and/or held down
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
+                //set the direction which the player is traveling
                 Controller.setDirection(event.getCode().toString(), true);
             }
         });
+
+        //event for when a key being held down is released
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
+                //set the direction which the player is traveling
                 Controller.setDirection(event.getCode().toString(), false);
             }
         });
+
+        //event for when the mouse moves
         scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
+                //keep track of the mouse's current position
                 mousePosition = new Point2D(event.getSceneX(), event.getSceneY());
             }
         });
     }
 
-    public static void initializeRoom(Pane screen, Scene scene) {
+    /**
+     * Initializes the game, updating class variables and setting the keybinds.
+     * @param screen The current room screen
+     * @param scene The current room scene
+     */
+    public static void initializeGame(Pane screen, Scene scene) {
         mousePosition = new Point2D(400, 400);
         GameManager.screen = screen;
         GameManager.scene = scene;
         setKeybinds();
     }
 
+    /**
+     * Removes sprites from the screen.
+     * Used primarily to remove dead enemy sprites.
+     * @param images the ImageViews of sprites to remove
+     */
     public static void destroyImage(ArrayList<ImageView> images) {
         screen.getChildren().removeAll(images);
     }
 
+    /**
+     * Initialize a new level.
+     */
     public static void initializeLevel() {
-        Controller.initializeLevel();
-        screen.getChildren().addAll(Controller.getCurrentRoomImages());
-        Room.drawDoors(Controller.getConnections());
+        Controller.initializeLevel();    //initializes the backend to a new level
+        screen.getChildren().addAll(Controller.getCurrentRoomImages());    //initialize sprites on screen
+        Room.drawDoors(Controller.getConnections());    //draws the doors on a room
     }
 
+    /**
+     * Move player sprite to a new room.
+     */
     public static void changeRoom() {
-        Room.reset();
-        screen.getChildren().addAll(Controller.getCurrentRoomImages());
-        Room.drawDoors(Controller.getConnections());
+        Room.reset();    //clear all the sprites in the current room from the screen
+        screen.getChildren().addAll(Controller.getCurrentRoomImages());    //initialize sprites on screen
+        Room.drawDoors(Controller.getConnections());    //draws the doors on a room
     }
 
+    /**
+     * Stops the game loop once user has exited.
+     */
     public static void stopGameLoop() {
         if (timer == null) {
             return;
@@ -65,18 +99,26 @@ public class GameManager {
         timer.stop();
     }
 
+    /**
+     * Display the game's win condition.
+     */
     public static void endGame() {
         stopGameLoop();
         MainScreen.setScene(EndGame.getScene());
     }
 
+    /**
+     * Starts the game loop, allowing the player to interact with the game
+     * by moving, killing enemies, etc.
+     */
     public static void gameLoop() {
         initializeLevel();
         if (timer == null) {
+            //runs at 60 fps
             timer = new AnimationTimer() {
                 @Override
                 public void handle(long l) {
-                    Controller.run(mousePosition);
+                    Controller.run(mousePosition);   //runs every frame
                 }
             };
         }

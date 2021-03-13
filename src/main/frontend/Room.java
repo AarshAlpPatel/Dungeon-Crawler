@@ -131,7 +131,7 @@ public class Room {
         initializeWallsAndDoors();
         drawWalls();
 
-        GameManager.initializeRoom(screen, roomScene);
+        GameManager.initializeGame(screen, roomScene);
         GameManager.gameLoop();
 
         return roomScene;

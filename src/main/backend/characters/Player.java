@@ -28,6 +28,22 @@ public class Player extends Sprite {
         this.backupWeapon = backupWeapon;
     }
 
+    public void setMoveNorth(boolean b) {
+        moveNorth = b;
+    }
+
+    public void setMoveWest(boolean b) {
+        moveWest = b;
+    }
+
+    public void setMoveSouth(boolean b) {
+        moveSouth = b;
+    }
+
+    public void setMoveEast(boolean b) {
+        moveEast = b;
+    }
+
     public void switchWeapons() {
         if (this.backupWeapon != null) {
             Weapon tmp = this.mainWeapon;
@@ -41,18 +57,6 @@ public class Player extends Sprite {
             playerObj = new Player();
         }
         return playerObj;
-    }
-
-    public void setDirection(String key, boolean b) {
-        if (key.equals("W")) {
-            moveNorth = b;
-        } else if (key.equals("A")) {
-            moveWest = b;
-        } else if (key.equals("S")) {
-            moveSouth = b;
-        } else if (key.equals("D")) {
-            moveEast = b;
-        }
     }
 
     public void move() {

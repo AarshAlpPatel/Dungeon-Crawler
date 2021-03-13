@@ -11,22 +11,46 @@ import main.frontend.GameManager;
 import main.frontend.MainScreen;
 import main.backend.rooms.*;
 
+/**
+ * All communication from the frontend to the backend should come through the Controller.
+ */
 public class Controller {
-    private static String difficultyLevel = "Easy";
-    private static int level = 1;
+    private static String difficultyLevel = "Easy";   //chosen difficulty of the game
+    private static int level = 1;    //records what level the game is on
 
+    /**
+     * Gets the current level of the game.
+     * @return current level
+     */
     public static int getLevel() {
         return level;
     }
 
+    /**
+     * Gets the selected difficulty level of the game.
+     * @return difficulty level
+     */
     public static String getDifficultyLevel() {
         return difficultyLevel;
     }
 
+    /**
+     * Sets difficulty level of the game.
+     * @param val difficulty level
+     */
     public static void setDifficultyLevel(String val) {
         difficultyLevel = val;
     }
     
+    /**
+     * Sets the player's attributes.
+     * @param x the player's x-position
+     * @param y the player's y-position
+     * @param name the player's name
+     * @param weaponName the player's weapon
+     * @param imagePath 
+     * @return the Player object
+     */
     public static Player createPlayer(double x, double y, String name, String weaponName,
                                       String imagePath) {
         Player player = Player.getInstance();
@@ -38,18 +62,36 @@ public class Controller {
         return player;
     }
 
+    /**
+     * Gets all sprites and structures in the current room 
+     *     for the GameManager to display.
+     * @return an arraylist of all the images of the sprites
+     */
     public static ArrayList<ImageView> getCurrentRoomImages() {
         ArrayList<ImageView> images = RoomManager.getCurrentRoomImages();
         images.addAll(Player.getInstance().getImage());
         return images;
     }
 
+    /**
+     * Sets the player's (x, y) position.
+     * @param x 
+     * @param y
+     */
     public static void setPlayerPosition(double x, double y) {
         Player.getInstance().setPosition(new Point2D(x, y));
     }
 
     public static void setDirection(String key, boolean b) {
-        Player.getInstance().setDirection(key, b);
+        if (key.equals("W")) {
+            Player.getInstance().setMoveNorth(b);
+        } else if (key.equals("A")) {
+            Player.getInstance().setMoveWest(b);
+        } else if (key.equals("S")) {
+            Player.getInstance().setMoveSouth(b);
+        } else if (key.equals("D")) {
+            Player.getInstance().setMoveEast(b);
+        }
     }
 
     public static void run(Point2D mousePosition) {
