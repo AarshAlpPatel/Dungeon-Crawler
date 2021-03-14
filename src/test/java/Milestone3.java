@@ -16,6 +16,7 @@ import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 import static org.testfx.api.FxToolkit.setupApplication;
@@ -112,87 +113,91 @@ public class Milestone3 extends ApplicationTest {
 
     @Test
     public void checkForFourExits() {
+//        clickOn("#toGame");
+//        clickOn("#nameField");
+//        type(KeyCode.N);
+//        clickOn("Start Game");
+//        //check North Exit
+//        while (Player.getInstance().getPosition().getY() < Controller.getMidY() - 1) {
+//            press(KeyCode.W);
+//        }
+//        release(KeyCode.W);
+//        while (Player.getInstance().getPosition().getY() > Controller.getMidY()) {
+//            press(KeyCode.S);
+//        }
+//        release(KeyCode.S);
+//        assertTrue(Player.getInstance().getPosition().getY() < MainScreen.getHeight());
+//        assertTrue(Player.getInstance().getPosition().getX() < MainScreen.getLength());
+//
+//        //return to center
+//        while (Player.getInstance().getPosition().getY() <= Controller.getMidY()) {
+//            press(KeyCode.S);
+//        }
+//        release(KeyCode.S);
+//
+//        //check South Exit
+//        while (Player.getInstance().getPosition().getY() > Controller.getMidY() / 2) {
+//            press(KeyCode.S);
+//        }
+//        release(KeyCode.S);
+//        while (Player.getInstance().getPosition().getY() < Controller.getMidY()) {
+//            press(KeyCode.W);
+//        }
+//        release(KeyCode.W);
+//        assertTrue(Player.getInstance().getPosition().getY() < MainScreen.getHeight());
+//        assertTrue(Player.getInstance().getPosition().getX() < MainScreen.getLength());
+//
+//        //return to center
+//        while (Player.getInstance().getPosition().getY() >= Controller.getMidY()) {
+//            press(KeyCode.W);
+//        }
+//        release(KeyCode.W);
+//
+//        //check East Exit
+//        for (int i = 0; i < 2; i++) {
+//            press(KeyCode.S);
+//        }
+//        release(KeyCode.S);
+//        while (Player.getInstance().getPosition().getX() > Controller.getMidX() - 1) {
+//            press(KeyCode.D);
+//        }
+//        release(KeyCode.D);
+//        while (Player.getInstance().getPosition().getX() < Controller.getMidX()) {
+//            press(KeyCode.A);
+//        }
+//        release(KeyCode.A);
+//        assertTrue(Player.getInstance().getPosition().getY() < MainScreen.getHeight());
+//        assertTrue(Player.getInstance().getPosition().getX() < MainScreen.getLength());
+//
+//        //return to center
+//        while (Player.getInstance().getPosition().getX() >= Controller.getMidX()) {
+//            press(KeyCode.A);
+//        }
+//        release(KeyCode.A);
+//
+//        //check West Exit
+//        while (Player.getInstance().getPosition().getX() < Controller.getMidX() + 1) {
+//            press(KeyCode.A);
+//        }
+//        release(KeyCode.A);
+//        while (Player.getInstance().getPosition().getX() > Controller.getMidY()) {
+//            press(KeyCode.D);
+//        }
+//        release(KeyCode.D);
+//        assertTrue(Player.getInstance().getPosition().getY() < MainScreen.getHeight());
+//        assertTrue(Player.getInstance().getPosition().getX() < MainScreen.getLength());
+//
+//        //return to center
+//        while (Player.getInstance().getPosition().getX() <= Controller.getMidX()) {
+//            press(KeyCode.D);
+//        }
+//        release(KeyCode.D);
+//
         clickOn("#toGame");
         clickOn("#nameField");
         type(KeyCode.N);
         clickOn("Start Game");
-        //check North Exit
-        while (Player.getInstance().getPosition().getY() < Controller.getMidY() - 1) {
-            press(KeyCode.W);
-        }
-        release(KeyCode.W);
-        while (Player.getInstance().getPosition().getY() > Controller.getMidY()) {
-            press(KeyCode.S);
-        }
-        release(KeyCode.S);
-        assertTrue(Player.getInstance().getPosition().getY() < MainScreen.getHeight());
-        assertTrue(Player.getInstance().getPosition().getX() < MainScreen.getLength());
-
-        //return to center
-        while (Player.getInstance().getPosition().getY() <= Controller.getMidY()) {
-            press(KeyCode.S);
-        }
-        release(KeyCode.S);
-
-        //check South Exit
-        while (Player.getInstance().getPosition().getY() > Controller.getMidY() / 2) {
-            press(KeyCode.S);
-        }
-        release(KeyCode.S);
-        while (Player.getInstance().getPosition().getY() < Controller.getMidY()) {
-            press(KeyCode.W);
-        }
-        release(KeyCode.W);
-        assertTrue(Player.getInstance().getPosition().getY() < MainScreen.getHeight());
-        assertTrue(Player.getInstance().getPosition().getX() < MainScreen.getLength());
-
-        //return to center
-        while (Player.getInstance().getPosition().getY() >= Controller.getMidY()) {
-            press(KeyCode.W);
-        }
-        release(KeyCode.W);
-
-        //check East Exit
-        for (int i = 0; i < 2; i++) {
-            press(KeyCode.S);
-        }
-        release(KeyCode.S);
-        while (Player.getInstance().getPosition().getX() > Controller.getMidX() - 1) {
-            press(KeyCode.D);
-        }
-        release(KeyCode.D);
-        while (Player.getInstance().getPosition().getX() < Controller.getMidX()) {
-            press(KeyCode.A);
-        }
-        release(KeyCode.A);
-        assertTrue(Player.getInstance().getPosition().getY() < MainScreen.getHeight());
-        assertTrue(Player.getInstance().getPosition().getX() < MainScreen.getLength());
-
-        //return to center
-        while (Player.getInstance().getPosition().getX() >= Controller.getMidX()) {
-            press(KeyCode.A);
-        }
-        release(KeyCode.A);
-
-        //check West Exit
-        while (Player.getInstance().getPosition().getX() < Controller.getMidX() + 1) {
-            press(KeyCode.A);
-        }
-        release(KeyCode.A);
-        while (Player.getInstance().getPosition().getX() > Controller.getMidY()) {
-            press(KeyCode.D);
-        }
-        release(KeyCode.D);
-        assertTrue(Player.getInstance().getPosition().getY() < MainScreen.getHeight());
-        assertTrue(Player.getInstance().getPosition().getX() < MainScreen.getLength());
-
-        //return to center
-        while (Player.getInstance().getPosition().getX() <= Controller.getMidX()) {
-            press(KeyCode.D);
-        }
-        release(KeyCode.D);
-
-
+        assertEquals(4, Controller.getConnections().length);
     }
 
     @Test
