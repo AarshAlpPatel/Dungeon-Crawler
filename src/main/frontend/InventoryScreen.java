@@ -67,12 +67,15 @@ public class InventoryScreen {
         if (backup != null) {
             ImageView backupImage = new ImageView(backup);
             backupWeapon.getChildren().addAll(backupImage);
+            handleImageActions(backupImage, backupWeapon);
         }
         handleSlotActions(mainWeapon, backupWeapon);
         //handleImageActions(mainImage, mainWeapon);
 
         weapons.getChildren().addAll(mainWeapon, backupWeapon);
         weapons.getStyleClass().add("center");
+        System.out.println(mainImage.getX());
+        handleImageActions(mainImage, mainWeapon);
 
         return weapons;
     }
@@ -152,7 +155,7 @@ public class InventoryScreen {
                 }
                 ((Rectangle) pane.getChildren().get(i)).setFill(Color.RED);
                 pane.getChildren().get(i).setOpacity(0.7);
-                inventoryScreen.setCursor(new ImageCursor(new Image("/main/design/images/cursors/custom_click.png")));
+                inventoryScreen.setCursor(Cursor.HAND);
 //                shape.setWidth(shape.getWidth() + 5);
 //                shape.setWidth(shape.getHeight() + 5);
             });
@@ -163,7 +166,7 @@ public class InventoryScreen {
                 }
                 ((Rectangle) pane.getChildren().get(i)).setFill(Color.BLACK);
                 pane.getChildren().get(i).setOpacity(1);
-                inventoryScreen.setCursor(new ImageCursor(new Image("/main/design/images/cursors/default_cursor.png")));
+                inventoryScreen.setCursor(Cursor.DEFAULT);
 //                shape.setWidth(shape.getWidth() - 5);
 //                shape.setWidth(shape.getHeight() - 5);
             });
@@ -174,53 +177,37 @@ public class InventoryScreen {
     private static double startY;
     private static double distX;
     private static double distY;
-
-//    static void setStartX(double value) {
-//        startX = value;
-//    }
-//
-//    static void setStartY(double value) {
-//        startY = value;
-//    }
-//
-//    static void setDistX(double value) {
-//        distX = value;
-//    }
-//
-//    static void setDistY(double value) {
-//        distY = value;
-//    }
+    private static int i = 1;
 
     //for dragging pictures
     private static void handleImageActions(ImageView image, Pane pane) {
         //corner is 0, 0
-        pane.setOnMouseEntered(event -> {
-            inventoryScreen.setCursor(Cursor.HAND);
-        });
-        pane.setOnMouseExited(event -> {
-            inventoryScreen.setCursor(Cursor.DEFAULT);
-        });
-        pane.setOnMousePressed(event -> {
-            pane.getChildren().remove(1);
+//        pane.setOnMouseEntered(event -> {
+//            inventoryScreen.setCursor(Cursor.HAND);
+//        });
+//        pane.setOnMouseExited(event -> {
+//            inventoryScreen.setCursor(Cursor.DEFAULT);
+//        });
+        image.setOnMousePressed(event -> {
+//            int i = 0;
+//            while (pane.getChildren().get(i) instanceof ImageView == false) {
+//                i++;
+//            }
+            pane.getChildren().remove(image);
             dragBox.getChildren().add(image);
-            image.setFitWidth(image.getFitHeight() / 2);
-            image.setFitHeight(image.getFitHeight() / 2);
-            startX = event.getX();
-            startY = event.getY();
-            image.setX(startX);
-            image.setY(startY);
-            distX = startX - image.getX();
-            distY = startY - image.getY();
+            System.out.println(image.getX());
+//            image.setFitWidth(image.getFitHeight() / 2);
+//            image.setFitHeight(image.getFitHeight() / 2);
+            startX = event.getScreenX();
+            startY = event.getScreenY();
         });
-        pane.setOnMouseDragged(event -> {
-//            System.out.println(image.getX());
-//            System.out.println(event.getX());
-            image.setX(event.getX());
-            image.setY(event.getY());
+        image.setOnMouseDragged(event -> {
+            image.setX(event.getSceneX() - startX);
+            image.setY(event.getSceneY() - startY);
         });
-        pane.setOnMouseReleased(event -> {
-            image.setFitWidth(image.getFitHeight() * 2);
-            image.setFitHeight(image.getFitHeight() * 2);
+        image.setOnMouseReleased(event -> {
+//            image.setFitWidth(image.getFitHeight() * 2);
+//            image.setFitHeight(image.getFitHeight() * 2);
             dragBox.getChildren().remove(image);
             pane.getChildren().add(image);
         });
@@ -232,6 +219,8 @@ public class InventoryScreen {
         screen = new VBox(25);
         screen.getStyleClass().addAll("screen", "center");
         dragBox = new Pane();
+        dragBox.setPrefHeight(MainScreen.getHeight());
+        dragBox.setPrefWidth(MainScreen.getLength());
         StackPane inventory = createBackground();
         VBox itemHolders = new VBox(20);
         itemHolders.getStyleClass().add("center");

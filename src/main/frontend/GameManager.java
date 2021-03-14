@@ -2,6 +2,7 @@ package main.frontend;
 
 import java.util.*;
 
+import com.sun.tools.javac.Main;
 import javafx.event.*;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
@@ -30,6 +31,8 @@ public class GameManager {
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.H) {
                     MainScreen.setScene(InventoryScreen.getScene());
+                } else if(event.getCode() == KeyCode.G) {
+                    MainScreen.setScene(ShopScreen.getScene());
                 } else {
                     Controller.setDirection(event.getCode().toString(), true);
                 }
