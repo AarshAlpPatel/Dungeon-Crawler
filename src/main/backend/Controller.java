@@ -198,6 +198,10 @@ public class Controller {
     }
 
     public static void endGame() {
+        Player.getInstance().setMoveNorth(false);
+        Player.getInstance().setMoveWest(false);
+        Player.getInstance().setMoveSouth(false);
+        Player.getInstance().setMoveEast(false);
         GameManager.endGame();
     }
 }
