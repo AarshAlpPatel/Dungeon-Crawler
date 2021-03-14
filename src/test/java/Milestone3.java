@@ -227,7 +227,7 @@ public class Milestone3 extends ApplicationTest {
         clickOn("#nameField");
         type(KeyCode.N);
         clickOn("Start Game");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             press(KeyCode.S);
         }
         release(KeyCode.S);
@@ -267,7 +267,7 @@ public class Milestone3 extends ApplicationTest {
         clickOn("#nameField");
         type(KeyCode.N);
         clickOn("Start Game");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             press(KeyCode.S);
         }
         release(KeyCode.S);
