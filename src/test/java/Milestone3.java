@@ -43,17 +43,6 @@ public class Milestone3 extends ApplicationTest {
     }
 
     @Test
-    public void checkForFourExits() {
-        clickOn("#toGame");
-        clickOn("#nameField");
-        type(KeyCode.N);
-        clickOn("Start Game");
-        for (int i = 0; i < 4; i++) {
-            verifyThat("#door" + i, NodeMatchers.isVisible());
-        }
-    }
-
-    @Test
     public void testEastRoom() {
         clickOn("#toGame");
         clickOn("#nameField");
@@ -273,7 +262,7 @@ public class Milestone3 extends ApplicationTest {
         clickOn("#nameField");
         type(KeyCode.N);
         clickOn("Start Game");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             press(KeyCode.S);
         }
         release(KeyCode.S);
