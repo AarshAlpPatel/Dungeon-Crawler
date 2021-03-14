@@ -2,9 +2,7 @@ package test.java;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
-import main.backend.characters.Player;
 import main.frontend.*;
 
 import javafx.stage.Stage;
@@ -12,7 +10,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import org.testfx.api.FxRobot;
@@ -51,7 +48,7 @@ public class StartGameTest extends ApplicationTest {
         clickOn("#toGame");
         verifyThat("Enter Name", NodeMatchers.isVisible());
         verifyThat("Difficulty", NodeMatchers.isVisible());
-        verifyThat(new ImageView("/main/design/images/dagger.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("/main/design/images/dagger-angle.png"), NodeMatchers.isVisible());
         verifyThat(new ImageView("/main/design/images/char1.gif"), NodeMatchers.isVisible());
         verifyThat("Dagger", NodeMatchers.isVisible());
         verifyThat("Choose", NodeMatchers.isVisible());
@@ -196,17 +193,17 @@ public class StartGameTest extends ApplicationTest {
     @Test
     public void testWeaponToggle() {
         clickOn("#toGame");
-        verifyThat(new ImageView("main/design/images/dagger.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/dagger-angle.png"), NodeMatchers.isVisible());
         clickOn("#forwardWeapon");
-        verifyThat(new ImageView("main/design/images/spear.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/spear-angle.png"), NodeMatchers.isVisible());
         clickOn("#forwardWeapon");
-        verifyThat(new ImageView("main/design/images/axe.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/axe-angle.png"), NodeMatchers.isVisible());
         clickOn("#backwardWeapon");
-        verifyThat(new ImageView("main/design/images/spear.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/spear-angle.png"), NodeMatchers.isVisible());
         clickOn("#backwardWeapon");
-        verifyThat(new ImageView("main/design/images/dagger.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/dagger-angle.png"), NodeMatchers.isVisible());
         clickOn("#backwardWeapon");
-        verifyThat(new ImageView("main/design/images/axe.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/axe-angle.png"), NodeMatchers.isVisible());
     }
 
     @Test

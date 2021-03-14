@@ -46,11 +46,11 @@ public class MainScreen extends Application {
     }
 
     public static double getMidX() {
-        return (LENGTH-MIN_X)/2 + MIN_X;
+        return (LENGTH - MIN_X) / 2 + MIN_X;
     }
 
     public static double getMidY() {
-        return (HEIGHT-MIN_Y)/2 + MIN_Y;
+        return (HEIGHT - MIN_Y) / 2 + MIN_Y;
     }
 
     public static double getDoorWidth() {

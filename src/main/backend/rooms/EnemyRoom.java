@@ -9,9 +9,9 @@ public class EnemyRoom extends Room {
     private EnemyManager enemies;
 
     public EnemyRoom(String difficulty) {
-        if(difficulty.equals("easy")) {
+        if (difficulty.equals("easy")) {
             this.enemies = new EnemyManager(0);
-        } else if(difficulty.equals("medium")) {
+        } else if (difficulty.equals("medium")) {
             this.enemies = new EnemyManager(0);
         } else if (difficulty.equals("hard")) {
             this.enemies = new EnemyManager(0);

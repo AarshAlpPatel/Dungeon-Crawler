@@ -15,7 +15,7 @@ public class Room {
     private static BorderPane bPane = null;
 
     public static void reset() {
-        if(screen != null) {
+        if (screen != null) {
             screen.getChildren().clear();
             screen.getChildren().add(bPane);
         }
