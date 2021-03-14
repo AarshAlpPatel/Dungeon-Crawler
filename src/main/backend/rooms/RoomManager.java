@@ -9,7 +9,7 @@ import main.backend.characters.Sprite;
 
 public class RoomManager {
     private static final int MAX_ROOMS = 16;
-    private static final double DOOR_WIDTH = 100;
+    private static final double DOOR_WIDTH = 250;
     private static Room current;
     private static ArrayList<Room> rooms = new ArrayList<>();
 
