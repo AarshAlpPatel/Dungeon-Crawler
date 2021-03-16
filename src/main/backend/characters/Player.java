@@ -17,7 +17,7 @@ public class Player extends Sprite {
     private boolean moveEast = false;
 
     private Player() {
-        this(400, 400, 1, 4.0, 100, 5, null, null, "/main/design/images/char1.gif");
+        this(400, 400, 1, 4.0, 100, 5, null, null, "char1.gif");
     }
 
     private Player(double x, double y, double attackMultiplier, double speed,

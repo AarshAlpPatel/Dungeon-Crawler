@@ -2,7 +2,7 @@ package main.backend.weapons;
 
 public class Spear extends Weapon {
     public Spear(double x, double y, int id, boolean dropped) {
-        super(x, y, 0, 10, 30, 0, id, "/main/design/images/spearh.png", dropped, 120, 15);
+        super(x, y, 0, 10, 30, 0, id, "spearh.png", dropped, 120, 15);
     }
 
     @Override

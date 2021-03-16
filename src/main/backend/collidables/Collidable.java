@@ -29,7 +29,7 @@ public abstract class Collidable {
      */
     protected Collidable(double x, double y, double length, double height,
                          String imagePath, double translateX, double translateY) {
-        this.image = new ImageView(new Image(imagePath));
+        this.image = new ImageView(new Image("/main/design/images/" + imagePath));
         this.image.setPreserveRatio(false);
         this.image.setFitWidth(length);
         this.image.setFitHeight(height);
@@ -39,7 +39,7 @@ public abstract class Collidable {
 
     protected Collidable(double x, double y, int maxsize,
                          String imagePath) {
-        this.image = new ImageView(new Image(imagePath));
+        this.image = new ImageView(new Image("/main/design/images/" + imagePath));
         this.image.setPreserveRatio(true);
         this.image.setFitWidth(maxsize);
         this.image.setFitHeight(maxsize);
@@ -55,7 +55,7 @@ public abstract class Collidable {
         double x = image.getTranslateX();
         double y = image.getTranslateY();
         double maxsize = Math.max(image.getFitHeight(), image.getFitWidth());
-        this.image = new ImageView(new Image(imagePath));
+        this.image = new ImageView(new Image("/main/design/images/" + imagePath));
         this.image.setPreserveRatio(true);
         this.image.setFitHeight(maxsize);
         this.image.setFitWidth(maxsize);
@@ -79,6 +79,6 @@ public abstract class Collidable {
     }
 
     protected boolean collidesWith(Collidable obj) {
-        return this.image.intersects(obj.image.getBoundsInParent());
+        return this.image.getBoundsInParent().intersects(obj.image.getBoundsInParent());
     }
 }
