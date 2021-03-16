@@ -3,7 +3,6 @@ package main.backend.rooms;
 import java.util.*;
 
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
 import main.backend.characters.Sprite;
 
@@ -110,7 +109,7 @@ public class RoomManager {
         return current.getImages();
     }
 
-    public static ArrayList<Rectangle> getCurrentRoomWalls() {
+    public static ArrayList<ImageView> getCurrentRoomWalls() {
         return current.getWalls();
     }
 

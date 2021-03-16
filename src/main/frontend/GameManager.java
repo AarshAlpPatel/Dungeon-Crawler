@@ -26,11 +26,8 @@ public class GameManager {
      */
     private static void setKeybinds() {
         //event for when a key is pressed and/or held down
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent event) {
-                //set the direction which the player is traveling
-                Controller.setDirection(event.getCode().toString(), true);
-            }
+        scene.setOnKeyPressed(e -> { 
+            Controller.setDirection(e.getCode().toString(), true);
         });
 
         //event for when a key being held down is released
@@ -47,6 +44,10 @@ public class GameManager {
                 //keep track of the mouse's current position
                 mousePosition = new Point2D(event.getSceneX(), event.getSceneY());
             }
+        });
+
+        scene.setOnMouseClicked(e -> {
+            Controller.startAttack();
         });
     }
 

@@ -84,4 +84,8 @@ public class Player extends Sprite {
             System.out.println(e);
         }
     }
+
+    public void startAttack() {
+        mainWeapon.startAttack();
+    }
 }
