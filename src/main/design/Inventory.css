@@ -21,9 +21,13 @@
     -fx-background-color: red;
 }
 
+/* Rectangle itself, not the pane*/
 .rectangle_slot {
     -fx-arc-height: 10px;
     -fx-arc-width: 10px;
+    -fx-fill: #323030;
+    -fx-border-radius: 15px;
+    -fx-border-color: #292626;
     /*-fx-effect: innershadow(gaussian, black, 0, 0, 0, 1);*/
 }
 
@@ -32,4 +36,9 @@
     -fx-font-size: 17px;
     -fx-font-family: "Bernard MT Condensed";
     -fx-font-weight: bold;
+}
+
+.drag_box {
+    -fx-border-radius: 5px;
+    -fx-border-color: red;
 }

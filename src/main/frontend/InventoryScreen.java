@@ -33,6 +33,13 @@ public class InventoryScreen {
     //finding the closest rectangle to the item being dragged
     private static List<Rectangle> rectangles = new ArrayList<>();
 
+    /*
+     * when the image starts getting dragged, this gets covered by the dragBox,
+     * effectively rendering all of the other mouseEntering and exiting actions
+     * for the slots underneath useless because they are no longer visible to the mouse
+     */
+    private static StackPane screenHolder;
+
     //sets up the blue, translucent background and StackPane for holding all of the slots
     private static StackPane createBackground() {
         StackPane inventory = new StackPane();
@@ -88,7 +95,7 @@ public class InventoryScreen {
         } else if (wpn instanceof Spear) {
             weapon = new Image("/main/design/images/spear-angle.png", 300, 300, false, false);
         } else if (wpn instanceof Dagger){
-            weapon = new Image("/main/design/images/dagger-angle.png", 300, 300, false, false);
+            weapon = new Image("/main/design/images/dagger-drag.png", 200, 200, false, false);
         } else {
             weapon = null;
         }
@@ -164,7 +171,7 @@ public class InventoryScreen {
                 while (!(pane.getChildren().get(i) instanceof Rectangle)) {
                     i++;
                 }
-                ((Rectangle) pane.getChildren().get(i)).setFill(Color.BLACK);
+                ((Rectangle) pane.getChildren().get(i)).setFill(Color.rgb(50, 48, 48));
                 pane.getChildren().get(i).setOpacity(1);
                 inventoryScreen.setCursor(Cursor.DEFAULT);
 //                shape.setWidth(shape.getWidth() - 5);
@@ -194,12 +201,18 @@ public class InventoryScreen {
 //                i++;
 //            }
             pane.getChildren().remove(image);
+            screenHolder.getChildren().add(dragBox);
             dragBox.getChildren().add(image);
-            System.out.println(image.getX());
+            //image.set
+            System.out.println(image.getX() + " " + image.getY());
+            System.out.println(event.getSceneX() + " " + event.getSceneY());
+//            image.setX(event.getSceneX());
+//            image.setY(event.getSceneY());
+            //System.out.println(image.getX());
 //            image.setFitWidth(image.getFitHeight() / 2);
 //            image.setFitHeight(image.getFitHeight() / 2);
-            startX = event.getScreenX();
-            startY = event.getScreenY();
+//            startX = event.getSceneX();
+//            startY = event.getSceneY();
         });
         image.setOnMouseDragged(event -> {
             image.setX(event.getSceneX() - startX);
@@ -208,6 +221,8 @@ public class InventoryScreen {
         image.setOnMouseReleased(event -> {
 //            image.setFitWidth(image.getFitHeight() * 2);
 //            image.setFitHeight(image.getFitHeight() * 2);
+            System.out.println(event.getSceneX() + " " + event.getSceneY());
+            screenHolder.getChildren().remove(dragBox);
             dragBox.getChildren().remove(image);
             pane.getChildren().add(image);
         });
@@ -216,9 +231,11 @@ public class InventoryScreen {
     public static Scene getScene() {
         HBox emptyPaneTop = new HBox();
         emptyPaneTop.setPadding(new Insets(0, 0, 50, 0));
+        screenHolder = new StackPane();
         screen = new VBox(25);
         screen.getStyleClass().addAll("screen", "center");
         dragBox = new Pane();
+        dragBox.getStyleClass().addAll("drag_box");
         dragBox.setPrefHeight(MainScreen.getHeight());
         dragBox.setPrefWidth(MainScreen.getLength());
         StackPane inventory = createBackground();
@@ -231,9 +248,10 @@ public class InventoryScreen {
         itemHolders.getChildren().addAll(weapons, items);
         inventory.getChildren().add(itemHolders);
         HBox bottomButtons = createBottomButtons();
-        screen.getChildren().addAll(emptyPaneTop, inventory, bottomButtons, dragBox);
+        screen.getChildren().addAll(emptyPaneTop, inventory, bottomButtons);
+        screenHolder.getChildren().addAll(screen);
 
-        inventoryScreen = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());
+        inventoryScreen = new Scene(screenHolder, MainScreen.getLength(), MainScreen.getHeight());
         //for dragging the weapons
         dragBox.setPrefWidth(inventoryScreen.getWidth());
         dragBox.setPrefHeight(inventoryScreen.getHeight());
