@@ -39,6 +39,7 @@ public class GameManager {
                 //set the direction which the player is traveling
                 Controller.setDirection(event.getCode().toString(), true);
             }
+        });
         scene.setOnKeyPressed(e -> { 
             Controller.setDirection(e.getCode().toString(), true);
         });

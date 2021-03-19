@@ -1,8 +1,8 @@
 package main.backend.weapons;
 
 public class Spear extends Weapon {
-    public Spear(double x, double y, int id, boolean dropped) {
-        super(x, y, 0, 10, 30, 0, id, "spearh.png", dropped, 120, 15);
+    public Spear(double x, double y, int id, boolean dropped, double translateX, double translateY) {
+        super(x, y, 0, 10, 30, 0, id, "spearh.png", dropped, 120, 15, translateX, translateY);
     }
 
     @Override

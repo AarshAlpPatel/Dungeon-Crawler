@@ -37,17 +37,26 @@ public abstract class Collidable {
         image.setTranslateY(y - translateY);
     }
 
-    protected Collidable(double x, double y, int maxsize,
-                         String imagePath) {
+    /**
+     * used exclusively for sprites
+     * @param x
+     * @param y
+     * @param maxsize
+     * @param imagePath
+     */
+    protected Collidable(double x, double y, int maxsize, String imagePath,
+                         double translateX, double translateY) {
         this.image = new ImageView(new Image("/main/design/images/" + imagePath));
         this.image.setPreserveRatio(true);
         this.image.setFitWidth(maxsize);
-        this.image.setFitHeight(maxsize);
+        //this.image.setFitHeight(maxsize);
         setImagePosition(new Point2D(x, y));
-        
+
         double width = this.image.getBoundsInParent().getWidth();
         double height = this.image.getBoundsInParent().getHeight();
-        offset = new Translate(width/2.5, 0);
+        System.out.print("WIDTH: " + width + ", HEIGHT: " + height + ", ");
+        offset = new Translate((translateX == 0) ? 0 : width/translateX,
+                               (translateY == 0) ? 0 : height/translateY);
         this.image.getTransforms().addAll(rotation, offset);
     }
 

@@ -3,26 +3,34 @@ package main.backend.weapons;
 import java.util.HashMap;
 
 public class WeaponManager {
-    private static HashMap<Integer, Weapon> weapons = new HashMap<>();
+    private static Weapon[] weapons;
     private static int weaponsCounter = 0;
 
-    public static Weapon create(String weapon, double x, double y, boolean dropped) {
+    public WeaponManager(int weaponsCount) {
+        weapons = new Weapon[weaponsCount];
+    }
+
+    public static Weapon create(String weapon, double x, double y, boolean dropped,
+                                double translateX, double translateY) {
+        if (weapons != null && weaponsCounter >= weapons.length) {
+            throw new RuntimeException("Creating too many weapons. You initialized WeaponManager wrong.");
+        }
+
         Weapon newWeapon = null;
         if (weapon.equals("dagger")) {
-            newWeapon = new Dagger(x, y, weaponsCounter, dropped);
+            newWeapon = new Dagger(x, y, weaponsCounter, dropped, translateX, translateY);
         } else if (weapon.equals("spear")) {
-            newWeapon = new Spear(x, y, weaponsCounter, dropped);
+            newWeapon = new Spear(x, y, weaponsCounter, dropped, translateX, translateY);
         } else if (weapon.equals("axe")) {
-            newWeapon = new Axe(x, y, weaponsCounter, dropped);
+            newWeapon = new Axe(x, y, weaponsCounter, dropped, translateX, translateY);
         } else {
             throw new IllegalArgumentException("Weapon name not recognized");
         }
-        weapons.put(weaponsCounter, newWeapon);
-        ++weaponsCounter;
+
         return newWeapon;
     }
 
-    public static void destroy(int id) {
-        weapons.remove(id);
+    public void addWeapon(Weapon weapon) {
+        weapons[weaponsCounter] = weapon;
     }
 }

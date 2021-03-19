@@ -2,9 +2,6 @@ package main.backend.weapons;
 
 import javafx.geometry.Point2D;
 import main.backend.collidables.Collidable;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import main.frontend.MainScreen;
 
 public abstract class Weapon extends Collidable {
     //x for the x-axis position
@@ -32,36 +29,26 @@ public abstract class Weapon extends Collidable {
     //id is the key stored in the dictionary with the weapon being its value
     protected int id;
 
-    //raw image of the image, original size
-    protected Image imageRaw;
-
-    //image of weapon
-    protected ImageView image;
-
     //whether or not any sprite is carrying the weapon or not
     protected boolean dropped;
 
     protected Weapon(double x, double y, double r, int damage, double range, double aoe,
-                     int id, String imagePath, boolean dropped, int maxsize, double rof) {
-        super(x, y, maxsize, imagePath);
+                     int id, String imagePath, boolean dropped, int maxsize, double rof,
+                     double translateX, double translateY) {
+        super(x, y, maxsize, imagePath, translateX, translateY);
+        System.out.println(imagePath);
         this.position = new Point2D(x, y);
         this.r = r;
         this.damage = damage;
         this.range = range;
         this.aoe = aoe;
         this.id = id;
-        this.imageRaw = new Image(imagePath);
-        this.image = new ImageView(this.imageRaw);
         this.dropped = dropped;
         this.rof = rof;
     }
 
     public Point2D getPosition() {
         return this.position;
-    }
-
-    public Image getImageRaw() {
-        return this.imageRaw;
     }
 
     public double getRange() {
@@ -99,9 +86,9 @@ public abstract class Weapon extends Collidable {
         }
     }
 
-    public abstract void attack();
-
-    public void destroy() {
-        WeaponManager.destroy(id);
+    public void dropWeapon() {
+        dropped = true;
     }
+
+    public abstract void attack();
 }
