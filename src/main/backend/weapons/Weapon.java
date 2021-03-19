@@ -2,6 +2,9 @@ package main.backend.weapons;
 
 import javafx.geometry.Point2D;
 import main.backend.collidables.Collidable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import main.frontend.MainScreen;
 
 public abstract class Weapon extends Collidable {
     //x for the x-axis position
@@ -29,6 +32,12 @@ public abstract class Weapon extends Collidable {
     //id is the key stored in the dictionary with the weapon being its value
     protected int id;
 
+    //raw image of the image, original size
+    protected Image imageRaw;
+
+    //image of weapon
+    protected ImageView image;
+
     //whether or not any sprite is carrying the weapon or not
     protected boolean dropped;
 
@@ -41,12 +50,18 @@ public abstract class Weapon extends Collidable {
         this.range = range;
         this.aoe = aoe;
         this.id = id;
+        this.imageRaw = new Image(imagePath);
+        this.image = new ImageView(this.imageRaw);
         this.dropped = dropped;
         this.rof = rof;
     }
 
     public Point2D getPosition() {
         return this.position;
+    }
+
+    public Image getImageRaw() {
+        return this.imageRaw;
     }
 
     public double getRange() {

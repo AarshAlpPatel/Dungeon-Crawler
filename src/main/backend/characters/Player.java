@@ -15,6 +15,7 @@ public class Player extends Sprite {
     private boolean moveWest = false;
     private boolean moveSouth = false;
     private boolean moveEast = false;
+    private Integer cash;
 
     private Player() {
         this(400, 400, 1, 4.0, 100, 5, null, null, "char1.gif");
@@ -25,8 +26,20 @@ public class Player extends Sprite {
         super(x, y, attackMultiplier, speed, health, regeneration, weapon, name, imagePath, 100);
     }
 
+    public void setCash(int cash) {
+        this.cash = cash;
+    }
+
+    public Integer getCash() {
+        return cash;
+    }
+
     public void setBackupWeapon(Weapon backupWeapon) {
         this.backupWeapon = backupWeapon;
+    }
+
+    public Weapon getBackupWeapon() {
+        return backupWeapon;
     }
 
     public void setMoveNorth(boolean b) {

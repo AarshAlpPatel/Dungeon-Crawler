@@ -2,6 +2,9 @@
     -fx-padding: 40;
 }
 
+/*
+    Background rectangle.
+ */
 .customization_panel_back {
     -fx-background-color: #2a6666;
     -fx-opacity: 0.5;
@@ -40,10 +43,16 @@
 .nav_buttons {
 }
 
+/*
+    Name and diff.
+ */
 .entry_fields {
     -fx-spacing: 50;
 }
 
+/*
+    Boxes for name, difficulty, weapon, and chooseChar.
+ */
 .rect {
     -fx-arc-height: 10px;
     -fx-arc-width: 10px;
