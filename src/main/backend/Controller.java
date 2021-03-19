@@ -4,7 +4,6 @@ import java.util.*;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 import main.backend.characters.*;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.*;
@@ -74,7 +73,7 @@ public class Controller {
         return images;
     }
 
-    public static ArrayList<Rectangle> getCurrentRoomWalls() {
+    public static ArrayList<ImageView> getCurrentRoomWalls() {
         return RoomManager.getCurrentRoomWalls();
     }
 
@@ -99,9 +98,13 @@ public class Controller {
         }
     }
 
+    public static void startAttack() {
+        Player.getInstance().startAttack();
+    }
+
     public static void run(Point2D mousePosition) {
         Player.getInstance().move();
-        Player.getInstance().getMainWeapon().follow(mousePosition);
+        Player.getInstance().getMainWeapon().rotate(mousePosition);
     }
 
     public static void initializeLevel() {
@@ -198,6 +201,10 @@ public class Controller {
     }
 
     public static void endGame() {
+        Player.getInstance().setMoveNorth(false);
+        Player.getInstance().setMoveWest(false);
+        Player.getInstance().setMoveSouth(false);
+        Player.getInstance().setMoveEast(false);
         GameManager.endGame();
     }
 }

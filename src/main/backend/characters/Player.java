@@ -18,7 +18,7 @@ public class Player extends Sprite {
     private Integer cash;
 
     private Player() {
-        this(400, 400, 1, 4.0, 100, 5, null, null, "/main/design/images/char1.gif");
+        this(400, 400, 1, 4.0, 100, 5, null, null, "char1.gif");
     }
 
     private Player(double x, double y, double attackMultiplier, double speed,
@@ -96,5 +96,9 @@ public class Player extends Sprite {
         } catch (WallCollision e) {
             System.out.println(e);
         }
+    }
+
+    public void startAttack() {
+        mainWeapon.startAttack();
     }
 }
