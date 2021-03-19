@@ -3,7 +3,6 @@ package main.backend.rooms;
 import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 import main.backend.exceptions.EdgeOfScreen;
 import main.backend.exceptions.WallCollision;
 import main.backend.Controller;
@@ -91,7 +90,7 @@ public abstract class Room {
         this.clear = true;
     }
 
-    public ArrayList<Rectangle> getWalls() {
+    public ArrayList<ImageView> getWalls() {
         return walls.getWalls();
     }
 

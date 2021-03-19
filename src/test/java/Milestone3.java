@@ -16,6 +16,7 @@ import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 import static org.testfx.api.FxToolkit.setupApplication;
@@ -112,7 +113,7 @@ public class Milestone3 extends ApplicationTest {
 
     @Test
     public void checkForFourExits() {
-        clickOn("#toGame");
+        /*clickOn("#toGame");
         clickOn("#nameField");
         type(KeyCode.N);
         clickOn("Start Game");
@@ -190,9 +191,13 @@ public class Milestone3 extends ApplicationTest {
         while (Player.getInstance().getPosition().getX() <= Controller.getMidX()) {
             press(KeyCode.D);
         }
-        release(KeyCode.D);
+        release(KeyCode.D);*/
 
-
+        clickOn("#toGame");
+        clickOn("#nameField");
+        type(KeyCode.N);
+        clickOn("Start Game");
+        assertEquals(4, Controller.getConnections().length);
     }
 
     @Test
@@ -222,7 +227,7 @@ public class Milestone3 extends ApplicationTest {
         clickOn("#nameField");
         type(KeyCode.N);
         clickOn("Start Game");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             press(KeyCode.S);
         }
         release(KeyCode.S);

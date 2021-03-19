@@ -9,8 +9,9 @@ public class EnemyManager {
     private Enemy[] enemies;
     private int enemyCounter = 0;
 
-    public EnemyManager(int enemies) {
+    public EnemyManager(int enemies, int difficulty) {
         this.enemies = new Enemy[enemies];
+        generateEnemies(enemies, difficulty);
     }
 
     public Enemy create(double x, double y, String name) {
@@ -29,7 +30,6 @@ public class EnemyManager {
     public void destroy(int id) {
         Controller.destroyImage(enemies[id].getImage());
         enemies[id].destroy();
-        enemies[id] = null;
         --enemyCounter;
     }
 
@@ -45,5 +45,25 @@ public class EnemyManager {
             }
         }
         return images;
+    }
+
+    private double getRandomPosition() {
+        return Math.random()*500 + 150;
+    }
+
+    public void generateEnemies(int enemies, int difficulty) {
+        //will customize with different level enemies at a later time
+        for(int i = 0; i < enemies; ++i) {
+            if (Math.random() < (0.9/difficulty)*(0.9/difficulty)) {
+                this.enemies[i] = new Ghost(getRandomPosition(),
+                                        getRandomPosition(), i);
+            } else if (Math.random() < 1/difficulty) {
+                this.enemies[i] = new Ghost(getRandomPosition(),
+                                        getRandomPosition(), i);
+            } else {
+                this.enemies[i] = new Ghost(getRandomPosition(),
+                                        getRandomPosition(), i);
+            }
+        }
     }
 }

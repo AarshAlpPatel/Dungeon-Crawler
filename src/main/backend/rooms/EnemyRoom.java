@@ -10,13 +10,13 @@ public class EnemyRoom extends Room {
 
     public EnemyRoom(String difficulty) {
         if (difficulty.equals("easy")) {
-            this.enemies = new EnemyManager(0);
+            this.enemies = new EnemyManager(4, 1);
         } else if (difficulty.equals("medium")) {
-            this.enemies = new EnemyManager(0);
+            this.enemies = new EnemyManager(5, 2);
         } else if (difficulty.equals("hard")) {
-            this.enemies = new EnemyManager(0);
+            this.enemies = new EnemyManager(6, 3);
         } else if (difficulty.equals("boss")) {
-            this.enemies = new EnemyManager(0);
+            this.enemies = new EnemyManager(8, 4);
         } else {
             throw new IllegalArgumentException("Invalid difficulty");
         }
@@ -25,7 +25,7 @@ public class EnemyRoom extends Room {
     @Override
     public ArrayList<ImageView> getImages() {
         ArrayList<ImageView> images = new ArrayList<>();
-        //images.addAll(enemies.getImages());
+        images.addAll(enemies.getImages());
         return images;
     }
 

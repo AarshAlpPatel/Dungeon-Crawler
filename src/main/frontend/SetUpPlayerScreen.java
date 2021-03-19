@@ -16,9 +16,9 @@ public class SetUpPlayerScreen {
     private static int indexC = 0; //character
     private static int indexW = 0; //weapon
     private static String[] characters = {
-        "/main/design/images/char1.gif",
-        "/main/design/images/char2.gif", 
-        "/main/design/images/char3.gif"
+        "char1.gif",
+        "char2.gif", 
+        "char3.gif"
     };
     private static String[] weapons = {
         "dagger",
@@ -123,7 +123,7 @@ public class SetUpPlayerScreen {
             if (indexC < 0) {
                 indexC = 2;
             }
-            character.getChildren().add(new ImageView(new Image(characters[indexC])));
+            character.getChildren().add(new ImageView(new Image("/main/design/images/" + characters[indexC])));
         });
         return direction;
     }
@@ -203,7 +203,7 @@ public class SetUpPlayerScreen {
 
         StackPane character = new StackPane();
 
-        character.getChildren().add(new ImageView(new Image(characters[indexC])));
+        character.getChildren().add(new ImageView(new Image("/main/design/images/" + characters[indexC])));
         character.getStyleClass().add("character");
 
         StackPane navButtons = new StackPane();

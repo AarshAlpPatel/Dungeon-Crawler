@@ -1,17 +1,22 @@
 package main.backend.collidables;
 
+import java.util.ArrayList;
+
 import javafx.geometry.Point2D;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.transform.*;
 import main.backend.Controller;
-import main.backend.Displayable;
 
-public abstract class Collidable extends Displayable {
-    
-    protected Rectangle box;
-    private double offsetX;
-    private double offsetY;
+public abstract class Collidable {
+    protected ImageView image;
+    protected Rotate rotation = new Rotate(0);
+    protected Translate offset;
 
+    private void setPivot(Point2D position) {
+        rotation.setPivotX(position.getX());
+        rotation.setPivotY(position.getY());
+    }
     /**
      * used exclusively to create walls
      * @param x initial x position of image
@@ -24,41 +29,56 @@ public abstract class Collidable extends Displayable {
      */
     protected Collidable(double x, double y, double length, double height,
                          String imagePath, double translateX, double translateY) {
-        super(x, y, length, height, imagePath);
-        box = new Rectangle(x, y, length, height);
-        box.setTranslateX(x - translateX);
-        box.setTranslateY(y - translateY);
+        this.image = new ImageView(new Image("/main/design/images/" + imagePath));
+        this.image.setPreserveRatio(false);
+        this.image.setFitWidth(length);
+        this.image.setFitHeight(height);
+        image.setTranslateX(x - translateX);
+        image.setTranslateY(y - translateY);
     }
 
     protected Collidable(double x, double y, int maxsize,
                          String imagePath) {
-        super(x, y, maxsize, imagePath);
-        double imageWidth = image.getBoundsInParent().getWidth();
-        double imageHeight = image.getBoundsInParent().getHeight();
-        offsetX = imageWidth / 2;
-        offsetY = imageHeight / 2;
-        box = new Rectangle(x - offsetX, y - offsetY, imageWidth, imageHeight);
-        box.setTranslateX(x - Controller.getLength() / 2);
-        box.setTranslateY(y - Controller.getHeight() / 2);
-        this.box.setFill(Color.GREEN);
+        this.image = new ImageView(new Image("/main/design/images/" + imagePath));
+        this.image.setPreserveRatio(true);
+        this.image.setFitWidth(maxsize);
+        this.image.setFitHeight(maxsize);
+        setImagePosition(new Point2D(x, y));
+        
+        double width = this.image.getBoundsInParent().getWidth();
+        double height = this.image.getBoundsInParent().getHeight();
+        offset = new Translate(width/2.5, 0);
+        this.image.getTransforms().addAll(rotation, offset);
     }
 
-    protected Rectangle getWall() {
-        return box;
+    public void setImage(String imagePath) {
+        double x = image.getTranslateX();
+        double y = image.getTranslateY();
+        double maxsize = Math.max(image.getFitHeight(), image.getFitWidth());
+        this.image = new ImageView(new Image("/main/design/images/" + imagePath));
+        this.image.setPreserveRatio(true);
+        this.image.setFitHeight(maxsize);
+        this.image.setFitWidth(maxsize);
+        setImagePosition(new Point2D(x, y));
+    }
+    
+    protected void setImagePosition(Point2D position) {
+        this.image.setTranslateX(position.getX() - Controller.getLength() / 2);
+        this.image.setTranslateY(position.getY() - Controller.getHeight() / 2);
+        setPivot(position);
     }
 
-    protected void setPosition(Point2D p) {
-        this.box.setX(p.getX() - offsetX);
-        this.box.setY(p.getY() - offsetY);
-        this.setImagePosition(p.getX(), p.getY());
+    public ArrayList<ImageView> getImage() {
+        ArrayList<ImageView> images = new ArrayList<>();
+        images.add(this.image);
+        return images;
     }
 
     protected void setRotate(double angle) {
-        this.box.setRotate(angle);
         this.image.setRotate(angle);
     }
 
     protected boolean collidesWith(Collidable obj) {
-        return this.box.intersects(obj.box.getBoundsInParent());
+        return this.image.getBoundsInParent().intersects(obj.image.getBoundsInParent());
     }
 }
