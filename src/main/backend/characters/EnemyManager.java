@@ -4,13 +4,16 @@ import java.util.*;
 
 import javafx.scene.image.ImageView;
 import main.backend.Controller;
+import main.backend.weapons.WeaponManager;
 
 public class EnemyManager {
     private Enemy[] enemies;
     private int enemyCounter = 0;
+    WeaponManager weaponManager;
 
     public EnemyManager(int enemies, int difficulty) {
         this.enemies = new Enemy[enemies];
+        weaponManager = new WeaponManager(enemies);
         generateEnemies(enemies, difficulty);
     }
 
@@ -64,6 +67,7 @@ public class EnemyManager {
                 this.enemies[i] = new Ghost(getRandomPosition(),
                                         getRandomPosition(), i);
             }
+            weaponManager.addWeapon(this.enemies[i].getMainWeapon());
         }
     }
 }

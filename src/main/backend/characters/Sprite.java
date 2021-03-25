@@ -20,7 +20,7 @@ public abstract class Sprite extends Collidable {
     protected Sprite(double x, double y, double attackMultiplier, double speed, 
                      int health, int regeneration, Weapon weapon, String name, 
                      String imagePath, int maxsize) {
-        super(x, y, maxsize, imagePath);
+        super(x, y, maxsize, imagePath, 0, 0);
         this.position = new Point2D(x, y);
         this.attackMultiplier = attackMultiplier;
         this.speed = speed;
@@ -109,6 +109,6 @@ public abstract class Sprite extends Collidable {
     }
 
     public void destroy() {
-        this.mainWeapon.destroy();
+        this.mainWeapon.dropWeapon();
     }
 }

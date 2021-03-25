@@ -2,6 +2,7 @@ package main.frontend;
 
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
@@ -25,6 +26,9 @@ public class SetUpPlayerScreen {
         "axe"
     };
 
+//    private static ImageCursor defaultCursor = new ImageCursor(new Image("/main/design/images/cursors/default_cursor.png"));
+//    private static ImageCursor clickCursor = new ImageCursor(new Image("/main/design/images/cursors/custom_click.png"));
+
     private static String capitalize(String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
@@ -35,8 +39,9 @@ public class SetUpPlayerScreen {
         direction.setId(id);
         direction.setOnMouseEntered(e -> {
             playerSetUp.setCursor(Cursor.HAND);
-            direction.setFitWidth(arrow.getWidth() * 1.5);
-            direction.setFitHeight(arrow.getHeight() * 1.5);
+        });
+        direction.setOnMouseExited(e -> {
+            playerSetUp.setCursor(Cursor.DEFAULT);
         });
         return direction;
     }
@@ -105,7 +110,9 @@ public class SetUpPlayerScreen {
         Image imageChar = new Image(imagePath, 16, 24, false, false);
         ImageView direction = new ImageView(imageChar);
         direction.setId(id);
-        direction.setOnMouseEntered(e -> playerSetUp.setCursor(Cursor.CLOSED_HAND));
+        direction.setOnMouseEntered(e -> {
+            playerSetUp.setCursor(Cursor.HAND);
+        });
         direction.setOnMouseExited(e -> playerSetUp.setCursor(Cursor.DEFAULT));
         direction.setOnMouseClicked(e -> {
             indexC += add;

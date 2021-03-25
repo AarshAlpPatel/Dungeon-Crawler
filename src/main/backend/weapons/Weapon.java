@@ -33,8 +33,10 @@ public abstract class Weapon extends Collidable {
     protected boolean dropped;
 
     protected Weapon(double x, double y, double r, int damage, double range, double aoe,
-                     int id, String imagePath, boolean dropped, int maxsize, double rof) {
-        super(x, y, maxsize, imagePath);
+                     int id, String imagePath, boolean dropped, int maxsize, double rof,
+                     double translateX, double translateY) {
+        super(x, y, maxsize, imagePath, translateX, translateY);
+        System.out.println(imagePath);
         this.position = new Point2D(x, y);
         this.r = r;
         this.damage = damage;
@@ -84,9 +86,9 @@ public abstract class Weapon extends Collidable {
         }
     }
 
-    public abstract void attack();
-
-    public void destroy() {
-        WeaponManager.destroy(id);
+    public void dropWeapon() {
+        dropped = true;
     }
+
+    public abstract void attack();
 }

@@ -61,6 +61,7 @@ public class MainScreen extends Application {
 
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
+        stage.setResizable(true);
         Image icon = new Image("/main/design/images/icon.png");
         stage.getIcons().add(icon);
         setScene(WelcomeScreen.getScene());

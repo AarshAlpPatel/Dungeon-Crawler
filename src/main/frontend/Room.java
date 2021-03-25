@@ -8,6 +8,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
+import main.backend.characters.Player;
 
 public class Room {
     private static Pane screen = null;
@@ -47,6 +48,7 @@ public class Room {
             numHearts = 6;
             amountCash = 300;
         }
+        Player.getInstance().setCash(amountCash);
 
         for (int i = 0; i < numHearts; i++) {
             ImageView heart = new ImageView("/main/design/images/heart.png");

@@ -54,7 +54,7 @@ public class Controller {
     public static Player createPlayer(double x, double y, String name, String weaponName,
                                       String imagePath) {
         Player player = Player.getInstance();
-        Weapon weapon = WeaponManager.create(weaponName, x, y, false);
+        Weapon weapon = WeaponManager.create(weaponName, x, y, false, 2.5, 10);
         player.setName(name);
         player.setWeapon(weapon);
         player.setPosition(new Point2D(x, y));

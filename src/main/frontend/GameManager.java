@@ -2,6 +2,7 @@ package main.frontend;
 
 import java.util.*;
 
+import com.sun.tools.javac.Main;
 import javafx.event.*;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
@@ -26,6 +27,19 @@ public class GameManager {
      */
     private static void setKeybinds() {
         //event for when a key is pressed and/or held down
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.H) {
+                    MainScreen.setScene(InventoryScreen.getScene());
+                } else if (event.getCode() == KeyCode.G) {
+                    MainScreen.setScene(ShopScreen.getScene());
+                } else {
+                    Controller.setDirection(event.getCode().toString(), true);
+                }
+                //set the direction which the player is traveling
+                Controller.setDirection(event.getCode().toString(), true);
+            }
+        });
         scene.setOnKeyPressed(e -> { 
             Controller.setDirection(e.getCode().toString(), true);
         });
