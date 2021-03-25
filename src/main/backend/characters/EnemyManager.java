@@ -13,6 +13,7 @@ public class EnemyManager {
 
     public EnemyManager(int enemies, int difficulty) {
         this.enemies = new Enemy[enemies];
+        this.enemyCounter = enemies;
         weaponManager = new WeaponManager(enemies);
         generateEnemies(enemies, difficulty);
     }
