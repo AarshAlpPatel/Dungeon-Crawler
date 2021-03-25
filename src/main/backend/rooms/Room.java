@@ -14,15 +14,15 @@ public abstract class Room {
     protected Room[] connections;
     protected WallManager walls;
 
-    protected boolean clear;
+    protected boolean status;
 
     protected Room() {
         this.connections = new Room[MAX_CONNECTIONS];
-        this.clear = false;
+        this.status = false;
     }
 
-    public boolean getClear() {
-        return clear;
+    public boolean getLockStatus() {
+        return status;
     }
 
     public Room getNextRoom(Door direction) {
@@ -33,22 +33,26 @@ public abstract class Room {
         if (x <= Controller.getMinPlayerX() + 5
             && y >= Controller.getMidY() - RoomManager.getDoorWidth() / 2
             && y <= Controller.getMidY() + RoomManager.getDoorWidth() / 2
-            && connections[Door.WEST.ordinal()] != null) {
+            && connections[Door.WEST.ordinal()] != null
+            && connections[Door.WEST.ordinal()].getLockStatus()) {
             return Door.WEST;
         } else if (x >= Controller.getMaxPlayerX() - 5
                    && y >= Controller.getMidY() - RoomManager.getDoorWidth() / 2
                    && y <= Controller.getMidY() + RoomManager.getDoorWidth() / 2
-                   && connections[Door.EAST.ordinal()] != null) {
+                   && connections[Door.EAST.ordinal()] != null
+                   && connections[Door.EAST.ordinal()].getLockStatus()) {
             return Door.EAST;
         } else if (y <= Controller.getMinPlayerY() + 5
                    && x >= Controller.getMidX() - RoomManager.getDoorWidth() / 2
                    && x <= Controller.getMidX() + RoomManager.getDoorWidth() / 2
-                   && connections[Door.NORTH.ordinal()] != null) {
+                   && connections[Door.NORTH.ordinal()] != null
+                   && connections[Door.NORTH.ordinal()].getLockStatus()) {
             return Door.NORTH;
         } else if (y >= Controller.getMaxPlayerY() - 5
                    && x >= Controller.getMidX() - RoomManager.getDoorWidth() / 2
                    && x <= Controller.getMidX() + RoomManager.getDoorWidth() / 2
-                   && connections[Door.SOUTH.ordinal()] != null) {
+                   && connections[Door.SOUTH.ordinal()] != null
+                   && connections[Door.SOUTH.ordinal()].getLockStatus()) {
             return Door.SOUTH;
         } else {
             return null;
@@ -86,8 +90,14 @@ public abstract class Room {
         return true;
     }
 
-    public void setClearTrue() {
-        this.clear = true;
+    public void setStatusTrue() {
+        this.status = true;
+        for (Room r: connections) {
+            if (r != null) {
+                r.status = true;
+                System.out.println("Set room status to true");
+            }
+        }
     }
 
     public ArrayList<ImageView> getWalls() {

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
 
-public class WeaponRoom extends Room {
+public class WeaponRoom extends EnemyRoom {
+    public WeaponRoom() {
+        super("hard");
+    }
+
     @Override
     public ArrayList<ImageView> getImages() {
         return new ArrayList<>();
     }
 
-    @Override
-    public void enter() {
-        setClearTrue();
-    }
 }

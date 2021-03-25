@@ -29,8 +29,6 @@ public class RoomManager {
     private static Room createRoom(String type) {
         if (type.equals("empty")) {
             return new EmptyRoom();
-        } else if (type.equals("shop")) {
-            return new ShopRoom();
         } else if (type.equals("potion")) {
             return new PotionRoom();
         } else if (type.equals("weapon")) {
@@ -56,9 +54,7 @@ public class RoomManager {
     public static void createRooms(int level) {
         ArrayList<String> types = new ArrayList<>(MAX_ROOMS);
         current = createRoom("empty");
-        current.enter();
         rooms.add(current);
-        types.add("shop");
         types.add("potion");
         types.add("weapon");
         types.add("weapon");
@@ -99,6 +95,7 @@ public class RoomManager {
         for (Room r : rooms) {
             r.setWalls();
         }
+        current.enter();
     }
 
     public static boolean validMove(double x, double y, Sprite s) {
@@ -115,7 +112,7 @@ public class RoomManager {
 
     public static void checkEdge(double x, double y) {
         Door direction = current.checkEdge(x, y);
-        if (direction != null && current.getClear()) {
+        if (direction != null && current.getLockStatus()) {
             Room next = current.getNextRoom(direction);
             current = next;
             Controller.changeRoom(direction);

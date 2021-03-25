@@ -12,7 +12,7 @@ public class EndRoom extends Room {
 
     @Override
     public void enter() {
-        setClearTrue();
+        setStatusTrue();
         Controller.endGame();
     }
 }

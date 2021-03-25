@@ -32,6 +32,9 @@ public class EnemyRoom extends Room {
     @Override
     public void enter() {
         //should generate enemies upon entering. this is temporary
-        setClearTrue();
+        if (enemies.clear()) {
+            setStatusTrue();
+        }
+
     }
 }
