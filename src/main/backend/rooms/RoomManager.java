@@ -2,8 +2,10 @@ package main.backend.rooms;
 
 import java.util.*;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.Node;
 import main.backend.Controller;
+import main.backend.characters.EnemyManager;
+import main.backend.characters.Player;
 import main.backend.characters.Sprite;
 
 public class RoomManager {
@@ -28,9 +30,7 @@ public class RoomManager {
 
     private static Room createRoom(String type) {
         if (type.equals("empty")) {
-            return new EmptyRoom();
-        } else if (type.equals("shop")) {
-            return new ShopRoom();
+            return new Room("empty");
         } else if (type.equals("potion")) {
             return new PotionRoom();
         } else if (type.equals("weapon")) {
@@ -40,7 +40,7 @@ public class RoomManager {
         } else if (type.equals("end")) {
             return new EndRoom();
         } else {
-            return new EnemyRoom(type);
+            return new Room(type);
         }
     }
 
@@ -56,9 +56,7 @@ public class RoomManager {
     public static void createRooms(int level) {
         ArrayList<String> types = new ArrayList<>(MAX_ROOMS);
         current = createRoom("empty");
-        current.enter();
         rooms.add(current);
-        types.add("shop");
         types.add("potion");
         types.add("weapon");
         types.add("weapon");
@@ -99,23 +97,28 @@ public class RoomManager {
         for (Room r : rooms) {
             r.setWalls();
         }
+        current.enter();
     }
 
     public static boolean validMove(double x, double y, Sprite s) {
         return current.validMove(x, y, s);
     }
 
-    public static ArrayList<ImageView> getCurrentRoomImages() {
+    public static ArrayList<Node> getCurrentRoomImages() {
         return current.getImages();
     }
 
-    public static ArrayList<ImageView> getCurrentRoomWalls() {
+    public static ArrayList<Node> getCurrentRoomWalls() {
         return current.getWalls();
+    }
+
+    public static EnemyManager getCurrentEnemies() {
+        return current.getCurrentEnemies();
     }
 
     public static void checkEdge(double x, double y) {
         Door direction = current.checkEdge(x, y);
-        if (direction != null && current.getClear()) {
+        if (direction != null && current.getLockStatus()) {
             Room next = current.getNextRoom(direction);
             current = next;
             Controller.changeRoom(direction);

@@ -1,5 +1,8 @@
 package main.backend.characters;
 
+import javafx.scene.control.ProgressBar;
+import javafx.scene.text.Text;
+import main.backend.Controller;
 import main.backend.exceptions.EdgeOfScreen;
 import main.backend.exceptions.WallCollision;
 import main.backend.rooms.RoomManager;
@@ -16,6 +19,7 @@ public class Player extends Sprite {
     private boolean moveSouth = false;
     private boolean moveEast = false;
     private Integer cash;
+    private Text healthTextBox;
 
     private Player() {
         this(400, 400, 1, 4.0, 100, 5, null, null, "char1.gif");
@@ -56,6 +60,11 @@ public class Player extends Sprite {
 
     public void setMoveEast(boolean b) {
         moveEast = b;
+    }
+
+    public void setHealthBox(ProgressBar healthBar, Text healthVal) {
+        this.healthBar = healthBar;
+        this.healthTextBox = healthVal;
     }
 
     public void switchWeapons() {
@@ -100,5 +109,10 @@ public class Player extends Sprite {
 
     public void startAttack() {
         mainWeapon.startAttack();
+    }
+
+    public void destroy() {
+        this.mainWeapon.destroyWeapon();
+        Controller.endGame();
     }
 }

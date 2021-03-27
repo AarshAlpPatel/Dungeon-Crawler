@@ -3,6 +3,7 @@ package main.backend.collidables;
 import java.util.ArrayList;
 
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.transform.*;
@@ -54,15 +55,14 @@ public abstract class Collidable {
 
         double width = this.image.getBoundsInParent().getWidth();
         double height = this.image.getBoundsInParent().getHeight();
-        System.out.print("WIDTH: " + width + ", HEIGHT: " + height + ", ");
         offset = new Translate((translateX == 0) ? 0 : width/translateX,
                                (translateY == 0) ? 0 : height/translateY);
         this.image.getTransforms().addAll(rotation, offset);
     }
 
     public void setImage(String imagePath) {
-        double x = image.getTranslateX();
-        double y = image.getTranslateY();
+        double x = image.getBoundsInParent().getCenterX();
+        double y = image.getBoundsInParent().getCenterY();
         double maxsize = Math.max(image.getFitHeight(), image.getFitWidth());
         this.image = new ImageView(new Image("/main/design/images/" + imagePath));
         this.image.setPreserveRatio(true);
@@ -77,8 +77,8 @@ public abstract class Collidable {
         setPivot(position);
     }
 
-    public ArrayList<ImageView> getImage() {
-        ArrayList<ImageView> images = new ArrayList<>();
+    public ArrayList<Node> getImage() {
+        ArrayList<Node> images = new ArrayList<>();
         images.add(this.image);
         return images;
     }
@@ -87,7 +87,7 @@ public abstract class Collidable {
         this.image.setRotate(angle);
     }
 
-    protected boolean collidesWith(Collidable obj) {
+    public boolean collidesWith(Collidable obj) {
         return this.image.getBoundsInParent().intersects(obj.image.getBoundsInParent());
     }
 }

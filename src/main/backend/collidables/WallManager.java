@@ -2,7 +2,7 @@ package main.backend.collidables;
 
 import java.util.ArrayList;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.Node;
 import main.backend.Controller;
 import main.backend.characters.Sprite;
 
@@ -60,8 +60,8 @@ public class WallManager {
         }
     }
 
-    public ArrayList<ImageView> getWalls() {
-        ArrayList<ImageView> rects = new ArrayList<>();
+    public ArrayList<Node> getWalls() {
+        ArrayList<Node> rects = new ArrayList<>();
         for (Wall w : walls) {
             rects.addAll(w.getImage());
         }

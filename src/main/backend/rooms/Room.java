@@ -2,53 +2,77 @@ package main.backend.rooms;
 
 import java.util.ArrayList;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.Node;
 import main.backend.exceptions.EdgeOfScreen;
 import main.backend.exceptions.WallCollision;
 import main.backend.Controller;
 import main.backend.characters.Sprite;
 import main.backend.collidables.WallManager;
+import main.backend.characters.EnemyManager;
 
-public abstract class Room {
+public class Room {
     protected static final int MAX_CONNECTIONS = 4;
     protected Room[] connections;
     protected WallManager walls;
+    protected EnemyManager enemies;
 
-    protected boolean clear;
+    protected boolean status;
 
-    protected Room() {
+    protected Room(String difficulty) {
         this.connections = new Room[MAX_CONNECTIONS];
-        this.clear = false;
+        this.status = false;
+
+        if (difficulty.equals("empty")) {
+            this.enemies = new EnemyManager(0, 0);
+        } else if (difficulty.equals("easy")) {
+            this.enemies = new EnemyManager(4, 1);
+        } else if (difficulty.equals("medium")) {
+            this.enemies = new EnemyManager(5, 2);
+        } else if (difficulty.equals("hard")) {
+            this.enemies = new EnemyManager(6, 3);
+        } else if (difficulty.equals("boss")) {
+            this.enemies = new EnemyManager(8, 4);
+        } else {
+            throw new IllegalArgumentException("Invalid difficulty");
+        }
     }
 
-    public boolean getClear() {
-        return clear;
+    public boolean getLockStatus() {
+        return status;
     }
 
     public Room getNextRoom(Door direction) {
         return connections[direction.ordinal()];
     }
 
+    public EnemyManager getCurrentEnemies() {
+        return enemies;
+    }
+
     public Door checkEdge(double x, double y) {
         if (x <= Controller.getMinPlayerX() + 5
             && y >= Controller.getMidY() - RoomManager.getDoorWidth() / 2
             && y <= Controller.getMidY() + RoomManager.getDoorWidth() / 2
-            && connections[Door.WEST.ordinal()] != null) {
+            && connections[Door.WEST.ordinal()] != null
+            && connections[Door.WEST.ordinal()].getLockStatus()) {
             return Door.WEST;
         } else if (x >= Controller.getMaxPlayerX() - 5
                    && y >= Controller.getMidY() - RoomManager.getDoorWidth() / 2
                    && y <= Controller.getMidY() + RoomManager.getDoorWidth() / 2
-                   && connections[Door.EAST.ordinal()] != null) {
+                   && connections[Door.EAST.ordinal()] != null
+                   && connections[Door.EAST.ordinal()].getLockStatus()) {
             return Door.EAST;
         } else if (y <= Controller.getMinPlayerY() + 5
                    && x >= Controller.getMidX() - RoomManager.getDoorWidth() / 2
                    && x <= Controller.getMidX() + RoomManager.getDoorWidth() / 2
-                   && connections[Door.NORTH.ordinal()] != null) {
+                   && connections[Door.NORTH.ordinal()] != null
+                   && connections[Door.NORTH.ordinal()].getLockStatus()) {
             return Door.NORTH;
         } else if (y >= Controller.getMaxPlayerY() - 5
                    && x >= Controller.getMidX() - RoomManager.getDoorWidth() / 2
                    && x <= Controller.getMidX() + RoomManager.getDoorWidth() / 2
-                   && connections[Door.SOUTH.ordinal()] != null) {
+                   && connections[Door.SOUTH.ordinal()] != null
+                   && connections[Door.SOUTH.ordinal()].getLockStatus()) {
             return Door.SOUTH;
         } else {
             return null;
@@ -86,11 +110,16 @@ public abstract class Room {
         return true;
     }
 
-    public void setClearTrue() {
-        this.clear = true;
+    public void setStatusTrue() {
+        this.status = true;
+        for (Room r: connections) {
+            if (r != null) {
+                r.status = true;
+            }
+        }
     }
 
-    public ArrayList<ImageView> getWalls() {
+    public ArrayList<Node> getWalls() {
         return walls.getWalls();
     }
 
@@ -117,7 +146,15 @@ public abstract class Room {
         walls = new WallManager(4, getConnections());
     }
 
-    public abstract ArrayList<ImageView> getImages();
+    public ArrayList<Node> getImages() {
+        ArrayList<Node> images = new ArrayList<>();
+        images.addAll(enemies.getImages());
+        return images;
+    }
 
-    public abstract void enter();
+    public void enter() {
+        if (enemies.clear()) {
+            setStatusTrue();
+        }
+    }
 }

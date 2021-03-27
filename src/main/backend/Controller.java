@@ -3,7 +3,8 @@ package main.backend;
 import java.util.*;
 
 import javafx.geometry.Point2D;
-import javafx.scene.image.ImageView;
+import javafx.scene.Node;
+import javafx.scene.control.ProgressBar;
 import main.backend.characters.*;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.*;
@@ -67,13 +68,14 @@ public class Controller {
      *     for the GameManager to display.
      * @return an arraylist of all the images of the sprites
      */
-    public static ArrayList<ImageView> getCurrentRoomImages() {
-        ArrayList<ImageView> images = RoomManager.getCurrentRoomImages();
+    public static ArrayList<Node> getCurrentRoomImages() {
+        ArrayList<Node> images = new ArrayList<>();
         images.addAll(Player.getInstance().getImage());
+        images.addAll(RoomManager.getCurrentRoomImages());
         return images;
     }
 
-    public static ArrayList<ImageView> getCurrentRoomWalls() {
+    public static ArrayList<Node> getCurrentRoomWalls() {
         return RoomManager.getCurrentRoomWalls();
     }
 
@@ -104,7 +106,7 @@ public class Controller {
 
     public static void run(Point2D mousePosition) {
         Player.getInstance().move();
-        Player.getInstance().getMainWeapon().rotate(mousePosition);
+        Player.getInstance().getMainWeapon().rotate(mousePosition, RoomManager.getCurrentEnemies());
     }
 
     public static void initializeLevel() {
@@ -112,8 +114,12 @@ public class Controller {
         RoomManager.createRooms(level);
     }
 
-    public static void destroyImage(ArrayList<ImageView> images) {
+    public static void destroyImage(ArrayList<Node> images) {
         GameManager.destroyImage(images);
+    }
+
+    public static void addImage(ArrayList<Node> images) {
+        GameManager.addImage(images);
     }
 
     public static void changeRoom(Door direction) {

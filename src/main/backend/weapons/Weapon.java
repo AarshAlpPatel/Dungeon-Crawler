@@ -1,6 +1,11 @@
 package main.backend.weapons;
 
+import java.util.ArrayList;
+
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import main.backend.Controller;
+import main.backend.characters.EnemyManager;
 import main.backend.collidables.Collidable;
 
 public abstract class Weapon extends Collidable {
@@ -33,16 +38,14 @@ public abstract class Weapon extends Collidable {
     protected boolean dropped;
 
     protected Weapon(double x, double y, double r, int damage, double range, double aoe,
-                     int id, String imagePath, boolean dropped, int maxsize, double rof,
+                     String imagePath, boolean dropped, int maxsize, double rof,
                      double translateX, double translateY) {
         super(x, y, maxsize, imagePath, translateX, translateY);
-        System.out.println(imagePath);
         this.position = new Point2D(x, y);
         this.r = r;
         this.damage = damage;
         this.range = range;
         this.aoe = aoe;
-        this.id = id;
         this.dropped = dropped;
         this.rof = rof;
     }
@@ -59,15 +62,18 @@ public abstract class Weapon extends Collidable {
         return this.damage;
     }
 
+    public void setID(int id) {
+        this.id = id;
+    }
+
     public void move(Point2D position) {
         this.position = position;
         super.setImagePosition(position);
     }
 
-    public void rotate(Point2D target) {
+    public void rotate(Point2D target, EnemyManager enemies) {
         if (attackCounter != -1) {
-            attack();
-            return;
+            animate(enemies);
         }
         double angle = target.subtract(this.position).angle(positiveX);
         if (target.getY() > this.position.getY()) {
@@ -88,6 +94,28 @@ public abstract class Weapon extends Collidable {
 
     public void dropWeapon() {
         dropped = true;
+    }
+
+    public void destroyWeapon() {
+        ArrayList<Node> image = new ArrayList<>();
+        image.add(this.image);
+        Controller.destroyImage(image);
+    }
+
+    public boolean animate(EnemyManager enemies) {
+        if (attackCounter == rof) {
+            finishAttack();
+            enemies.resetHits();
+            return true;
+        }
+        this.attack();
+        enemies.checkHits();
+        attackCounter++;
+        return false;
+    }
+
+    public void finishAttack() {
+        attackCounter = -1;
     }
 
     public abstract void attack();

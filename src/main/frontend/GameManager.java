@@ -83,8 +83,12 @@ public class GameManager {
      * Used primarily to remove dead enemy sprites.
      * @param images the ImageViews of sprites to remove
      */
-    public static void destroyImage(ArrayList<ImageView> images) {
+    public static void destroyImage(ArrayList<Node> images) {
         screen.getChildren().removeAll(images);
+    }
+
+    public static void addImage(ArrayList<Node> images) {
+        screen.getChildren().addAll(images);
     }
 
     /**
