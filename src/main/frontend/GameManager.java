@@ -35,6 +35,7 @@ public class GameManager {
                     MainScreen.setScene(ShopScreen.getScene());
                 } else {
                     Controller.setDirection(event.getCode().toString(), true);
+                    System.out.println(event.getCode().toString() + " clicked");
                 }
                 //set the direction which the player is traveling
                 Controller.setDirection(event.getCode().toString(), true);
