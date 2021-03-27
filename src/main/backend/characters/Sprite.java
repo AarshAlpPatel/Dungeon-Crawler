@@ -3,7 +3,8 @@ package main.backend.characters;
 import java.util.ArrayList;
 
 import javafx.geometry.Point2D;
-import javafx.scene.image.*;
+import javafx.scene.Node;
+import javafx.scene.control.ProgressBar;
 import main.backend.collidables.Collidable;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.Weapon;
@@ -13,21 +14,28 @@ public abstract class Sprite extends Collidable {
     protected double attackMultiplier;
     protected double speed;
     protected int regeneration;
-    protected int health;
+    protected double health;
+    protected double maxHealth;
     protected Weapon mainWeapon;
     protected String name;
+    protected ProgressBar healthBar;
 
     protected Sprite(double x, double y, double attackMultiplier, double speed, 
-                     int health, int regeneration, Weapon weapon, String name, 
+                     double health, int regeneration, Weapon weapon, String name, 
                      String imagePath, int maxsize) {
         super(x, y, maxsize, imagePath, 0, 0);
         this.position = new Point2D(x, y);
         this.attackMultiplier = attackMultiplier;
         this.speed = speed;
         this.health = health;
+        this.maxHealth = health;
         this.regeneration = regeneration;
         this.mainWeapon = weapon;
         this.name = name;
+        this.healthBar = new ProgressBar();
+        this.healthBar.setProgress(1.0);
+        this.healthBar.setPrefWidth(this.image.getBoundsInParent().getWidth());
+        this.healthBar.setScaleShape(false);
     }
 
     public Point2D getPosition() {
@@ -55,8 +63,8 @@ public abstract class Sprite extends Collidable {
     }
 
     @Override
-    public ArrayList<ImageView> getImage() {
-        ArrayList<ImageView> images = super.getImage();
+    public ArrayList<Node> getImage() {
+        ArrayList<Node> images = super.getImage();
         images.addAll(this.mainWeapon.getImage());
         return images;
     }
@@ -97,18 +105,29 @@ public abstract class Sprite extends Collidable {
         dy *= speed;
         double x = this.position.getX() + dx;
         double y = this.position.getY() + dy;
-        super.setImagePosition(new Point2D(x, y));
+        Point2D newPos = new Point2D(x, y);
+        super.setImagePosition(newPos);
         if (!RoomManager.validMove(x, y, this)) {
             super.setImagePosition(this.position);
             return;
         }
 
-        this.position = this.position.add(dx, dy);
-        super.setImagePosition(this.position);
-        mainWeapon.move(this.position);
+        setPosition(newPos);
     }
 
-    public void destroy() {
-        this.mainWeapon.dropWeapon();
+    public void hit(Sprite s) {
+        s.takeDamage(mainWeapon.getDamage() * this.attackMultiplier);
     }
+
+    public void takeDamage(double damage) {
+        if (this.health <= damage) {
+            this.health = 0;
+            this.destroy();
+        } else {
+            this.health -= damage;
+            this.healthBar.setProgress(this.health/this.maxHealth);
+        }
+    }
+
+    public abstract void destroy();
 }

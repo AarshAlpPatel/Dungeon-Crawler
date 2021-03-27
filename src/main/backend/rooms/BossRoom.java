@@ -1,6 +1,6 @@
 package main.backend.rooms;
 
-public class BossRoom extends EnemyRoom {
+public class BossRoom extends Room {
     public BossRoom() {
         super("boss");
     }

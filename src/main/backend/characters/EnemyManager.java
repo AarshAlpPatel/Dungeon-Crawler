@@ -2,20 +2,23 @@ package main.backend.characters;
 
 import java.util.*;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.Node;
 import main.backend.Controller;
+import main.backend.weapons.Weapon;
 import main.backend.weapons.WeaponManager;
 
 public class EnemyManager {
     private Enemy[] enemies;
+    private boolean[] hit;
     private int enemyCounter = 0;
     WeaponManager weaponManager;
 
-    public EnemyManager(int enemies, int difficulty) {
-        this.enemies = new Enemy[enemies];
-        this.enemyCounter = enemies;
-        weaponManager = new WeaponManager(enemies);
-        generateEnemies(enemies, difficulty);
+    public EnemyManager(int enemyCount, int difficulty) {
+        this.enemies = new Enemy[enemyCount];
+        this.hit = new boolean[enemyCount];
+        this.enemyCounter = 0;
+        weaponManager = new WeaponManager(enemyCount);
+        generateEnemies(enemyCount, difficulty);
     }
 
     public Enemy create(double x, double y, String name) {
@@ -41,8 +44,8 @@ public class EnemyManager {
         return enemyCounter == 0;
     }
 
-    public ArrayList<ImageView> getImages() {
-        ArrayList<ImageView> images = new ArrayList<>(enemyCounter * 2);
+    public ArrayList<Node> getImages() {
+        ArrayList<Node> images = new ArrayList<>(enemyCounter * 2);
         for (Enemy enemy : enemies) {
             if (enemy != null) {
                 images.addAll(enemy.getImage());
@@ -60,15 +63,29 @@ public class EnemyManager {
         for(int i = 0; i < enemies; ++i) {
             if (Math.random() < (0.9/difficulty)*(0.9/difficulty)) {
                 this.enemies[i] = new Ghost(getRandomPosition(),
-                                        getRandomPosition(), i);
+                                        getRandomPosition(), this.enemyCounter++);
             } else if (Math.random() < 1/difficulty) {
                 this.enemies[i] = new Ghost(getRandomPosition(),
-                                        getRandomPosition(), i);
+                                        getRandomPosition(), this.enemyCounter++);
             } else {
                 this.enemies[i] = new Ghost(getRandomPosition(),
-                                        getRandomPosition(), i);
+                                        getRandomPosition(), this.enemyCounter++);
             }
             weaponManager.addWeapon(this.enemies[i].getMainWeapon());
         }
+    }
+
+    public void checkHits() {
+        for (int i = 0; i < enemies.length; ++i) {
+            if (!enemies[i].isDead() && !hit[i]
+                && Player.getInstance().getMainWeapon().collidesWith(enemies[i])) {
+                Player.getInstance().hit(enemies[i]);
+                hit[i] = true;
+            }
+        }
+    }
+
+    public void resetHits() {
+        hit = new boolean[enemies.length];
     }
 }

@@ -2,8 +2,10 @@ package main.backend.rooms;
 
 import java.util.*;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.Node;
 import main.backend.Controller;
+import main.backend.characters.EnemyManager;
+import main.backend.characters.Player;
 import main.backend.characters.Sprite;
 
 public class RoomManager {
@@ -28,7 +30,7 @@ public class RoomManager {
 
     private static Room createRoom(String type) {
         if (type.equals("empty")) {
-            return new EmptyRoom();
+            return new Room("empty");
         } else if (type.equals("potion")) {
             return new PotionRoom();
         } else if (type.equals("weapon")) {
@@ -38,7 +40,7 @@ public class RoomManager {
         } else if (type.equals("end")) {
             return new EndRoom();
         } else {
-            return new EnemyRoom(type);
+            return new Room(type);
         }
     }
 
@@ -102,12 +104,16 @@ public class RoomManager {
         return current.validMove(x, y, s);
     }
 
-    public static ArrayList<ImageView> getCurrentRoomImages() {
+    public static ArrayList<Node> getCurrentRoomImages() {
         return current.getImages();
     }
 
-    public static ArrayList<ImageView> getCurrentRoomWalls() {
+    public static ArrayList<Node> getCurrentRoomWalls() {
         return current.getWalls();
+    }
+
+    public static EnemyManager getCurrentEnemies() {
+        return current.getCurrentEnemies();
     }
 
     public static void checkEdge(double x, double y) {

@@ -3,10 +3,12 @@ package main.frontend;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import main.backend.Controller;
 import main.backend.characters.Player;
 
@@ -37,7 +39,6 @@ public class Room {
         HBox hearts = new HBox(2);
         //buy upgrades or we can add more weapons later or something
         HBox cash = new HBox(10, new ImageView("/main/design/images/coin.png"));
-        healthAndCash.getChildren().addAll(hearts, cash);
         if (Controller.getDifficultyLevel().equals("Easy")) {
             numHearts = 8;
             amountCash = 500;
@@ -48,6 +49,17 @@ public class Room {
             numHearts = 6;
             amountCash = 300;
         }
+
+        ProgressBar healthBar = new ProgressBar();
+        healthBar.setScaleShape(false);
+        healthBar.setPrefWidth(200);
+        healthBar.setProgress(1.0);
+
+        Text healthVal = new Text(10, 50, "100");
+        HBox health = new HBox();
+        health.getChildren().addAll(healthBar, healthVal);
+        healthAndCash.getChildren().addAll(health, cash);
+        Player.getInstance().setHealthBox(healthBar, healthVal);
         Player.getInstance().setCash(amountCash);
 
         for (int i = 0; i < numHearts; i++) {

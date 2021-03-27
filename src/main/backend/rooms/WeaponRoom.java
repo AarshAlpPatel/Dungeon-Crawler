@@ -2,15 +2,15 @@ package main.backend.rooms;
 
 import java.util.ArrayList;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.Node;
 
-public class WeaponRoom extends EnemyRoom {
+public class WeaponRoom extends Room {
     public WeaponRoom() {
         super("hard");
     }
 
     @Override
-    public ArrayList<ImageView> getImages() {
+    public ArrayList<Node> getImages() {
         return new ArrayList<>();
     }
 
