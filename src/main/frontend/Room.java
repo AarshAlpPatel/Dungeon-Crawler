@@ -1,5 +1,7 @@
 package main.frontend;
 
+import javafx.beans.InvalidationListener;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -13,9 +15,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import main.backend.Controller;
 import main.backend.characters.Player;
-import main.backend.rooms.RoomManager;
-
-import java.util.List;
 
 public class Room {
     private static Pane screen = null;
@@ -25,33 +24,6 @@ public class Room {
         if (screen != null) {
             screen.getChildren().clear();
             screen.getChildren().add(bPane);
-        }
-    }
-
-    public static void removeEnemies() {
-        int i = 0;
-        while (i < screen.getChildren().size()) {
-            if (screen.getChildren().get(i) instanceof ImageView) {
-                if (RoomManager.getCurrent().getDifficulty().equals("easy")) {
-                    if (screen.getChildren().get(i).equals(new ImageView("main/design/images/enemies/bat/base/bat-base.gif"))) {
-                        screen.getChildren().remove(i);
-                    } else {
-                        i++;
-                    }
-                } else if (RoomManager.getCurrent().getDifficulty().equals("medium")) {
-                    if (screen.getChildren().get(i).equals(new ImageView("main/design/images/enemies/ghosts/base left/blue base left.gif"))) {
-                        screen.getChildren().remove(i);
-                    } else {
-                        i++;
-                    }
-                } else if (RoomManager.getCurrent().getDifficulty().equals("hard")) {
-                    if (screen.getChildren().get(i).equals(new ImageView("main/design/images/enemies/snake/base/snake_base.gif"))) {
-                        screen.getChildren().remove(i);
-                    } else {
-                        i++;
-                    }
-                }
-            }
         }
     }
 

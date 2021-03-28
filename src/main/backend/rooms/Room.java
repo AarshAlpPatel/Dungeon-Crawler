@@ -163,8 +163,4 @@ public class Room {
             setStatusTrue();
         }
     }
-
-    public void clearEnemies() {
-        main.frontend.Room.removeEnemies();
-    }
 }

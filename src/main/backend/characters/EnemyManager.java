@@ -5,7 +5,6 @@ import java.util.*;
 import javafx.scene.Node;
 import main.backend.Controller;
 import main.backend.rooms.RoomManager;
-import main.backend.weapons.Weapon;
 import main.backend.weapons.WeaponManager;
 
 public class EnemyManager {
@@ -42,7 +41,6 @@ public class EnemyManager {
     }
 
     public boolean clear() {
-
         return enemyCounter == 0;
     }
 
@@ -96,5 +94,13 @@ public class EnemyManager {
 
     public void resetHits() {
         hit = new boolean[enemies.length];
+    }
+
+    public Enemy[] getEnemies() {
+        return enemies;
+    }
+
+    public void setEnemyCounter(int enemyCounter) {
+        this.enemyCounter = enemyCounter;
     }
 }
