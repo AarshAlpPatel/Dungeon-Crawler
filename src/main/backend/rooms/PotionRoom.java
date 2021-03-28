@@ -8,10 +8,4 @@ public class PotionRoom extends Room {
     public PotionRoom() {
         super("hard");
     }
-
-    @Override
-    public ArrayList<Node> getImages() {
-        return new ArrayList<>();
-    }
-
 }

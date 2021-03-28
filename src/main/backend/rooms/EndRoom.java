@@ -9,6 +9,6 @@ public class EndRoom extends Room {
     @Override
     public void enter() {
         setStatusTrue();
-        Controller.endGame();
+        Controller.winGame();
     }
 }

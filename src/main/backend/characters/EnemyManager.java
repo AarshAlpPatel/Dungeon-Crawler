@@ -3,19 +3,21 @@ package main.backend.characters;
 import java.util.*;
 
 import javafx.scene.Node;
-import main.backend.Controller;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.WeaponManager;
 
 public class EnemyManager {
     private Enemy[] enemies;
-    private boolean[] hit;
+    private boolean[] enemiesHit;
+    private boolean[] playerHits;
     private int enemyCounter = 0;
+    private static double rangeOffset = 40;
     WeaponManager weaponManager;
 
     public EnemyManager(int enemyCount, int difficulty) {
         this.enemies = new Enemy[enemyCount];
-        this.hit = new boolean[enemyCount];
+        this.enemiesHit = new boolean[enemyCount];
+        this.playerHits = new boolean[enemyCount];
         this.enemyCounter = 0;
         weaponManager = new WeaponManager(enemyCount);
         generateEnemies(enemyCount, difficulty);
@@ -32,12 +34,6 @@ public class EnemyManager {
         enemies[enemyCounter] = newEnemy;
         ++enemyCounter;
         return newEnemy;
-    }
-
-    public void destroy(int id) {
-        Controller.destroyImage(enemies[id].getImage());
-        enemies[id].destroy();
-        --enemyCounter;
     }
 
     public boolean clear() {
@@ -77,13 +73,12 @@ public class EnemyManager {
 
     public void checkHits() {
         for (int i = 0; i < enemies.length; ++i) {
-            if (!enemies[i].isDead() && !hit[i]
+            if (!enemies[i].isDead() && !enemiesHit[i]
                 && Player.getInstance().getMainWeapon().collidesWith(enemies[i])) {
                 Player.getInstance().hit(enemies[i]);
-                hit[i] = true;
+                enemiesHit[i] = true;
                 if (enemies[i].isDead()) {
                     enemyCounter--;
-                    System.out.println(enemyCounter);
                 }
             }
         }
@@ -93,7 +88,33 @@ public class EnemyManager {
     }
 
     public void resetHits() {
-        hit = new boolean[enemies.length];
+        enemiesHit = new boolean[enemies.length];
+    }
+
+    public void attackPlayer() {
+        for (int i = 0; i < enemies.length; ++i) {
+            System.out.println(i + ": " + enemies[i].getMainWeapon().distance(Player.getInstance()) + ", " + enemies[i].getMainWeapon().isAttacking());
+            if (enemies[i].getMainWeapon().isAttacking()) {
+                int res = enemies[i].getMainWeapon().animate();
+                if (enemies[i].getMainWeapon().collidesWith(Player.getInstance())
+                    && !playerHits[i]) {
+                    enemies[i].hit(Player.getInstance());
+                    playerHits[i] = true;
+                }
+                if (res == 3) {
+                    playerHits[i] = false;
+                } else if (res == 1) {
+                    enemies[i].setWeaponDirection();
+                }
+            } else {
+                if (enemies[i].getMainWeapon().inRange(Player.getInstance(), rangeOffset)) {
+                    enemies[i].getMainWeapon().startAttack();
+                } else {
+                    enemies[i].setWeaponDirection();
+                }
+            }
+        }
+        System.out.println();
     }
 
     public Enemy[] getEnemies() {
