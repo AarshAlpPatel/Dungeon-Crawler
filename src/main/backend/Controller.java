@@ -213,11 +213,19 @@ public class Controller {
         return RoomManager.getConnections();
     }
 
-    public static void endGame() {
+    public static void winGame() {
         Player.getInstance().setMoveNorth(false);
         Player.getInstance().setMoveWest(false);
         Player.getInstance().setMoveSouth(false);
         Player.getInstance().setMoveEast(false);
-        GameManager.endGame();
+        GameManager.winGame();
+    }
+
+    public static void loseGame() {
+        Player.getInstance().setMoveNorth(false);
+        Player.getInstance().setMoveWest(false);
+        Player.getInstance().setMoveSouth(false);
+        Player.getInstance().setMoveEast(false);
+        GameManager.loseGame();
     }
 }

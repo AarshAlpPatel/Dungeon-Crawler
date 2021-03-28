@@ -113,6 +113,6 @@ public class Player extends Sprite {
 
     public void destroy() {
         this.mainWeapon.destroyWeapon();
-        Controller.endGame();
+        Controller.loseGame();
     }
 }

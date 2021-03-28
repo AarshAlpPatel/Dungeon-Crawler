@@ -126,9 +126,17 @@ public class GameManager {
     /**
      * Display the game's win condition.
      */
-    public static void endGame() {
+    public static void winGame() {
         stopGameLoop();
         MainScreen.setScene(EndGame.getScene());
+    }
+
+    /**
+     * Display the game's lose condition.
+     */
+    public static void loseGame() {
+        stopGameLoop();
+        MainScreen.setScene(LoseGame.getScene());
     }
 
     /**
