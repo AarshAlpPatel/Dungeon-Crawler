@@ -1,13 +1,11 @@
 package test.java;
 
+import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import main.backend.Controller;
-import main.backend.characters.Enemy;
-import main.backend.characters.EnemyManager;
 import main.backend.characters.Player;
-import main.backend.exceptions.WallCollision;
 import main.backend.rooms.Door;
 import main.backend.rooms.RoomManager;
 import main.frontend.MainScreen;
@@ -21,8 +19,6 @@ import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 import static org.testfx.api.FxToolkit.setupApplication;
@@ -92,21 +88,7 @@ public class Milestone4 extends ApplicationTest {
         clickOn("Start Game");
         goEast();
         Room current = RoomManager.getCurrent();
-        int i = 0;
-        Door[] directions = Door.values();
-        while (current.getNextRoom(directions[i]) == null) {
-            i++;
-        }
-        switch (directions[i]) {
-            case EAST:
-                goEast();
-            case WEST:
-                goWest();
-            case NORTH:
-                goNorth();
-            case SOUTH:
-                goSouth();
-        }
+        findOpenDoor(current);
         assertTrue(current.equals(RoomManager.getCurrent())); //makes sure you didn't leave the room
     }
 
@@ -116,8 +98,31 @@ public class Milestone4 extends ApplicationTest {
         clickOn("#nameField");
         type(KeyCode.N);
         clickOn("Start Game");
-        goEast();
+        Room current = RoomManager.getCurrent();
+        if (current.getNextRoom(Door.EAST).hasConnections()) {
+            goEast();
+        } else if (current.getNextRoom(Door.WEST).hasConnections()) {
+            goWest();
+        } else if (current.getNextRoom(Door.NORTH).hasConnections()) {
+            goNorth();
+        } else {
+            goSouth();
+        }
+        killAllEnemies();
+        Room nextToStart = RoomManager.getCurrent();
+        Door direction = findOpenDoor(nextToStart);
+        assertTrue(direction != null && RoomManager.getCurrent() == nextToStart.getNextRoom(direction));
+    }
 
+    public void killAllEnemies() {
+//        int i = 0;
+//        while (i < RoomManager.getCurrentEnemies().getEnemies().length) {
+//            Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[i].getPosition().subtract(10, 0));
+//            for (int j = 0; j < 10; j++) {
+//                clickOn(RoomManager.getCurrentEnemies().getEnemies()[i].getPosition());
+//            }
+//        }
+        System.out.println("yes");
     }
 
     public void goNorth() {
@@ -135,22 +140,48 @@ public class Milestone4 extends ApplicationTest {
     }
 
     public void goEast() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             press(KeyCode.S);
         }
         release(KeyCode.S);
         while (Player.getInstance().getPosition().getX() > Controller.getMidX() - 1) {
             press(KeyCode.D);
         }
+        release(KeyCode.D);
     }
 
     public void goWest() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             press(KeyCode.S);
         }
         release(KeyCode.S);
         while (Player.getInstance().getPosition().getX() < Controller.getMidX() + 1) {
             press(KeyCode.A);
         }
+        release(KeyCode.A);
+    }
+
+    public Door findOpenDoor(Room current) {
+        int i = 0;
+        Door[] directions = Door.values();
+        while (current.getNextRoom(directions[i]) == null) {
+            i++;
+        }
+        Player.getInstance().setPosition(new Point2D(MainScreen.getMidX(), MainScreen.getMidY()));
+        switch (directions[i]) {
+            case EAST:
+                goEast();
+                return Door.EAST;
+            case WEST:
+                goWest();
+                return Door.WEST;
+            case NORTH:
+                goNorth();
+                return Door.NORTH;
+            case SOUTH:
+                goSouth();
+                return Door.SOUTH;
+        }
+        return null;
     }
 }

@@ -7,8 +7,6 @@ import java.util.ArrayList;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class Enemy extends Sprite {
     protected int id;
@@ -73,5 +71,10 @@ public class Enemy extends Sprite {
         } else {
             mainWeapon.rotate(this.position.add(-1, 0));
         }
+    }
+
+    public Point2D getPosition() {
+
+        return null;
     }
 }

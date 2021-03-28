@@ -37,7 +37,6 @@ public class EnemyManager {
     }
 
     public boolean clear() {
-
         return enemyCounter == 0;
     }
 
@@ -108,7 +107,7 @@ public class EnemyManager {
                     enemies[i].setWeaponDirection();
                 }
             } else {
-                if (enemies[i].getMainWeapon().inRange(Player.getInstance(), rangeOffset)) {
+                if (enemies[i].getMainWeapon().inRange(Player.getInstance(), rangeOffset) && !enemies[i].isDead()) {
                     enemies[i].getMainWeapon().startAttack();
                 } else {
                     enemies[i].setWeaponDirection();
@@ -117,4 +116,19 @@ public class EnemyManager {
         }
         System.out.println();
     }
+
+    public Enemy[] getEnemies() {
+        return enemies;
+    }
+
+//    public void setEnemyCounter(int enemyCounter) {
+//        this.enemyCounter = enemyCounter;
+//    }
+//
+//    public void killAllEnemies() {
+//        for (Enemy enemy : enemies) {
+//            enemy.destroy();
+//            System.out.println(enemyCounter);
+//        }
+//    }
 }
