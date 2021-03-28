@@ -194,7 +194,7 @@ public class Milestone4 extends ApplicationTest {
         Enemy[] enemies = RoomManager.getCurrentEnemies().getEnemies();
         while (i < enemies.length) {
             Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[i].getPosition().subtract(100, 0));
-            for (int j = 0; j < 10; j++) {
+            while (RoomManager.getCurrentEnemies().getEnemies()[i].getHealth() > 0) {
                 clickOn(RoomManager.getCurrentEnemies().getEnemies()[i].getRawImage());
             }
             i++;
