@@ -134,4 +134,8 @@ public class RoomManager {
     public static Room getCurrent() {
         return current;
     }
+    
+    public static void setCurrentRoomStatusTrue() {
+        current.setStatusTrue();
+    }
 }
