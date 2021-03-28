@@ -98,9 +98,6 @@ public class StartGameTest extends ApplicationTest {
         clickOn("#start");
         verifyThat("500", NodeMatchers.isNotNull());
         verifyThat(new ImageView("/main/design/images/coin.png"), NodeMatchers.isVisible());
-        for (int i = 0; i < 8; i++) {
-            verifyThat("#heart" + i, NodeMatchers.isVisible());
-        }
     }
 
     @Test
@@ -112,9 +109,6 @@ public class StartGameTest extends ApplicationTest {
         clickOn("Medium");
         clickOn("#start");
         verifyThat("400", NodeMatchers.isNotNull());
-        for (int i = 0; i < 7; i++) {
-            verifyThat("#heart" + i, NodeMatchers.isVisible());
-        }
     }
 
     @Test
@@ -126,9 +120,6 @@ public class StartGameTest extends ApplicationTest {
         clickOn("Hard");
         clickOn("#start");
         verifyThat("300", NodeMatchers.isNotNull());
-        for (int i = 0; i < 6; i++) {
-            verifyThat("#heart" + i, NodeMatchers.isVisible());
-        }
     }
 
     @Test
