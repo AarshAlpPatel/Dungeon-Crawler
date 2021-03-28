@@ -19,12 +19,17 @@ import main.backend.characters.Player;
 public class Room {
     private static Pane screen = null;
     private static BorderPane bPane = null;
+    private static Text healthVal;
 
     public static void reset() {
         if (screen != null) {
             screen.getChildren().clear();
             screen.getChildren().add(bPane);
         }
+    }
+
+    public static Text getHealthVal() {
+        return healthVal;
     }
 
     public static Scene getScene() {
@@ -59,7 +64,7 @@ public class Room {
         healthBar.setPrefWidth(200);
         healthBar.setProgress(1.0);
 
-        Text healthVal = new Text(10, 50, "100");
+        healthVal = new Text(10, 50, "100");
         HBox health = new HBox();
         health.getChildren().addAll(healthBar, healthVal);
         healthAndCash.getChildren().addAll(health, cash);

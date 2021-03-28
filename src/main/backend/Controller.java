@@ -11,6 +11,7 @@ import main.backend.weapons.*;
 import main.frontend.GameManager;
 import main.frontend.MainScreen;
 import main.backend.rooms.*;
+import main.frontend.Room;
 
 /**
  * All communication from the frontend to the backend should come through the Controller.
@@ -227,5 +228,9 @@ public class Controller {
         Player.getInstance().setMoveSouth(false);
         Player.getInstance().setMoveEast(false);
         GameManager.loseGame();
+    }
+
+    public static void changePlayerHealth() {
+        Room.getHealthVal().setText(Player.getInstance().getHealth().toString());
     }
 }

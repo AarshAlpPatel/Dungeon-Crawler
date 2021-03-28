@@ -115,4 +115,9 @@ public class Player extends Sprite {
         this.mainWeapon.destroyWeapon();
         Controller.loseGame();
     }
+
+    @Override
+    public Double getHealth() {
+        return this.health;
+    }
 }

@@ -99,4 +99,8 @@ public abstract class Collidable {
         double dy = obj1.getCenterY() - obj2.getCenterY();
         return Math.sqrt(dx*dx + dy*dy);
     }
+
+    public ImageView getRawImage() {
+        return this.image;
+    }
 }

@@ -73,8 +73,8 @@ public class Enemy extends Sprite {
         }
     }
 
-    public Point2D getPosition() {
-
-        return null;
+    @Override
+    public Double getHealth() {
+        return this.health;
     }
 }
