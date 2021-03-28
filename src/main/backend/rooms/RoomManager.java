@@ -131,6 +131,10 @@ public class RoomManager {
         return current.getConnections();
     }
 
+    public static Room getCurrent() {
+        return current;
+    }
+    
     public static void setCurrentRoomStatusTrue() {
         current.setStatusTrue();
     }

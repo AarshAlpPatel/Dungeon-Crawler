@@ -15,12 +15,14 @@ public class Room {
     protected Room[] connections;
     protected WallManager walls;
     protected EnemyManager enemies;
+    private String difficulty;
 
     protected boolean status;
 
     protected Room(String difficulty) {
         this.connections = new Room[MAX_CONNECTIONS];
         this.status = false;
+        this.difficulty = difficulty;
 
         if (difficulty.equals("empty")) {
             this.enemies = new EnemyManager(0, 0);
@@ -35,6 +37,10 @@ public class Room {
         } else {
             throw new IllegalArgumentException("Invalid difficulty");
         }
+    }
+
+    public String getDifficulty() {
+        return difficulty;
     }
 
     public boolean getLockStatus() {
@@ -156,5 +162,9 @@ public class Room {
         if (enemies.clear()) {
             setStatusTrue();
         }
+    }
+
+    public void clearEnemies() {
+        main.frontend.Room.removeEnemies();
     }
 }

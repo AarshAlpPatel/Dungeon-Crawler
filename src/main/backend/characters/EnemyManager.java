@@ -42,6 +42,7 @@ public class EnemyManager {
     }
 
     public boolean clear() {
+
         return enemyCounter == 0;
     }
 
