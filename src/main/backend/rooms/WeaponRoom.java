@@ -8,10 +8,4 @@ public class WeaponRoom extends Room {
     public WeaponRoom() {
         super("hard");
     }
-
-    @Override
-    public ArrayList<Node> getImages() {
-        return new ArrayList<>();
-    }
-
 }

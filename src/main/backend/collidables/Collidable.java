@@ -2,6 +2,7 @@ package main.backend.collidables;
 
 import java.util.ArrayList;
 
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -89,5 +90,13 @@ public abstract class Collidable {
 
     public boolean collidesWith(Collidable obj) {
         return this.image.getBoundsInParent().intersects(obj.image.getBoundsInParent());
+    }
+
+    public double distance(Collidable obj) {
+        Bounds obj1 = this.image.getBoundsInParent();
+        Bounds obj2 = obj.image.getBoundsInParent();
+        double dx = obj1.getCenterX() - obj2.getCenterX();
+        double dy = obj1.getCenterY() - obj2.getCenterY();
+        return Math.sqrt(dx*dx + dy*dy);
     }
 }

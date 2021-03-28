@@ -55,7 +55,8 @@ public class Controller {
     public static Player createPlayer(double x, double y, String name, String weaponName,
                                       String imagePath) {
         Player player = Player.getInstance();
-        Weapon weapon = WeaponManager.create(weaponName, x, y, false, 2.5, 10);
+        Weapon weapon = WeaponManager.create(weaponName, x, y, false, 2.5, 10, -1);
+        weapon.setAttackInterval(weapon.getROF());
         player.setName(name);
         player.setWeapon(weapon);
         player.setPosition(new Point2D(x, y));
@@ -106,7 +107,13 @@ public class Controller {
 
     public static void run(Point2D mousePosition) {
         Player.getInstance().move();
-        Player.getInstance().getMainWeapon().rotate(mousePosition, RoomManager.getCurrentEnemies());
+        int res = Player.getInstance().getMainWeapon().rotate(mousePosition);
+        if (res == 3) {
+            RoomManager.getCurrentEnemies().resetHits();
+        } else if (res > 0) {
+            RoomManager.getCurrentEnemies().checkHits();
+        }
+        RoomManager.getCurrentEnemies().attackPlayer();
     }
 
     public static void initializeLevel() {
