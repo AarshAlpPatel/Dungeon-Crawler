@@ -3,6 +3,7 @@ package main.backend.characters;
 import java.util.*;
 
 import javafx.scene.Node;
+import main.backend.Controller;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.WeaponManager;
 
@@ -51,22 +52,48 @@ public class EnemyManager {
     }
 
     private double getRandomPosition() {
-        return Math.random()*500 + 150;
+        return Math.random() * 500 + 150;
     }
+
+//    private Enemy randomlyChooseEnemy() { //use eventually
+//        Random rand = new Random();
+//        int n = rand.nextInt(99) + 1;
+//        if (n < 33) {
+//            return new Ghost(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
+//        } else if (n < 66) {
+//            return new Bat(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
+//        } else {
+//            return new Snake(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
+//        }
+//    }
 
     public void generateEnemies(int enemies, int difficulty) {
         //will customize with different level enemies at a later time
-        for(int i = 0; i < enemies; ++i) {
-            if (Math.random() < (0.9/difficulty)*(0.9/difficulty)) {
-                this.enemies[i] = new Ghost(getRandomPosition(),
-                                        getRandomPosition(), this.enemyCounter++);
-            } else if (Math.random() < 1/difficulty) {
-                this.enemies[i] = new Ghost(getRandomPosition(),
-                                        getRandomPosition(), this.enemyCounter++);
-            } else {
-                this.enemies[i] = new Ghost(getRandomPosition(),
-                                        getRandomPosition(), this.enemyCounter++);
+
+        //added for testing purposes to verify that all types show up, eventually replace with randomly generated
+//        Enemy[] enemyTypes = { //delete eventually
+//            new Bat(getRandomPosition(), getRandomPosition(), this.enemyCounter++),
+//            new Ghost(getRandomPosition(), getRandomPosition(), this.enemyCounter++),
+//            new Snake(getRandomPosition(), getRandomPosition(), this.enemyCounter++)
+//        };
+        for(int i = 0, j = 0; i < enemies; ++i, j++) {
+            if (j == 3) { //delete eventually
+                j = 0;
             }
+            if (j == 0) {
+                this.enemies[i] = new Bat(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
+            } else if (j == 1) {
+                this.enemies[i] = new Ghost(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
+            } else if (j == 2) {
+                this.enemies[i] = new Snake(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
+            }
+//            if (Math.random() < (0.9/difficulty)*(0.9/difficulty)) {
+//                this.enemies[i] = randomlyChooseEnemy();
+//            } else if (Math.random() < 1 / difficulty) {
+//                this.enemies[i] = randomlyChooseEnemy();
+//            } else {
+//                this.enemies[i] = randomlyChooseEnemy();
+//            }
             weaponManager.addWeapon(this.enemies[i].getMainWeapon());
         }
     }
@@ -99,6 +126,7 @@ public class EnemyManager {
                 if (enemies[i].getMainWeapon().collidesWith(Player.getInstance())
                     && !playerHits[i]) {
                     enemies[i].hit(Player.getInstance());
+                    Controller.changePlayerHealth();
                     playerHits[i] = true;
                 }
                 if (res == 3) {
@@ -119,6 +147,10 @@ public class EnemyManager {
 
     public Enemy[] getEnemies() {
         return enemies;
+    }
+
+    public int getEnemyCounter() {
+        return enemyCounter;
     }
 
 //    public void setEnemyCounter(int enemyCounter) {

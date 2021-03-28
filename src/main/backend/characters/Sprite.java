@@ -14,7 +14,7 @@ public abstract class Sprite extends Collidable {
     protected double attackMultiplier;
     protected double speed;
     protected int regeneration;
-    protected double health;
+    protected Double health;
     protected double maxHealth;
     protected Weapon mainWeapon;
     protected String name;
@@ -121,13 +121,15 @@ public abstract class Sprite extends Collidable {
 
     public void takeDamage(double damage) {
         if (this.health <= damage) {
-            this.health = 0;
+            this.health = 0.0;
             this.destroy();
         } else {
             this.health -= damage;
             this.healthBar.setProgress(this.health/this.maxHealth);
         }
     }
+
+    public abstract Double getHealth();
 
     public abstract void destroy();
 }
