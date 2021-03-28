@@ -14,6 +14,7 @@ public class Enemy extends Sprite {
     protected int id;
     protected double healthBarYOffset;
     protected String deathImagePath;
+    protected boolean direction;
 
     protected Enemy(double x, double y, double attackMultiplier, double speed, int health, int regeneration,
                     Weapon weapon, String name, String imagePath, int id, int maxsize, String deathImagePath) {
@@ -24,6 +25,7 @@ public class Enemy extends Sprite {
         this.healthBarYOffset = this.image.getBoundsInParent().getHeight()/2+5;
         setHealthBarPosition(this.position);
         this.deathImagePath = "enemies/" + deathImagePath;
+        this.direction = true;
     }
 
     protected void setHealthBarPosition(Point2D position) {
@@ -33,6 +35,12 @@ public class Enemy extends Sprite {
 
     @Override
     public void move(double dx, double dy) {
+        if (dx < 0) {
+            direction = false;
+        } else {
+            direction = true;
+        }
+
         super.move(dx, dy);
         setHealthBarPosition(this.position);
     }
@@ -57,5 +65,13 @@ public class Enemy extends Sprite {
         setImage(deathImagePath);
         images.add(this.image);
         Controller.addImage(images);
+    }
+
+    public void setWeaponDirection() {
+        if (direction) {
+            mainWeapon.rotate(this.position.add(1, 0));
+        } else {
+            mainWeapon.rotate(this.position.add(-1, 0));
+        }
     }
 }

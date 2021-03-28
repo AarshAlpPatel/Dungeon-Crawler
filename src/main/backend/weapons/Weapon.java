@@ -1,11 +1,13 @@
 package main.backend.weapons;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import main.backend.Controller;
 import main.backend.characters.EnemyManager;
+import main.backend.characters.Sprite;
 import main.backend.collidables.Collidable;
 
 public abstract class Weapon extends Collidable {
@@ -28,6 +30,8 @@ public abstract class Weapon extends Collidable {
     //remember game runs at 60 fps roughly
     protected double rof;
 
+    protected double attackInterval;
+
     //a count of how many frames have passed attacking so far
     protected double attackCounter= -1;
 
@@ -39,7 +43,7 @@ public abstract class Weapon extends Collidable {
 
     protected Weapon(double x, double y, double r, int damage, double range, double aoe,
                      String imagePath, boolean dropped, int maxsize, double rof,
-                     double translateX, double translateY) {
+                     double translateX, double translateY, double attackInterval) {
         super(x, y, maxsize, imagePath, translateX, translateY);
         this.position = new Point2D(x, y);
         this.r = r;
@@ -48,6 +52,7 @@ public abstract class Weapon extends Collidable {
         this.aoe = aoe;
         this.dropped = dropped;
         this.rof = rof;
+        this.attackInterval = attackInterval;
     }
 
     public Point2D getPosition() {
@@ -58,6 +63,10 @@ public abstract class Weapon extends Collidable {
         return this.range;
     }
 
+    public double getROF() {
+        return this.rof;
+    }
+
     public int getDamage() {
         return this.damage;
     }
@@ -66,14 +75,18 @@ public abstract class Weapon extends Collidable {
         this.id = id;
     }
 
+    public void setAttackInterval(double attackInterval) {
+        this.attackInterval = attackInterval;
+    }
+
     public void move(Point2D position) {
         this.position = position;
         super.setImagePosition(position);
     }
 
-    public void rotate(Point2D target, EnemyManager enemies) {
+    public int rotate(Point2D target) {
         if (attackCounter != -1) {
-            animate(enemies);
+            return animate();
         }
         double angle = target.subtract(this.position).angle(positiveX);
         if (target.getY() > this.position.getY()) {
@@ -82,6 +95,7 @@ public abstract class Weapon extends Collidable {
             r = -angle;
         }
         super.setRotate(this.r);
+        return 0;
     }
 
     public void startAttack() {
@@ -102,21 +116,30 @@ public abstract class Weapon extends Collidable {
         Controller.destroyImage(image);
     }
 
-    public boolean animate(EnemyManager enemies) {
-        if (attackCounter == rof) {
+    public int animate() {
+        if (attackCounter == attackInterval) {
             finishAttack();
-            enemies.resetHits();
-            return true;
+            return 3;
+        } else if (attackCounter < rof) {
+            this.attack();
+            ++attackCounter;
+            return 2;
         }
-        this.attack();
-        enemies.checkHits();
-        attackCounter++;
-        return false;
+        ++attackCounter;
+        return 1;
     }
 
     public void finishAttack() {
         attackCounter = -1;
     }
 
+    public boolean isAttacking() {
+        return attackCounter != -1;
+    }
+
     public abstract void attack();
+
+    public boolean inRange(Sprite s, double offset) {
+        return this.distance(s) <= this.range+offset;
+    }
 }
