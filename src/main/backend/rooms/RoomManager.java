@@ -130,4 +130,8 @@ public class RoomManager {
     public static boolean[] getConnections() {
         return current.getConnections();
     }
+
+    public static void setCurrentRoomStatusTrue() {
+        current.setStatusTrue();
+    }
 }

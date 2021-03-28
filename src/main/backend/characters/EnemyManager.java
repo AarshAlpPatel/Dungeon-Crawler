@@ -4,6 +4,7 @@ import java.util.*;
 
 import javafx.scene.Node;
 import main.backend.Controller;
+import main.backend.rooms.RoomManager;
 import main.backend.weapons.Weapon;
 import main.backend.weapons.WeaponManager;
 
@@ -81,7 +82,14 @@ public class EnemyManager {
                 && Player.getInstance().getMainWeapon().collidesWith(enemies[i])) {
                 Player.getInstance().hit(enemies[i]);
                 hit[i] = true;
+                if (enemies[i].isDead()) {
+                    enemyCounter--;
+                    System.out.println(enemyCounter);
+                }
             }
+        }
+        if (clear()) {
+            RoomManager.setCurrentRoomStatusTrue();
         }
     }
 
