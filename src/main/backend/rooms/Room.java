@@ -163,4 +163,18 @@ public class Room {
             setStatusTrue();
         }
     }
+
+    public boolean hasConnections() {
+        boolean found = false;
+        int numDoors = 0;
+        for (int i = 0; i < 4; i++) {
+            if (connections[i] != null) {
+                numDoors++;
+            }
+            if (numDoors > 1) {
+                found = true;
+            }
+        }
+        return found;
+    }
 }

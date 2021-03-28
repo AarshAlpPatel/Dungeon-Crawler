@@ -98,45 +98,31 @@ public class Milestone4 extends ApplicationTest {
         clickOn("#nameField");
         type(KeyCode.N);
         clickOn("Start Game");
-        Door directionCurr = Door.NORTH;
-        int i = 0;
-        boolean found = false;
-        while (i < 4 && found == false) {
-            Door directionNext = Door.values()[i];
-            Room next = RoomManager.getCurrent().getNextRoom(directionNext);
-            int numConnections = 0;
-            int j = 0;
-            while (j < next.getConnections().length) {
-                if (next.getConnections()[j] != false) {
-                    numConnections++;
-                    if (numConnections > 1) {
-                        found = true;
-                        directionCurr = directionNext;
-                        break;
-                    }
-                }
-            }
-        }
-        switch (directionCurr) {
-            case NORTH:
-                goNorth();
-            case EAST:
-                goEast();
-            case SOUTH:
-                goSouth();
-            case WEST:
-                goWest();
-        }
-//        EnemyManager currentRoomEnemies = RoomManager.getCurrentEnemies();
-//        int i = 0;
-//        while (i < currentRoomEnemies.getEnemies().length) {
-//            currentRoomEnemies.destroy(i);
-//            i++;
-//        }
-        RoomManager.getCurrent().getCurrentEnemies().setEnemyCounter(0);
         Room current = RoomManager.getCurrent();
-        Door direction = findOpenDoor(current);
-        assertTrue(RoomManager.getCurrent() == current.getNextRoom(direction));
+        if (current.getNextRoom(Door.EAST).hasConnections()) {
+            goEast();
+        } else if (current.getNextRoom(Door.WEST).hasConnections()) {
+            goWest();
+        } else if (current.getNextRoom(Door.NORTH).hasConnections()) {
+            goNorth();
+        } else {
+            goSouth();
+        }
+        killAllEnemies();
+        Room nextToStart = RoomManager.getCurrent();
+        Door direction = findOpenDoor(nextToStart);
+        assertTrue(direction != null && RoomManager.getCurrent() == nextToStart.getNextRoom(direction));
+    }
+
+    public void killAllEnemies() {
+//        int i = 0;
+//        while (i < RoomManager.getCurrentEnemies().getEnemies().length) {
+//            Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[i].getPosition().subtract(10, 0));
+//            for (int j = 0; j < 10; j++) {
+//                clickOn(RoomManager.getCurrentEnemies().getEnemies()[i].getPosition());
+//            }
+//        }
+        System.out.println("yes");
     }
 
     public void goNorth() {
@@ -154,23 +140,25 @@ public class Milestone4 extends ApplicationTest {
     }
 
     public void goEast() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             press(KeyCode.S);
         }
         release(KeyCode.S);
         while (Player.getInstance().getPosition().getX() > Controller.getMidX() - 1) {
             press(KeyCode.D);
         }
+        release(KeyCode.D);
     }
 
     public void goWest() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             press(KeyCode.S);
         }
         release(KeyCode.S);
         while (Player.getInstance().getPosition().getX() < Controller.getMidX() + 1) {
             press(KeyCode.A);
         }
+        release(KeyCode.A);
     }
 
     public Door findOpenDoor(Room current) {
