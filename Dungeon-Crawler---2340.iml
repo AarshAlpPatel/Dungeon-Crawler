@@ -31,5 +31,14 @@
     <orderEntry type="library" name="org.testfx:testfx-core:4.0.15-alpha" level="project" />
     <orderEntry type="library" name="org.testfx:testfx-junit:4.0.15-alpha" level="project" />
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/annotations/19.0.0/annotations-19.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

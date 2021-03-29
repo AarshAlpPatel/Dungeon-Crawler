@@ -77,4 +77,9 @@ public class Enemy extends Sprite {
     public Double getHealth() {
         return this.health;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s at position: x %f, y %f", this.name, this.position.getX(), this.position.getY());
+    }
 }
