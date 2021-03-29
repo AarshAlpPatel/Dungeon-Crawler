@@ -62,6 +62,7 @@ public class Controller {
         player.setWeapon(weapon);
         player.setPosition(new Point2D(x, y));
         player.setImage(imagePath);
+        player.setHealth(100.0);
         return player;
     }
 

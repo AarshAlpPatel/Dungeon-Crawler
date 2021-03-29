@@ -120,4 +120,8 @@ public class Player extends Sprite {
     public Double getHealth() {
         return this.health;
     }
+
+    public void setHealth(double health) {
+        this.health = health;
+    }
 }
