@@ -17,11 +17,11 @@ public class Room {
     protected EnemyManager enemies;
     private String difficulty;
 
-    protected boolean status;
+    protected boolean visited;
 
     protected Room(String difficulty) {
         this.connections = new Room[MAX_CONNECTIONS];
-        this.status = false;
+        this.visited = false;
         this.difficulty = difficulty;
 
         if (difficulty.equals("empty")) {
@@ -43,15 +43,19 @@ public class Room {
         return difficulty;
     }
 
-    public boolean getLockStatus() {
-        return status;
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public boolean isClear() {
+        return enemies.clear();
     }
 
     public Room getNextRoom(Door direction) {
         return connections[direction.ordinal()];
     }
 
-    public EnemyManager getCurrentEnemies() {
+    public EnemyManager getEnemies() {
         return enemies;
     }
 
@@ -60,25 +64,25 @@ public class Room {
             && y >= Controller.getMidY() - RoomManager.getDoorWidth() / 2
             && y <= Controller.getMidY() + RoomManager.getDoorWidth() / 2
             && connections[Door.WEST.ordinal()] != null
-            && connections[Door.WEST.ordinal()].getLockStatus()) {
+            && (connections[Door.WEST.ordinal()].isVisited() || isClear())) {
             return Door.WEST;
         } else if (x >= Controller.getMaxPlayerX() - 5
                    && y >= Controller.getMidY() - RoomManager.getDoorWidth() / 2
                    && y <= Controller.getMidY() + RoomManager.getDoorWidth() / 2
                    && connections[Door.EAST.ordinal()] != null
-                   && connections[Door.EAST.ordinal()].getLockStatus()) {
+                   && (connections[Door.EAST.ordinal()].isVisited() || isClear())) {
             return Door.EAST;
         } else if (y <= Controller.getMinPlayerY() + 5
                    && x >= Controller.getMidX() - RoomManager.getDoorWidth() / 2
                    && x <= Controller.getMidX() + RoomManager.getDoorWidth() / 2
                    && connections[Door.NORTH.ordinal()] != null
-                   && connections[Door.NORTH.ordinal()].getLockStatus()) {
+                   && (connections[Door.NORTH.ordinal()].isVisited() || isClear())) {
             return Door.NORTH;
         } else if (y >= Controller.getMaxPlayerY() - 5
                    && x >= Controller.getMidX() - RoomManager.getDoorWidth() / 2
                    && x <= Controller.getMidX() + RoomManager.getDoorWidth() / 2
                    && connections[Door.SOUTH.ordinal()] != null
-                   && connections[Door.SOUTH.ordinal()].getLockStatus()) {
+                   && (connections[Door.SOUTH.ordinal()].isVisited() || isClear())) {
             return Door.SOUTH;
         } else {
             return null;
@@ -116,15 +120,6 @@ public class Room {
         return true;
     }
 
-    public void setStatusTrue() {
-        this.status = true;
-        for (Room r: connections) {
-            if (r != null) {
-                r.status = true;
-            }
-        }
-    }
-
     public ArrayList<Node> getWalls() {
         return walls.getWalls();
     }
@@ -159,9 +154,7 @@ public class Room {
     }
 
     public void enter() {
-        if (enemies.clear()) {
-            setStatusTrue();
-        }
+        this.visited = true;
     }
 
     public boolean hasConnections() {

@@ -113,12 +113,12 @@ public class RoomManager {
     }
 
     public static EnemyManager getCurrentEnemies() {
-        return current.getCurrentEnemies();
+        return current.getEnemies();
     }
 
     public static void checkEdge(double x, double y) {
         Door direction = current.checkEdge(x, y);
-        if (direction != null && current.getLockStatus()) {
+        if (direction != null) {
             Room next = current.getNextRoom(direction);
             current = next;
             Controller.changeRoom(direction);
@@ -133,9 +133,5 @@ public class RoomManager {
 
     public static Room getCurrent() {
         return current;
-    }
-    
-    public static void setCurrentRoomStatusTrue() {
-        current.setStatusTrue();
     }
 }

@@ -109,9 +109,6 @@ public class EnemyManager {
                 }
             }
         }
-        if (clear()) {
-            RoomManager.setCurrentRoomStatusTrue();
-        }
     }
 
     public void resetHits() {
