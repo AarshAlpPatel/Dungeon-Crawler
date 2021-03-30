@@ -7,19 +7,20 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import main.backend.Controller;
 import main.backend.characters.*;
-import main.backend.exceptions.EdgeOfScreen;
 import main.backend.rooms.Door;
 import main.backend.rooms.RoomManager;
-import main.frontend.LoseGame;
 import main.frontend.MainScreen;
 import main.backend.rooms.Room;
 import main.frontend.WelcomeScreen;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
+
+import java.util.Timer;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -146,9 +147,16 @@ public class Milestone4 extends ApplicationTest {
             lastRoomDirection = Door.NORTH;
         }
         killAllEnemies();
+//        Timer timer = new Timer();
+//        try {
+//            timer.wait(100);
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
         Room nextToStart = RoomManager.getCurrent();
         Door direction = findOpenDoor(nextToStart, lastRoomDirection);
-        if (direction == null) direction = Door.EAST;
+        System.out.println(direction.toString());
+        //if (direction == null) direction = Door.EAST;
         assertSame(RoomManager.getCurrent(), nextToStart.getNextRoom(direction));
     }
 
@@ -193,15 +201,47 @@ public class Milestone4 extends ApplicationTest {
         int i = 0;
         Enemy[] enemies = RoomManager.getCurrentEnemies().getEnemies();
         while (i < enemies.length) {
-            Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[i].getPosition().subtract(100, 0));
+            Player.getInstance().setPosition(enemies[i].getPosition().subtract(100, 0));
+            System.out.println(enemies[i].toString());
+            //takePlayerToEnemy(enemies[i]);
             while (RoomManager.getCurrentEnemies().getEnemies()[i].getHealth() > 0) {
+            	Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[i].getPosition().subtract(100, 0));
                 clickOn(RoomManager.getCurrentEnemies().getEnemies()[i].getRawImage());
             }
             i++;
         }
     }
 
+    public void takePlayerToEnemy(Enemy enemy) {
+        //set x
+        if (enemy.getPosition().getX() < Player.getInstance().getPosition().getX()) {
+            while (Player.getInstance().getPosition().getX() > enemy.getPosition().getX()) {
+                press(KeyCode.A);
+            }
+            release(KeyCode.A);
+        } else {
+            while (Player.getInstance().getPosition().getX() < enemy.getPosition().getX()) {
+                press(KeyCode.D);
+            }
+            release(KeyCode.D);
+        }
+
+        //set y
+        if (enemy.getPosition().getY() < Player.getInstance().getPosition().getY()) {
+            while (Player.getInstance().getPosition().getY() > enemy.getPosition().getY()) {
+                press(KeyCode.S);
+            }
+            release(KeyCode.S);
+        } else {
+            while (Player.getInstance().getPosition().getY() < enemy.getPosition().getY()) {
+                press(KeyCode.W);
+            }
+            release(KeyCode.W);
+        }
+    }
+
     public void goNorth() {
+        System.out.println("going");
         while (Player.getInstance().getPosition().getY() < Controller.getMidY() - 1) {
             press(KeyCode.W);
         }
@@ -209,6 +249,7 @@ public class Milestone4 extends ApplicationTest {
     }
 
     public void goSouth() {
+        System.out.println("going");
         while (Player.getInstance().getPosition().getY() > Controller.getMidY() / 2) {
             press(KeyCode.S);
         }
@@ -216,6 +257,7 @@ public class Milestone4 extends ApplicationTest {
     }
 
     public void goEast() {
+        System.out.println("going");
         for (int i = 0; i < 2; i++) {
             press(KeyCode.S);
         }
@@ -227,6 +269,7 @@ public class Milestone4 extends ApplicationTest {
     }
 
     public void goWest() {
+        System.out.println("going");
         for (int i = 0; i < 2; i++) {
             press(KeyCode.S);
         }
@@ -287,7 +330,8 @@ public class Milestone4 extends ApplicationTest {
         while (current.getNextRoom(directions[i]) == null || directions[i] == lastRoomDirection) {
             i++;
         }
-        Player.getInstance().setPosition(new Point2D(MainScreen.getMidX(), MainScreen.getMidY()));
+        Point2D middle = new Point2D(MainScreen.getMidX(), MainScreen.getMidY());
+        Player.getInstance().setPosition(middle);
         switch (directions[i]) {
             case EAST:
                 goEast();
@@ -302,10 +346,11 @@ public class Milestone4 extends ApplicationTest {
                 goSouth();
                 return Door.SOUTH;
         }
+        goEast();
         return null;
     }
 
-    public Door findOpenDoorSetAmount(Room current, Door lastRoomDirection) {
+    public Door findOpenDoorSetAmount(@NotNull Room current, Door lastRoomDirection) {
         int i = 0;
         Door[] directions = Door.values();
         while (current.getNextRoom(directions[i]) == null || directions[i] == lastRoomDirection) {

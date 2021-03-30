@@ -120,7 +120,7 @@ public class EnemyManager {
 
     public void attackPlayer() {
         for (int i = 0; i < enemies.length; ++i) {
-            System.out.println(i + ": " + enemies[i].getMainWeapon().distance(Player.getInstance()) + ", " + enemies[i].getMainWeapon().isAttacking());
+            //System.out.println(i + ": " + enemies[i].getMainWeapon().distance(Player.getInstance()) + ", " + enemies[i].getMainWeapon().isAttacking());
             if (enemies[i].getMainWeapon().isAttacking()) {
                 int res = enemies[i].getMainWeapon().animate();
                 if (enemies[i].getMainWeapon().collidesWith(Player.getInstance())
@@ -142,7 +142,7 @@ public class EnemyManager {
                 }
             }
         }
-        System.out.println();
+        //System.out.println();
     }
 
     public Enemy[] getEnemies() {
