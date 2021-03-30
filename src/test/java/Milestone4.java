@@ -1,10 +1,8 @@
 package test.java;
 
 import javafx.geometry.Point2D;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.backend.Controller;
 import main.backend.characters.*;
