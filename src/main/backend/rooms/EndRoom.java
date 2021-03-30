@@ -8,7 +8,7 @@ public class EndRoom extends Room {
     }
     @Override
     public void enter() {
-        setStatusTrue();
+        super.enter();
         Controller.winGame();
     }
 }
