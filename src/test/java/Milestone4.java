@@ -212,10 +212,15 @@ public class Milestone4 extends ApplicationTest {
         int i = 0;
         Enemy[] enemies = RoomManager.getCurrentEnemies().getEnemies();
         while (i < enemies.length) {
-            Player.getInstance().setPosition(enemies[i].getPosition().subtract(100, 0));
+            //Player.getInstance().setPosition(enemies[i].getPosition().subtract(100, 0));
+            if (enemies[i].getPosition().getY() > MainScreen.getMidY()) { //enemy is lower than middle
+                Player.getInstance().setPosition(enemies[i].getPosition().subtract(0, 100));
+            } else {
+                Player.getInstance().setPosition(enemies[i].getPosition().add(0, 100));
+            }
             System.out.println(enemies[i].toString());
             //takePlayerToEnemy(enemies[i]);
-            while (RoomManager.getCurrentEnemies().getEnemies()[i].getHealth() > 0) {
+            while (!enemies[i].isDead()) {
                 if (RoomManager.getCurrentEnemies() == null) {
                     break;
                 } else if (RoomManager.getCurrentEnemies().getEnemies()[i] == null) {
@@ -223,8 +228,10 @@ public class Milestone4 extends ApplicationTest {
                 } else if (RoomManager.getCurrentEnemies().getEnemies()[i].getRawImage() == null) {
                     break;
                 }
-            	Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[i].getPosition().subtract(100, 0));
             	clickOn(enemies[i].getRawImage());
+                if (enemies[i].isDead()) {
+                    break;
+                }
             }
             i++;
         }
