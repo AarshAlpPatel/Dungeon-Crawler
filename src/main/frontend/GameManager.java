@@ -2,13 +2,11 @@ package main.frontend;
 
 import java.util.*;
 
-import com.sun.tools.javac.Main;
 import javafx.event.*;
 import javafx.geometry.Point2D;
 import javafx.scene.input.*;
 import javafx.animation.*;
 import javafx.scene.*;
-import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import main.backend.Controller;
 

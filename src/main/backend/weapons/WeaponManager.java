@@ -26,7 +26,8 @@ public class WeaponManager {
 
     public void addWeapon(Weapon weapon) {
         if (weapons != null && weaponsCounter >= weapons.length) {
-            throw new RuntimeException("Creating too many weapons. You initialized WeaponManager wrong.");
+            throw new RuntimeException("Creating too many weapons. "
+                    + "You initialized WeaponManager wrong.");
         }
         weapon.setID(weaponsCounter);
         weapons[weaponsCounter] = weapon;

@@ -1,12 +1,10 @@
 package main.backend.weapons;
 
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import main.backend.Controller;
-import main.backend.characters.EnemyManager;
 import main.backend.characters.Sprite;
 import main.backend.collidables.Collidable;
 
@@ -33,7 +31,7 @@ public abstract class Weapon extends Collidable {
     protected double attackInterval;
 
     //a count of how many frames have passed attacking so far
-    protected double attackCounter= -1;
+    protected double attackCounter = -1;
 
     //id is the key stored in the dictionary with the weapon being its value
     protected int id;
@@ -101,7 +99,7 @@ public abstract class Weapon extends Collidable {
     public void startAttack() {
         if (attackCounter == -1) {
             attackCounter = 0;
-            this.r -= aoe/2;
+            this.r -= aoe / 2;
             super.setRotate(this.r);
         }
     }
@@ -140,6 +138,6 @@ public abstract class Weapon extends Collidable {
     public abstract void attack();
 
     public boolean inRange(Sprite s, double offset) {
-        return this.distance(s) <= this.range+offset;
+        return this.distance(s) <= this.range + offset;
     }
 }

@@ -14,13 +14,15 @@ public class Enemy extends Sprite {
     protected String deathImagePath;
     protected boolean direction;
 
-    protected Enemy(double x, double y, double attackMultiplier, double speed, int health, int regeneration,
-                    Weapon weapon, String name, String imagePath, int id, int maxsize, String deathImagePath) {
-        super(x, y, attackMultiplier, speed, health, regeneration, weapon, name, "enemies/" + imagePath, maxsize);
+    protected Enemy(double x, double y, double attackMultiplier, double speed,
+                    int health, int regeneration, Weapon weapon, String name,
+                    String imagePath, int id, int maxsize, String deathImagePath) {
+        super(x, y, attackMultiplier, speed, health, regeneration, weapon, name,
+                "enemies/" + imagePath, maxsize);
         this.id = id;
         this.healthBar.setPrefHeight(10);
         this.healthBar.setPrefWidth(this.image.getBoundsInParent().getWidth());
-        this.healthBarYOffset = this.image.getBoundsInParent().getHeight()/2+5;
+        this.healthBarYOffset = this.image.getBoundsInParent().getHeight() / 2 + 5;
         setHealthBarPosition(this.position);
         this.deathImagePath = "enemies/" + deathImagePath;
         this.direction = true;
@@ -28,7 +30,8 @@ public class Enemy extends Sprite {
 
     protected void setHealthBarPosition(Point2D position) {
         this.healthBar.setTranslateX(position.getX() - Controller.getLength() / 2);
-        this.healthBar.setTranslateY(position.getY() - Controller.getHeight() / 2 - this.healthBarYOffset);
+        this.healthBar.setTranslateY(position.getY()
+                - Controller.getHeight() / 2 - this.healthBarYOffset);
     }
 
     @Override
@@ -80,6 +83,7 @@ public class Enemy extends Sprite {
 
     @Override
     public String toString() {
-        return String.format("%s at position: x %f, y %f", this.name, this.position.getX(), this.position.getY());
+        return String.format("%s at position: x %f, y %f", this.name,
+                this.position.getX(), this.position.getY());
     }
 }

@@ -2,7 +2,6 @@ package main.frontend;
 
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
@@ -26,8 +25,10 @@ public class SetUpPlayerScreen {
         "axe"
     };
 
-//    private static ImageCursor defaultCursor = new ImageCursor(new Image("/main/design/images/cursors/default_cursor.png"));
-//    private static ImageCursor clickCursor = new ImageCursor(new Image("/main/design/images/cursors/custom_click.png"));
+    //private static ImageCursor defaultCursor =
+    //new ImageCursor(new Image("/main/design/images/cursors/default_cursor.png"));
+    //private static ImageCursor clickCursor =
+    //new ImageCursor(new Image("/main/design/images/cursors/custom_click.png"));
 
     private static String capitalize(String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
@@ -123,7 +124,8 @@ public class SetUpPlayerScreen {
             if (indexC < 0) {
                 indexC = 2;
             }
-            character.getChildren().add(new ImageView(new Image("/main/design/images/" + characters[indexC])));
+            character.getChildren().add(new ImageView(new Image("/main/design/images/"
+                    + characters[indexC])));
         });
         return direction;
     }
@@ -203,7 +205,8 @@ public class SetUpPlayerScreen {
 
         StackPane character = new StackPane();
 
-        character.getChildren().add(new ImageView(new Image("/main/design/images/" + characters[indexC])));
+        character.getChildren().add(new ImageView(new Image("/main/design/images/"
+                + characters[indexC])));
         character.getStyleClass().add("character");
 
         StackPane navButtons = new StackPane();
