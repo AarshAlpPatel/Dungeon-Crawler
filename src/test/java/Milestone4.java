@@ -1,8 +1,10 @@
 package test.java;
 
 import javafx.geometry.Point2D;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.backend.Controller;
 import main.backend.characters.*;
@@ -223,6 +225,9 @@ public class Milestone4 extends ApplicationTest {
 
             System.out.println(enemies[i].toString());
             while (!enemies[i].isDead()) {
+                if (enemies[i].isDead()) {
+                    break;
+                }
                 if (RoomManager.getCurrentEnemies() == null) {
                     break;
                 } else if (RoomManager.getCurrentEnemies().getEnemies()[i] == null) {
@@ -231,9 +236,6 @@ public class Milestone4 extends ApplicationTest {
                     break;
                 }
                 clickOn(enemies[i].getRawImage());
-                if (enemies[i].isDead()) {
-                    break;
-                }
             }
             i++;
         }
