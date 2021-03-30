@@ -212,46 +212,30 @@ public class Milestone4 extends ApplicationTest {
         int i = 0;
         Enemy[] enemies = RoomManager.getCurrentEnemies().getEnemies();
         while (i < enemies.length) {
-            Player.getInstance().setPosition(enemies[i].getPosition().subtract(100, 0));
+            //Player.getInstance().setPosition(enemies[i].getPosition().subtract(100, 0));
+            int shiftY = 100;
+            //enemy is lower than middle
+            if (enemies[i].getPosition().getY() > MainScreen.getMidY()) {
+                Player.getInstance().setPosition(enemies[i].getPosition().subtract(0, shiftY));
+            } else {
+                Player.getInstance().setPosition(enemies[i].getPosition().add(0, shiftY));
+            }
+
             System.out.println(enemies[i].toString());
-            //takePlayerToEnemy(enemies[i]);
-            while (RoomManager.getCurrentEnemies().getEnemies()[i].getHealth() > 0) {
-                Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[i]
-                        .getPosition().subtract(100, 0));
-                if (RoomManager.getCurrentEnemies().getEnemies()[i].getRawImage() == null) {
+            while (!enemies[i].isDead()) {
+                if (RoomManager.getCurrentEnemies() == null) {
+                    break;
+                } else if (RoomManager.getCurrentEnemies().getEnemies()[i] == null) {
+                    break;
+                } else if (RoomManager.getCurrentEnemies().getEnemies()[i].getRawImage() == null) {
                     break;
                 }
-                clickOn(RoomManager.getCurrentEnemies().getEnemies()[i].getRawImage());
+                clickOn(enemies[i].getRawImage());
+                if (enemies[i].isDead()) {
+                    break;
+                }
             }
             i++;
-        }
-    }
-
-    public void takePlayerToEnemy(Enemy enemy) {
-        //set x
-        if (enemy.getPosition().getX() < Player.getInstance().getPosition().getX()) {
-            while (Player.getInstance().getPosition().getX() > enemy.getPosition().getX()) {
-                press(KeyCode.A);
-            }
-            release(KeyCode.A);
-        } else {
-            while (Player.getInstance().getPosition().getX() < enemy.getPosition().getX()) {
-                press(KeyCode.D);
-            }
-            release(KeyCode.D);
-        }
-
-        //set y
-        if (enemy.getPosition().getY() < Player.getInstance().getPosition().getY()) {
-            while (Player.getInstance().getPosition().getY() > enemy.getPosition().getY()) {
-                press(KeyCode.S);
-            }
-            release(KeyCode.S);
-        } else {
-            while (Player.getInstance().getPosition().getY() < enemy.getPosition().getY()) {
-                press(KeyCode.W);
-            }
-            release(KeyCode.W);
         }
     }
 

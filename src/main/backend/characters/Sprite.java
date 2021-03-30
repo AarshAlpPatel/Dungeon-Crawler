@@ -127,6 +127,9 @@ public abstract class Sprite extends Collidable {
             this.health -= damage;
             this.healthBar.setProgress(this.health / this.maxHealth);
         }
+        if (this instanceof Enemy) {
+            System.out.println(health);
+        }
     }
 
     public abstract Double getHealth();
