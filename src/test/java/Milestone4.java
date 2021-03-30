@@ -155,8 +155,9 @@ public class Milestone4 extends ApplicationTest {
 //        }
         Room nextToStart = RoomManager.getCurrent();
         Door direction = findOpenDoor(nextToStart, lastRoomDirection);
+        //goNorth();
         System.out.println(direction.toString());
-        //if (direction == null) direction = Door.EAST;
+        if (direction == null) direction = Door.EAST;
         assertSame(RoomManager.getCurrent(), nextToStart.getNextRoom(direction));
     }
 
@@ -206,6 +207,9 @@ public class Milestone4 extends ApplicationTest {
             //takePlayerToEnemy(enemies[i]);
             while (RoomManager.getCurrentEnemies().getEnemies()[i].getHealth() > 0) {
             	Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[i].getPosition().subtract(100, 0));
+            	if (RoomManager.getCurrentEnemies().getEnemies()[i].getRawImage() == null) {
+            	    break;
+                }
             	clickOn(RoomManager.getCurrentEnemies().getEnemies()[i].getRawImage());
             }
             i++;
@@ -241,8 +245,9 @@ public class Milestone4 extends ApplicationTest {
     }
 
     public void goNorth() {
+        release(KeyCode.S);
         System.out.println("going");
-        while (Player.getInstance().getPosition().getY() < Controller.getMidY() - 1) {
+        while (Player.getInstance().getPosition().getY() < Controller.getMidY() + 50) {
             press(KeyCode.W);
         }
         release(KeyCode.W);
@@ -340,7 +345,7 @@ public class Milestone4 extends ApplicationTest {
                 goWest();
                 return Door.WEST;
             case NORTH:
-                goNorth();
+                goNorthSetAmount();
                 return Door.NORTH;
             case SOUTH:
                 goSouth();
