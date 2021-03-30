@@ -1,7 +1,6 @@
 package test.java;
 
 import javafx.geometry.Point2D;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
@@ -19,8 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
-
-import java.util.Timer;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -66,16 +63,20 @@ public class Milestone4 extends ApplicationTest {
         startGame();
         goEast();
         assertTrue(RoomManager.getCurrentEnemies().getEnemies().length > 0);
-        verifyThat(RoomManager.getCurrentEnemies().getEnemies()[0].getRawImage(), NodeMatchers.isVisible());
+        verifyThat(RoomManager.getCurrentEnemies().getEnemies()[0].getRawImage(),
+                NodeMatchers.isVisible());
     }
 
     @Test
     public void testThreeTypes() {
         startGame();
         goEast();
-        verifyThat(new ImageView("main/design/images/enemies/bat/base/bat-base.gif"), NodeMatchers.isVisible());
-        verifyThat(new ImageView("main/design/images/enemies/snake/base/snake_base.gif"), NodeMatchers.isVisible());
-        verifyThat(new ImageView("main/design/images/enemies/ghost/base/ghost_base.gif"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/enemies/bat/base/bat-base.gif"),
+                NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/enemies/snake/base/snake_base.gif"),
+                NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/enemies/ghost/base/ghost_base.gif"),
+                NodeMatchers.isVisible());
     }
 
     @Test
@@ -105,16 +106,20 @@ public class Milestone4 extends ApplicationTest {
     public void testPlayerAttack() {
         startGame();
         goEast();
-        Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[0].getPosition().subtract(100, 0));
+        Player.getInstance().setPosition(RoomManager.getCurrentEnemies().
+                getEnemies()[0].getPosition().subtract(100, 0));
         for (int j = 0; j < 10; j++) {
             clickOn(RoomManager.getCurrentEnemies().getEnemies()[0].getRawImage());
         }
         if (RoomManager.getCurrentEnemies().getEnemies()[0] instanceof Bat) {
-            verifyThat(new ImageView("main/design/images/enemies/bat/dead/bat-dead.png"), NodeMatchers.isVisible());
+            verifyThat(new ImageView("main/design/images/enemies/bat/dead/bat-dead.png"),
+                    NodeMatchers.isVisible());
         } else if (RoomManager.getCurrentEnemies().getEnemies()[0] instanceof Ghost) {
-            verifyThat(new ImageView("main/design/images/enemies/ghost/dead/ghost_dead.png"), NodeMatchers.isVisible());
+            verifyThat(new ImageView("main/design/images/enemies/ghost/dead/ghost_dead.png"),
+                    NodeMatchers.isVisible());
         } else if (RoomManager.getCurrentEnemies().getEnemies()[0] instanceof Snake) {
-            verifyThat(new ImageView("main/design/images/enemies/snake/dead/snake_dead_frame0.png"), NodeMatchers.isVisible());
+            verifyThat(new ImageView("main/design/images/enemies/snake/dead/snake_dead_frame0.png"),
+                    NodeMatchers.isVisible());
         }
     }
 
@@ -123,7 +128,8 @@ public class Milestone4 extends ApplicationTest {
         startGame();
         assertTrue(RoomManager.getCurrentEnemies().getEnemyCounter() == 0);
         goWest();
-        assertTrue(RoomManager.getCurrentEnemies().getEnemies().length == RoomManager.getCurrentEnemies().getEnemyCounter());
+        assertTrue(RoomManager.getCurrentEnemies().getEnemies().length
+                == RoomManager.getCurrentEnemies().getEnemyCounter());
         killAllEnemies();
         assertTrue(RoomManager.getCurrentEnemies().getEnemyCounter() == 0);
     }
@@ -147,17 +153,19 @@ public class Milestone4 extends ApplicationTest {
             lastRoomDirection = Door.NORTH;
         }
         killAllEnemies();
-//        Timer timer = new Timer();
-//        try {
-//            timer.wait(100);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
+        //Timer timer = new Timer();
+        //try {
+        //    timer.wait(100);
+        //} catch (Exception e) {
+        //    System.out.println(e.getMessage());
+        //}
         Room nextToStart = RoomManager.getCurrent();
         Door direction = findOpenDoor(nextToStart, lastRoomDirection);
         //goNorth();
         System.out.println(direction.toString());
-        if (direction == null) direction = Door.EAST;
+        if (direction == null) {
+            direction = Door.EAST;
+        }
         assertSame(RoomManager.getCurrent(), nextToStart.getNextRoom(direction));
     }
 
@@ -167,7 +175,8 @@ public class Milestone4 extends ApplicationTest {
         goNorth();
         //verifyThat(new Label("100"), NodeMatchers.isVisible());
         while (Player.getInstance().getHealth() > 80) {
-            Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[0].getPosition());
+            Player.getInstance().setPosition(RoomManager.getCurrentEnemies()
+                    .getEnemies()[0].getPosition());
         }
         assertFalse(main.frontend.Room.getHealthVal().getText().equals("100"));
     }
@@ -177,7 +186,8 @@ public class Milestone4 extends ApplicationTest {
         startGame();
         goEast();
         while (Player.getInstance().getHealth() > 0) {
-            Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[0].getPosition());
+            Player.getInstance().setPosition(RoomManager.getCurrentEnemies()
+                    .getEnemies()[0].getPosition());
         }
         verifyThat(new ImageView("main/design/images/Dead.gif"), NodeMatchers.isVisible());
     }
@@ -206,11 +216,12 @@ public class Milestone4 extends ApplicationTest {
             System.out.println(enemies[i].toString());
             //takePlayerToEnemy(enemies[i]);
             while (RoomManager.getCurrentEnemies().getEnemies()[i].getHealth() > 0) {
-            	Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[i].getPosition().subtract(100, 0));
-            	if (RoomManager.getCurrentEnemies().getEnemies()[i].getRawImage() == null) {
-            	    break;
+                Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[i]
+                        .getPosition().subtract(100, 0));
+                if (RoomManager.getCurrentEnemies().getEnemies()[i].getRawImage() == null) {
+                    break;
                 }
-            	clickOn(RoomManager.getCurrentEnemies().getEnemies()[i].getRawImage());
+                clickOn(RoomManager.getCurrentEnemies().getEnemies()[i].getRawImage());
             }
             i++;
         }
@@ -338,18 +349,19 @@ public class Milestone4 extends ApplicationTest {
         Point2D middle = new Point2D(MainScreen.getMidX(), MainScreen.getMidY());
         Player.getInstance().setPosition(middle);
         switch (directions[i]) {
-            case EAST:
-                goEast();
-                return Door.EAST;
-            case WEST:
-                goWest();
-                return Door.WEST;
-            case NORTH:
-                goNorthSetAmount();
-                return Door.NORTH;
-            case SOUTH:
-                goSouth();
-                return Door.SOUTH;
+        case EAST:
+            goEast();
+            return Door.EAST;
+        case WEST:
+            goWest();
+            return Door.WEST;
+        case NORTH:
+            goNorthSetAmount();
+            return Door.NORTH;
+        case SOUTH:
+            goSouth();
+            return Door.SOUTH;
+        default:
         }
         goEast();
         return null;
@@ -363,18 +375,19 @@ public class Milestone4 extends ApplicationTest {
         }
         Player.getInstance().setPosition(new Point2D(MainScreen.getMidX(), MainScreen.getMidY()));
         switch (directions[i]) {
-            case EAST:
-                goEastSetAmount();
-                return Door.EAST;
-            case WEST:
-                goWestSetAmount();
-                return Door.WEST;
-            case NORTH:
-                goNorthSetAmount();
-                return Door.NORTH;
-            case SOUTH:
-                goSouthSetAmount();
-                return Door.SOUTH;
+        case EAST:
+            goEastSetAmount();
+            return Door.EAST;
+        case WEST:
+            goWestSetAmount();
+            return Door.WEST;
+        case NORTH:
+            goNorthSetAmount();
+            return Door.NORTH;
+        case SOUTH:
+            goSouthSetAmount();
+            return Door.SOUTH;
+        default:
         }
         return null;
     }

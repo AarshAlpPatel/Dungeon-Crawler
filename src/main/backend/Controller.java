@@ -4,7 +4,6 @@ import java.util.*;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.control.ProgressBar;
 import main.backend.characters.*;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.*;

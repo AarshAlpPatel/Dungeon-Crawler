@@ -4,7 +4,6 @@ import java.util.*;
 
 import javafx.scene.Node;
 import main.backend.Controller;
-import main.backend.rooms.RoomManager;
 import main.backend.weapons.WeaponManager;
 
 public class EnemyManager {
@@ -13,7 +12,7 @@ public class EnemyManager {
     private boolean[] playerHits;
     private int enemyCounter = 0;
     private static double rangeOffset = 40;
-    WeaponManager weaponManager;
+    private WeaponManager weaponManager;
 
     public EnemyManager(int enemyCount, int difficulty) {
         this.enemies = new Enemy[enemyCount];
@@ -55,45 +54,49 @@ public class EnemyManager {
         return Math.random() * 500 + 150;
     }
 
-//    private Enemy randomlyChooseEnemy() { //use eventually
-//        Random rand = new Random();
-//        int n = rand.nextInt(99) + 1;
-//        if (n < 33) {
-//            return new Ghost(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
-//        } else if (n < 66) {
-//            return new Bat(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
-//        } else {
-//            return new Snake(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
-//        }
-//    }
+    //private Enemy randomlyChooseEnemy() { //use eventually
+    //    Random rand = new Random();
+    //    int n = rand.nextInt(99) + 1;
+    //    if (n < 33) {
+    //        return new Ghost(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
+    //    } else if (n < 66) {
+    //        return new Bat(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
+    //    } else {
+    //        return new Snake(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
+    //    }
+    //}
 
     public void generateEnemies(int enemies, int difficulty) {
         //will customize with different level enemies at a later time
 
-        //added for testing purposes to verify that all types show up, eventually replace with randomly generated
-//        Enemy[] enemyTypes = { //delete eventually
-//            new Bat(getRandomPosition(), getRandomPosition(), this.enemyCounter++),
-//            new Ghost(getRandomPosition(), getRandomPosition(), this.enemyCounter++),
-//            new Snake(getRandomPosition(), getRandomPosition(), this.enemyCounter++)
-//        };
-        for(int i = 0, j = 0; i < enemies; ++i, j++) {
+        //added for testing purposes to verify that all types show up,
+        //eventually replace with randomly generated
+        //Enemy[] enemyTypes = { //delete eventually
+        //    new Bat(getRandomPosition(), getRandomPosition(), this.enemyCounter++),
+        //    new Ghost(getRandomPosition(), getRandomPosition(), this.enemyCounter++),
+        //    new Snake(getRandomPosition(), getRandomPosition(), this.enemyCounter++)
+        //};
+        for (int i = 0, j = 0; i < enemies; ++i, j++) {
             if (j == 3) { //delete eventually
                 j = 0;
             }
             if (j == 0) {
-                this.enemies[i] = new Bat(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
+                this.enemies[i] = new Bat(getRandomPosition(), getRandomPosition(),
+                        this.enemyCounter++);
             } else if (j == 1) {
-                this.enemies[i] = new Ghost(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
+                this.enemies[i] = new Ghost(getRandomPosition(), getRandomPosition(),
+                        this.enemyCounter++);
             } else if (j == 2) {
-                this.enemies[i] = new Snake(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
+                this.enemies[i] = new Snake(getRandomPosition(), getRandomPosition(),
+                        this.enemyCounter++);
             }
-//            if (Math.random() < (0.9/difficulty)*(0.9/difficulty)) {
-//                this.enemies[i] = randomlyChooseEnemy();
-//            } else if (Math.random() < 1 / difficulty) {
-//                this.enemies[i] = randomlyChooseEnemy();
-//            } else {
-//                this.enemies[i] = randomlyChooseEnemy();
-//            }
+            // if (Math.random() < (0.9/difficulty)*(0.9/difficulty)) {
+            //     this.enemies[i] = randomlyChooseEnemy();
+            // } else if (Math.random() < 1 / difficulty) {
+            //     this.enemies[i] = randomlyChooseEnemy();
+            // } else {
+            //     this.enemies[i] = randomlyChooseEnemy();
+            // }
             weaponManager.addWeapon(this.enemies[i].getMainWeapon());
         }
     }
@@ -117,7 +120,8 @@ public class EnemyManager {
 
     public void attackPlayer() {
         for (int i = 0; i < enemies.length; ++i) {
-            //System.out.println(i + ": " + enemies[i].getMainWeapon().distance(Player.getInstance()) + ", " + enemies[i].getMainWeapon().isAttacking());
+            //System.out.println(i + ": " + enemies[i].getMainWeapon().distance
+            // (Player.getInstance()) + ", " + enemies[i].getMainWeapon().isAttacking());
             if (enemies[i].getMainWeapon().isAttacking()) {
                 int res = enemies[i].getMainWeapon().animate();
                 if (enemies[i].getMainWeapon().collidesWith(Player.getInstance())
@@ -132,7 +136,8 @@ public class EnemyManager {
                     enemies[i].setWeaponDirection();
                 }
             } else {
-                if (enemies[i].getMainWeapon().inRange(Player.getInstance(), rangeOffset) && !enemies[i].isDead()) {
+                if (enemies[i].getMainWeapon().inRange(Player.getInstance(), rangeOffset)
+                        && !enemies[i].isDead()) {
                     enemies[i].getMainWeapon().startAttack();
                 } else {
                     enemies[i].setWeaponDirection();
@@ -150,14 +155,14 @@ public class EnemyManager {
         return enemyCounter;
     }
 
-//    public void setEnemyCounter(int enemyCounter) {
-//        this.enemyCounter = enemyCounter;
-//    }
-//
-//    public void killAllEnemies() {
-//        for (Enemy enemy : enemies) {
-//            enemy.destroy();
-//            System.out.println(enemyCounter);
-//        }
-//    }
+    //    public void setEnemyCounter(int enemyCounter) {
+    //        this.enemyCounter = enemyCounter;
+    //    }
+    //
+    //    public void killAllEnemies() {
+    //        for (Enemy enemy : enemies) {
+    //            enemy.destroy();
+    //            System.out.println(enemyCounter);
+    //        }
+    //    }
 }

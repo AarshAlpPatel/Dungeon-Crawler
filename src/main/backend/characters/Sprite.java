@@ -125,7 +125,7 @@ public abstract class Sprite extends Collidable {
             this.destroy();
         } else {
             this.health -= damage;
-            this.healthBar.setProgress(this.health/this.maxHealth);
+            this.healthBar.setProgress(this.health / this.maxHealth);
         }
     }
 

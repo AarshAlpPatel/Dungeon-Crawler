@@ -41,10 +41,12 @@ public abstract class Collidable {
 
     /**
      * used exclusively for sprites
-     * @param x
-     * @param y
-     * @param maxsize
-     * @param imagePath
+     * @param x initial x position
+     * @param y initial y position
+     * @param maxsize maximum size
+     * @param imagePath file path to image
+     * @param translateX how much to move horizontally
+     * @param translateY how much to move vertically
      */
     protected Collidable(double x, double y, int maxsize, String imagePath,
                          double translateX, double translateY) {
@@ -56,8 +58,8 @@ public abstract class Collidable {
 
         double width = this.image.getBoundsInParent().getWidth();
         double height = this.image.getBoundsInParent().getHeight();
-        offset = new Translate((translateX == 0) ? 0 : width/translateX,
-                               (translateY == 0) ? 0 : height/translateY);
+        offset = new Translate((translateX == 0) ? 0 : width / translateX,
+                               (translateY == 0) ? 0 : height / translateY);
         this.image.getTransforms().addAll(rotation, offset);
     }
 
@@ -97,7 +99,7 @@ public abstract class Collidable {
         Bounds obj2 = obj.image.getBoundsInParent();
         double dx = obj1.getCenterX() - obj2.getCenterX();
         double dy = obj1.getCenterY() - obj2.getCenterY();
-        return Math.sqrt(dx*dx + dy*dy);
+        return Math.sqrt(dx * dx + dy * dy);
     }
 
     public ImageView getRawImage() {

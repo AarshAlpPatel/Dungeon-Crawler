@@ -5,7 +5,6 @@ import java.util.*;
 import javafx.scene.Node;
 import main.backend.Controller;
 import main.backend.characters.EnemyManager;
-import main.backend.characters.Player;
 import main.backend.characters.Sprite;
 
 public class RoomManager {
@@ -60,8 +59,8 @@ public class RoomManager {
         types.add("potion");
         types.add("weapon");
         types.add("weapon");
-//        types.add("empty");
-//        types.add("empty");
+        //types.add("empty");
+        //types.add("empty");
         for (int i = 6; i < MAX_ROOMS - 2; ++i) {
             types.add(returnRandomType(level));
         }

@@ -1,10 +1,7 @@
 package main.frontend;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -94,7 +91,7 @@ public class InventoryScreen {
             weapon = new Image("/main/design/images/axe-angle.png", 300, 300, false, false);
         } else if (wpn instanceof Spear) {
             weapon = new Image("/main/design/images/spear-angle.png", 300, 300, false, false);
-        } else if (wpn instanceof Dagger){
+        } else if (wpn instanceof Dagger) {
             weapon = new Image("/main/design/images/dagger-drag.png", 200, 200, false, false);
         } else {
             weapon = null;
@@ -163,8 +160,8 @@ public class InventoryScreen {
                 ((Rectangle) pane.getChildren().get(i)).setFill(Color.RED);
                 pane.getChildren().get(i).setOpacity(0.7);
                 inventoryScreen.setCursor(Cursor.HAND);
-//                shape.setWidth(shape.getWidth() + 5);
-//                shape.setWidth(shape.getHeight() + 5);
+                //shape.setWidth(shape.getWidth() + 5);
+                //shape.setWidth(shape.getHeight() + 5);
             });
             pane.setOnMouseExited(event -> {
                 int i = 0;
@@ -174,8 +171,8 @@ public class InventoryScreen {
                 ((Rectangle) pane.getChildren().get(i)).setFill(Color.rgb(50, 48, 48));
                 pane.getChildren().get(i).setOpacity(1);
                 inventoryScreen.setCursor(Cursor.DEFAULT);
-//                shape.setWidth(shape.getWidth() - 5);
-//                shape.setWidth(shape.getHeight() - 5);
+                //shape.setWidth(shape.getWidth() - 5);
+                //shape.setWidth(shape.getHeight() - 5);
             });
         }
     }
@@ -189,38 +186,38 @@ public class InventoryScreen {
     //for dragging pictures
     private static void handleImageActions(ImageView image, Pane pane) {
         //corner is 0, 0
-//        pane.setOnMouseEntered(event -> {
-//            inventoryScreen.setCursor(Cursor.HAND);
-//        });
-//        pane.setOnMouseExited(event -> {
-//            inventoryScreen.setCursor(Cursor.DEFAULT);
-//        });
+        //pane.setOnMouseEntered(event -> {
+        //    inventoryScreen.setCursor(Cursor.HAND);
+        //});
+        //pane.setOnMouseExited(event -> {
+        //    inventoryScreen.setCursor(Cursor.DEFAULT);
+        //});
         image.setOnMousePressed(event -> {
-//            int i = 0;
-//            while (pane.getChildren().get(i) instanceof ImageView == false) {
-//                i++;
-//            }
+            //int i = 0;
+            //while (pane.getChildren().get(i) instanceof ImageView == false) {
+            //    i++;
+            //}
             pane.getChildren().remove(image);
             screenHolder.getChildren().add(dragBox);
             dragBox.getChildren().add(image);
             //image.set
             System.out.println(image.getX() + " " + image.getY());
             System.out.println(event.getSceneX() + " " + event.getSceneY());
-//            image.setX(event.getSceneX());
-//            image.setY(event.getSceneY());
+            //image.setX(event.getSceneX());
+            //image.setY(event.getSceneY());
             //System.out.println(image.getX());
-//            image.setFitWidth(image.getFitHeight() / 2);
-//            image.setFitHeight(image.getFitHeight() / 2);
-//            startX = event.getSceneX();
-//            startY = event.getSceneY();
+            //image.setFitWidth(image.getFitHeight() / 2);
+            //image.setFitHeight(image.getFitHeight() / 2);
+            //startX = event.getSceneX();
+            //startY = event.getSceneY();
         });
         image.setOnMouseDragged(event -> {
             image.setX(event.getSceneX() - startX);
             image.setY(event.getSceneY() - startY);
         });
         image.setOnMouseReleased(event -> {
-//            image.setFitWidth(image.getFitHeight() * 2);
-//            image.setFitHeight(image.getFitHeight() * 2);
+            //image.setFitWidth(image.getFitHeight() * 2);
+            //image.setFitHeight(image.getFitHeight() * 2);
             System.out.println(event.getSceneX() + " " + event.getSceneY());
             screenHolder.getChildren().remove(dragBox);
             dragBox.getChildren().remove(image);
