@@ -130,7 +130,8 @@ public class Milestone4 extends ApplicationTest {
         startGame();
         assertEquals(0, RoomManager.getCurrentEnemies().getEnemyCounter());
         goWest();
-        assertEquals(RoomManager.getCurrentEnemies().getEnemies().length, RoomManager.getCurrentEnemies().getEnemyCounter());
+        assertEquals(RoomManager.getCurrentEnemies().getEnemies().length,
+                RoomManager.getCurrentEnemies().getEnemyCounter());
         int numAlive = killEnemy(RoomManager.getCurrentEnemies().getEnemies().length - 1);
         assertSame(numAlive, RoomManager.getCurrentEnemies().getEnemyCounter());
 
@@ -158,19 +159,22 @@ public class Milestone4 extends ApplicationTest {
     }
 
     //public int findAliveEnemy() {
-        //int eIndex = 0;
-        //while (RoomManager.getCurrentEnemies().getEnemies()[eIndex].isDead()) {
-        //    eIndex++;
-        //}
-        //return eIndex;
+    //    int eIndex = 0;
+    //    while (RoomManager.getCurrentEnemies().getEnemies()[eIndex].isDead()) {
+    //        eIndex++;
+    //    }
+    //    return eIndex;
     //}
 
     public int killEnemy(int index) {
         int numAlive = 0;
-        if (RoomManager.getCurrentEnemies().getEnemies()[index].getPosition().getY() < MainScreen.getMidY()) {
-            Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[index].getPosition().add(0, 100));
+        if (RoomManager.getCurrentEnemies().getEnemies()[index].getPosition().getY()
+                < MainScreen.getMidY()) {
+            Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[index]
+                    .getPosition().add(0, 100));
         } else {
-            Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[index].getPosition().subtract(0, 100));
+            Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[index]
+                    .getPosition().subtract(0, 100));
         }
         while (!RoomManager.getCurrentEnemies().getEnemies()[index].isDead()) {
             clickOn(RoomManager.getCurrentEnemies().getEnemies()[index].getRawImage());
@@ -193,37 +197,37 @@ public class Milestone4 extends ApplicationTest {
 
     //@Test
     //public void testUnlockingFunction() {
-        //startGame();
-        //Room current = RoomManager.getCurrent();
-        //Door lastRoomDirection;
-        //if (current.getNextRoom(Door.EAST).hasConnections()) {
-        //    goEast();
-        //    lastRoomDirection = Door.WEST;
-        //} else if (current.getNextRoom(Door.WEST).hasConnections()) {
-        //   goWest();
-        //    lastRoomDirection = Door.EAST;
-        //} else if (current.getNextRoom(Door.NORTH).hasConnections()) {
-        //       goNorth();
-        //    lastRoomDirection = Door.SOUTH;
-        //} else {
-        //    goSouth();
-        //   lastRoomDirection = Door.NORTH;
-        //}
-        //killAllEnemies();
-        //Timer timer = new Timer();
-        //try {
-        //    timer.wait(100);
-        //} catch (Exception e) {
-        //    System.out.println(e.getMessage());
-        //}
-        //Room nextToStart = RoomManager.getCurrent();
-        //Door direction = findOpenDoor(nextToStart, lastRoomDirection);
-        ///goNorth();
-        //System.out.println(direction.toString());
-        //if (direction == null) {
-        //    direction = Door.EAST;
-        //}
-        //assertSame(RoomManager.getCurrent(), nextToStart.getNextRoom(direction));
+    //    startGame();
+    //    Room current = RoomManager.getCurrent();
+    //    Door lastRoomDirection;
+    //    if (current.getNextRoom(Door.EAST).hasConnections()) {
+    //        goEast();
+    //        lastRoomDirection = Door.WEST;
+    //    } else if (current.getNextRoom(Door.WEST).hasConnections()) {
+    //       goWest();
+    //        lastRoomDirection = Door.EAST;
+    //    } else if (current.getNextRoom(Door.NORTH).hasConnections()) {
+    //           goNorth();
+    //        lastRoomDirection = Door.SOUTH;
+    //    } else {
+    //        goSouth();
+    //       lastRoomDirection = Door.NORTH;
+    //    }
+    //    killAllEnemies();
+    //    Timer timer = new Timer();
+    //    try {
+    //        timer.wait(100);
+    //    } catch (Exception e) {
+    //        System.out.println(e.getMessage());
+    //    }
+    //    Room nextToStart = RoomManager.getCurrent();
+    //    Door direction = findOpenDoor(nextToStart, lastRoomDirection);
+    //    goNorth();
+    //    System.out.println(direction.toString());
+    //    if (direction == null) {
+    //        direction = Door.EAST;
+    //    }
+    //    assertSame(RoomManager.getCurrent(), nextToStart.getNextRoom(direction));
     //}
 
     @Test
@@ -231,15 +235,17 @@ public class Milestone4 extends ApplicationTest {
         startGame();
         goEast();
         switch (RoomManager.getCurrentEnemies().getDifficulty()) {
-            case 1 :
-                assertEquals(4, RoomManager.getCurrentEnemies().getEnemies().length);
-                break;
-            case 2 :
-                assertEquals(5, RoomManager.getCurrentEnemies().getEnemies().length);
-                break;
-            case 3 :
-                assertEquals(6, RoomManager.getCurrentEnemies().getEnemies().length);
-                break;
+        case 1 :
+            assertEquals(4, RoomManager.getCurrentEnemies().getEnemies().length);
+            break;
+        case 2 :
+            assertEquals(5, RoomManager.getCurrentEnemies().getEnemies().length);
+            break;
+        case 3 :
+            assertEquals(6, RoomManager.getCurrentEnemies().getEnemies().length);
+            break;
+        default :
+            System.out.println("Can't read difficulty");
         }
     }
 
@@ -283,34 +289,34 @@ public class Milestone4 extends ApplicationTest {
     }
 
     //public void killAllEnemies() {
-        //int i = 0;
-        //Enemy[] enemies = RoomManager.getCurrentEnemies().getEnemies();
-        //while (i < enemies.length) {
-            ////Player.getInstance().setPosition(enemies[i].getPosition().subtract(100, 0));
-            //int shiftY = 100;
-            ////enemy is lower than middle
-            //if (enemies[i].getPosition().getY() > MainScreen.getMidY()) {
-            //    Player.getInstance().setPosition(enemies[i].getPosition().subtract(0, shiftY));
-            //} else {
-            //    Player.getInstance().setPosition(enemies[i].getPosition().add(0, shiftY));
-            //}
-
-            //System.out.println(enemies[i].toString());
-            //while (!enemies[i].isDead()) {
-            //    if (enemies[i].isDead()) {
-            //        break;
-            //    }
-            //    if (RoomManager.getCurrentEnemies() == null) {
-            //        break;
-            //    } else if (RoomManager.getCurrentEnemies().getEnemies()[i] == null) {
-            //        break;
-            //    } else if (RoomManager.getCurrentEnemies().getEnemies()[i].getRawImage() == null) {
-            //       break;
-            //    }
-            //    clickOn(enemies[i].getRawImage());
-            //}
-            //i++;
-        //}
+    //    int i = 0;
+    //   Enemy[] enemies = RoomManager.getCurrentEnemies().getEnemies();
+    //    while (i < enemies.length) {
+    //        //Player.getInstance().setPosition(enemies[i].getPosition().subtract(100, 0));
+    //        int shiftY = 100;
+    //        //enemy is lower than middle
+    //        if (enemies[i].getPosition().getY() > MainScreen.getMidY()) {
+    //            Player.getInstance().setPosition(enemies[i].getPosition().subtract(0, shiftY));
+    //        } else {
+    //            Player.getInstance().setPosition(enemies[i].getPosition().add(0, shiftY));
+    //        }
+    //        System.out.println(enemies[i].toString());
+    //        while (!enemies[i].isDead()) {
+    //            if (enemies[i].isDead()) {
+    //                break;
+    //            }
+    //            if (RoomManager.getCurrentEnemies() == null) {
+    //                break;
+    //            } else if (RoomManager.getCurrentEnemies().getEnemies()[i] == null) {
+    //                break;
+    //            } else if (RoomManager.getCurrentEnemies().getEnemies()[i]
+    //            .getRawImage() == null) {
+    //               break;
+    //            }
+    //            clickOn(enemies[i].getRawImage());
+    //        }
+    //        i++;
+    //    }
     //}
 
     public void goNorth() {
