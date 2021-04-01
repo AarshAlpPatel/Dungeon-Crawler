@@ -56,8 +56,8 @@ public class StartGameTest extends ApplicationTest {
         verifyThat("Start Game", NodeMatchers.isVisible());
         verifyThat("#forwardChar", NodeMatchers.isVisible());
         verifyThat("#backwardChar", NodeMatchers.isVisible());
-        verifyThat("#forwardWeapon", NodeMatchers.isVisible());
-        verifyThat("#backwardWeapon", NodeMatchers.isVisible());
+        verifyThat("#weaponRight", NodeMatchers.isVisible());
+        verifyThat("#weaponLeft", NodeMatchers.isVisible());
     }
 
     @Test
@@ -185,15 +185,15 @@ public class StartGameTest extends ApplicationTest {
     public void testWeaponToggle() {
         clickOn("#toGame");
         verifyThat(new ImageView("main/design/images/dagger-angle.png"), NodeMatchers.isVisible());
-        clickOn("#forwardWeapon");
+        clickOn("#weaponRight");
         verifyThat(new ImageView("main/design/images/spear-angle.png"), NodeMatchers.isVisible());
-        clickOn("#forwardWeapon");
+        clickOn("#weaponRight");
         verifyThat(new ImageView("main/design/images/axe-angle.png"), NodeMatchers.isVisible());
-        clickOn("#backwardWeapon");
+        clickOn("#weaponLeft");
         verifyThat(new ImageView("main/design/images/spear-angle.png"), NodeMatchers.isVisible());
-        clickOn("#backwardWeapon");
+        clickOn("#weaponLeft");
         verifyThat(new ImageView("main/design/images/dagger-angle.png"), NodeMatchers.isVisible());
-        clickOn("#backwardWeapon");
+        clickOn("#weaponLeft");
         verifyThat(new ImageView("main/design/images/axe-angle.png"), NodeMatchers.isVisible());
     }
 
