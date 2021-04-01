@@ -55,8 +55,10 @@ public class SetUpPlayerScreen {
 
         ImageView arrowLeft = setArrow("/main/design/images/arrow left.png",
                                        "backwardWeapon", playerSetUp);
+        arrowLeft.setId("weaponLeft");
         ImageView arrowRight = setArrow("/main/design/images/arrow right.png",
                                         "forwardWeapon", playerSetUp);
+        arrowRight.setId("weaponRight");
 
         HBox weaponAndArrows = new HBox(0, arrowLeft, arrowRight);
         weaponAndArrows.getStyleClass().addAll("center");
