@@ -13,6 +13,7 @@ public class EnemyManager {
     private int enemyCounter = 0;
     private static double rangeOffset = 40;
     private WeaponManager weaponManager;
+    private int difficulty;
 
     public EnemyManager(int enemyCount, int difficulty) {
         this.enemies = new Enemy[enemyCount];
@@ -20,6 +21,7 @@ public class EnemyManager {
         this.playerHits = new boolean[enemyCount];
         this.enemyCounter = 0;
         weaponManager = new WeaponManager(enemyCount);
+        this.difficulty = difficulty;
         generateEnemies(enemyCount, difficulty);
     }
 
@@ -153,6 +155,10 @@ public class EnemyManager {
 
     public int getEnemyCounter() {
         return enemyCounter;
+    }
+
+    public int getDifficulty() {
+        return this.difficulty;
     }
 
     //    public void setEnemyCounter(int enemyCounter) {
