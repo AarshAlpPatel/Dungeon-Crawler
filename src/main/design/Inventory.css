@@ -38,7 +38,7 @@
     -fx-font-weight: bold;
 }
 
-.drag_box {
-    -fx-border-radius: 5px;
-    -fx-border-color: red;
-}
+/*.drag_box {*/
+/*    -fx-border-radius: 5px;*/
+/*    -fx-border-color: red;*/
+/*}*/

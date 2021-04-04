@@ -21,6 +21,9 @@ public class Player extends Sprite {
     private Integer cash;
     private Text healthTextBox;
 
+    //player Inventory
+    private Inventory inventory;
+
     private Player() {
         this(400, 400, 1, 4.0, 100, 5, null, null, "char1.gif");
     }

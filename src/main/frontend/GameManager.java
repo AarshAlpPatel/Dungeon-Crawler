@@ -32,15 +32,10 @@ public class GameManager {
                 } else if (event.getCode() == KeyCode.G) {
                     MainScreen.setScene(ShopScreen.getScene());
                 } else {
+                    //set the direction which the player is traveling
                     Controller.setDirection(event.getCode().toString(), true);
-                    System.out.println(event.getCode().toString() + " clicked");
                 }
-                //set the direction which the player is traveling
-                Controller.setDirection(event.getCode().toString(), true);
             }
-        });
-        scene.setOnKeyPressed(e -> { 
-            Controller.setDirection(e.getCode().toString(), true);
         });
 
         //event for when a key being held down is released

@@ -2,6 +2,7 @@ package main.frontend;
 
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,11 +25,11 @@ public class InventoryScreen {
     //main screen
     private static VBox screen;
 
-    //what the item moves on when being dragged (Pane uses x and y)
-    private static Pane dragBox;
-
     //finding the closest rectangle to the item being dragged
     private static List<Rectangle> rectangles = new ArrayList<>();
+
+    //keeps track of selected slot for slot actions
+    private static Slot selected;
 
     /*
      * when the image starts getting dragged, this gets covered by the dragBox,
@@ -55,31 +56,19 @@ public class InventoryScreen {
         Image backup = weaponImage(Player.getInstance().getBackupWeapon());
 
         //main weapon
-        StackPane mainWeapon = new StackPane();
-        Rectangle mainRect = new Rectangle(300, 300);
-        mainRect.getStyleClass().addAll("rectangle_slot");
-        rectangles.add(mainRect);
-        ImageView mainImage = new ImageView(main);
-        mainWeapon.getChildren().addAll(mainRect, mainImage);
+        ImageView mainV = new ImageView(main);
+        Slot mainWeapon = new Slot(mainV, "Weapon");
 
         //backup weapon
-        StackPane backupWeapon = new StackPane();
-        Rectangle backupRect = new Rectangle(300, 300);
-        backupRect.getStyleClass().addAll("rectangle_slot");
-        rectangles.add(backupRect);
-        backupWeapon.getChildren().addAll(backupRect);
+        Slot backupWeapon;
         if (backup != null) {
-            ImageView backupImage = new ImageView(backup);
-            backupWeapon.getChildren().addAll(backupImage);
-            handleImageActions(backupImage, backupWeapon);
+            ImageView backupV = new ImageView(backup);
+            backupWeapon = new Slot(backupV, "Weapon");
+        } else {
+            backupWeapon = new Slot("Weapon");
         }
-        handleSlotActions(mainWeapon, backupWeapon);
-        //handleImageActions(mainImage, mainWeapon);
-
         weapons.getChildren().addAll(mainWeapon, backupWeapon);
         weapons.getStyleClass().add("center");
-        System.out.println(mainImage.getX());
-        handleImageActions(mainImage, mainWeapon);
 
         return weapons;
     }
@@ -103,7 +92,7 @@ public class InventoryScreen {
     private static HBox createItemsHBox() {
         HBox items = new HBox(10);
         items.getStyleClass().add("center");
-        StackPane slot1 = createItemPane();
+        Slot item1 = new Slot("Item");
         VBox cash = new VBox(10);
         cash.getStyleClass().addAll("center");
         Label cashNum = new Label(Player.getInstance().getCash().toString());
@@ -112,29 +101,14 @@ public class InventoryScreen {
                 new ImageView(
                         new Image("/main/design/images/coin.png", 40, 40, false, false)),
                 cashNum);
-        slot1.getChildren().add(cash);
-        StackPane slot2 = createItemPane();
-        StackPane slot3 = createItemPane();
-        StackPane slot4 = createItemPane();
-        StackPane slot5 = createItemPane();
-        items.getChildren().addAll(slot1, slot2, slot3, slot4, slot5);
+        item1.getChildren().add(cash);
+        Slot item2 = new Slot("Item");
+        Slot item3 = new Slot("Item");
+        Slot item4 = new Slot("Item");
+        Slot item5 = new Slot("Item");
+        items.getChildren().addAll(item1, item2, item3, item4, item5);
 
         return items;
-    }
-
-    //sets up the rectangle inside the pane
-    private static StackPane createItemPane() {
-        StackPane slot = new StackPane();
-        slot.getStyleClass().addAll("center");
-        Rectangle rect = new Rectangle(100, 100);
-        rect.getStyleClass().addAll("rectangle_slot");
-        rectangles.add(rect);
-        //slot.setMinSize(80, 80);
-        slot.getStyleClass().add("center");
-        slot.getChildren().add(rect);
-        handleSlotActions(slot);
-
-        return slot;
     }
 
     //exit button
@@ -149,92 +123,12 @@ public class InventoryScreen {
         return bottomButtons;
     }
 
-    //rects change colors when hovered over and change cursor
-    private static void handleSlotActions(Pane...panes) {
-        for (Pane pane : panes) {
-            pane.setOnMouseEntered(event -> {
-                int i = 0;
-                while (!(pane.getChildren().get(i) instanceof Rectangle)) {
-                    i++;
-                }
-                ((Rectangle) pane.getChildren().get(i)).setFill(Color.RED);
-                pane.getChildren().get(i).setOpacity(0.7);
-                inventoryScreen.setCursor(Cursor.HAND);
-                //shape.setWidth(shape.getWidth() + 5);
-                //shape.setWidth(shape.getHeight() + 5);
-            });
-            pane.setOnMouseExited(event -> {
-                int i = 0;
-                while (!(pane.getChildren().get(i) instanceof Rectangle)) {
-                    i++;
-                }
-                ((Rectangle) pane.getChildren().get(i)).setFill(Color.rgb(50, 48, 48));
-                pane.getChildren().get(i).setOpacity(1);
-                inventoryScreen.setCursor(Cursor.DEFAULT);
-                //shape.setWidth(shape.getWidth() - 5);
-                //shape.setWidth(shape.getHeight() - 5);
-            });
-        }
-    }
-
-    private static double startX;
-    private static double startY;
-    private static double distX;
-    private static double distY;
-    private static int i = 1;
-
-    //for dragging pictures
-    private static void handleImageActions(ImageView image, Pane pane) {
-        //corner is 0, 0
-        //pane.setOnMouseEntered(event -> {
-        //    inventoryScreen.setCursor(Cursor.HAND);
-        //});
-        //pane.setOnMouseExited(event -> {
-        //    inventoryScreen.setCursor(Cursor.DEFAULT);
-        //});
-        image.setOnMousePressed(event -> {
-            //int i = 0;
-            //while (pane.getChildren().get(i) instanceof ImageView == false) {
-            //    i++;
-            //}
-            pane.getChildren().remove(image);
-            screenHolder.getChildren().add(dragBox);
-            dragBox.getChildren().add(image);
-            //image.set
-            System.out.println(image.getX() + " " + image.getY());
-            System.out.println(event.getSceneX() + " " + event.getSceneY());
-            //image.setX(event.getSceneX());
-            //image.setY(event.getSceneY());
-            //System.out.println(image.getX());
-            //image.setFitWidth(image.getFitHeight() / 2);
-            //image.setFitHeight(image.getFitHeight() / 2);
-            //startX = event.getSceneX();
-            //startY = event.getSceneY();
-        });
-        image.setOnMouseDragged(event -> {
-            image.setX(event.getSceneX() - startX);
-            image.setY(event.getSceneY() - startY);
-        });
-        image.setOnMouseReleased(event -> {
-            //image.setFitWidth(image.getFitHeight() * 2);
-            //image.setFitHeight(image.getFitHeight() * 2);
-            System.out.println(event.getSceneX() + " " + event.getSceneY());
-            screenHolder.getChildren().remove(dragBox);
-            dragBox.getChildren().remove(image);
-            pane.getChildren().add(image);
-        });
-    }
-
     public static Scene getScene() {
         HBox emptyPaneTop = new HBox();
         emptyPaneTop.setPadding(new Insets(0, 0, 50, 0));
         screenHolder = new StackPane();
         screen = new VBox(25);
         screen.getStyleClass().addAll("screen", "center");
-        dragBox = new Pane();
-        dragBox.getStyleClass().addAll("drag_box");
-        dragBox.setPrefHeight(MainScreen.getHeight());
-        dragBox.setPrefWidth(MainScreen.getLength());
         StackPane inventory = createBackground();
         VBox itemHolders = new VBox(20);
         itemHolders.getStyleClass().add("center");
@@ -249,10 +143,126 @@ public class InventoryScreen {
         screenHolder.getChildren().addAll(screen);
 
         inventoryScreen = new Scene(screenHolder, MainScreen.getLength(), MainScreen.getHeight());
-        //for dragging the weapons
-        dragBox.setPrefWidth(inventoryScreen.getWidth());
-        dragBox.setPrefHeight(inventoryScreen.getHeight());
         inventoryScreen.getStylesheets().add("/main/design/Inventory.css");
         return inventoryScreen;
+    }
+
+    private static class Slot extends StackPane {
+        int clickCount = 0;
+        Node child;
+        String type;
+        Rectangle rect;
+
+        public Slot(String type) {
+            //set up stackpane and rectangles
+            if (type.equals("Weapon"))
+                initSlot(300, 300);
+            else
+                initSlot(100, 100);
+            this.handleMouseActions();
+            this.type = type;
+        }
+
+        public Slot(Node child, String type) {
+            this(type);
+            add(child);
+            this.child = child;
+        }
+
+        public void initSlot(int d1, int d2) {
+            rect = new Rectangle(d1, d2);
+            rect.getStyleClass().add("rectangle_slot");
+            this.getChildren().add(rect);
+        }
+
+        public void add(Node child) {
+            if (child != null)
+                this.getChildren().add(child);
+        }
+
+        public void remove() {
+            this.getChildren().remove(this.getChildren().size() - 1);
+        }
+
+        public void remove(Node child) {
+            if (child != null)
+                this.getChildren().remove(child);
+        }
+
+        public void handleMouseActions() {
+            this.setOnMousePressed(e -> {
+                clickCount++;
+                //rect.setOpacity(0.5);
+                if (selected != null) {
+                    if (selected == this) {
+                        //deselect
+                        handleDeselect();
+                    } else if (this.type.equals(selected.type)){
+                        //swap items
+                        handleSwap();
+                    } else {
+                        selected.handleDeselect();
+                        selected = this;
+                        handleSelect();
+                    }
+                } else {
+                    selected = this;
+                    handleSelect();
+                }
+            });
+            this.setOnMouseReleased(e -> {
+                System.out.println(clickCount);
+            });
+            this.setOnMouseEntered(e -> {
+                inventoryScreen.setCursor(Cursor.HAND);
+                if (this != selected) {
+                    int i = 0;
+                    while (!(this.getChildren().get(i) instanceof Rectangle)) {
+                        i++;
+                    }
+                    ((Rectangle) this.getChildren().get(i)).setFill(Color.RED);
+                    this.getChildren().get(i).setOpacity(0.7);
+                }
+            });
+            this.setOnMouseExited(e -> {
+                inventoryScreen.setCursor(Cursor.DEFAULT);
+                if (this != selected) {
+                    reset();
+                }
+            });
+        }
+
+        private void reset() {
+            int i = 0;
+            while (!(this.getChildren().get(i) instanceof Rectangle)) {
+                i++;
+            }
+            ((Rectangle) this.getChildren().get(i)).setFill(Color.rgb(50, 48, 48));
+            this.getChildren().get(i).setOpacity(1);
+        }
+
+        private void handleSelect() {
+            rect.setOpacity(0.5);
+        }
+
+        private void handleDeselect() {
+            selected = null;
+            this.reset();
+        }
+
+        private void handleSwap() {
+            Node item1;
+            if (!(selected.getChildren().get(selected.getChildren().size() - 1) instanceof ImageView)) {
+                item1 = null;
+            } else {
+                item1 = selected.getChildren().get(selected.getChildren().size() - 1);
+            }
+            Node item2 = this.child;
+            selected.remove(item1);
+            this.remove(item2);
+            selected.add(item2);
+            this.add(item1);
+            selected.handleDeselect();
+        }
     }
 }
