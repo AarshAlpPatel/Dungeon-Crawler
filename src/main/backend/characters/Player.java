@@ -33,6 +33,11 @@ public class Player extends Sprite {
         super(x, y, attackMultiplier, speed, health, regeneration, weapon, name, imagePath, 100);
     }
 
+    public void initInventory() {
+        inventory.addWeapon(mainWeapon);
+        inventory.addWeapon(backupWeapon);
+    }
+
     public void setCash(int cash) {
         this.cash = cash;
     }
@@ -42,7 +47,9 @@ public class Player extends Sprite {
     }
 
     public void setBackupWeapon(Weapon backupWeapon) {
+        inventory.removeWeapon(this.backupWeapon);
         this.backupWeapon = backupWeapon;
+        inventory.addWeapon(backupWeapon);
     }
 
     public Weapon getBackupWeapon() {
@@ -126,5 +133,9 @@ public class Player extends Sprite {
 
     public void setHealth(double health) {
         this.health = health;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 }

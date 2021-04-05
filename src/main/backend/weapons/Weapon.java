@@ -140,4 +140,8 @@ public abstract class Weapon extends Collidable {
     public boolean inRange(Sprite s, double offset) {
         return this.distance(s) <= this.range + offset;
     }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
 }

@@ -62,6 +62,8 @@ public class Controller {
         player.setPosition(new Point2D(x, y));
         player.setImage(imagePath);
         player.setHealth(100.0);
+        //set up inventory
+        player.setInventory(new Inventory(weapon));
         return player;
     }
 
