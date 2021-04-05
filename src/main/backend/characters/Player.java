@@ -5,6 +5,7 @@ import javafx.scene.text.Text;
 import main.backend.Controller;
 import main.backend.exceptions.EdgeOfScreen;
 import main.backend.exceptions.WallCollision;
+import main.backend.inventory.Inventory;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.Weapon;
 
@@ -20,8 +21,6 @@ public class Player extends Sprite {
     private boolean moveEast = false;
     private Integer cash;
     private Text healthTextBox;
-
-    //player Inventory
     private Inventory inventory;
 
     private Player() {
@@ -31,11 +30,11 @@ public class Player extends Sprite {
     private Player(double x, double y, double attackMultiplier, double speed,
             int health, int regeneration, Weapon weapon, String name, String imagePath) {
         super(x, y, attackMultiplier, speed, health, regeneration, weapon, name, imagePath, 100);
+        this.inventory = new Inventory();
     }
 
-    public void initInventory() {
-        inventory.addWeapon(mainWeapon);
-        inventory.addWeapon(backupWeapon);
+    public void resetPlayer() {
+        playerObj = null;
     }
 
     public void setCash(int cash) {
@@ -75,6 +74,10 @@ public class Player extends Sprite {
     public void setHealthBox(ProgressBar healthBar, Text healthVal) {
         this.healthBar = healthBar;
         this.healthTextBox = healthVal;
+    }
+
+    public void setHealth(double health) {
+        this.health = health;
     }
 
     public void switchWeapons() {
@@ -129,10 +132,6 @@ public class Player extends Sprite {
     @Override
     public Double getHealth() {
         return this.health;
-    }
-
-    public void setHealth(double health) {
-        this.health = health;
     }
 
     public void setInventory(Inventory inventory) {

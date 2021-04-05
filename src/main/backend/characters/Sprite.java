@@ -9,7 +9,7 @@ import main.backend.collidables.Collidable;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.Weapon;
 
-public abstract class Sprite extends Collidable {
+public abstract class Sprite extends Collidable implements Upgradeable {
     protected Point2D position;
     protected double attackMultiplier;
     protected double speed;
@@ -42,10 +42,12 @@ public abstract class Sprite extends Collidable {
         return this.position;
     }
 
+    @Override
     public double getAttackMultiplier() {
         return this.attackMultiplier;
     }
 
+    @Override
     public double getSpeed() {
         return this.speed;
     }
@@ -92,6 +94,11 @@ public abstract class Sprite extends Collidable {
     }
 
     @Override
+    public void changeHealth(double hdiff) {
+        this.health += hdiff;
+    }
+
+    @Override
     public String toString() {
         return String.format("Character: %s", name);
     }
@@ -116,7 +123,7 @@ public abstract class Sprite extends Collidable {
     }
 
     public void hit(Sprite s) {
-        s.takeDamage(mainWeapon.getDamage() * this.attackMultiplier);
+        s.takeDamage(mainWeapon.getDamage() * this.getAttackMultiplier());
     }
 
     public void takeDamage(double damage) {

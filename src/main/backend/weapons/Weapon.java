@@ -7,8 +7,9 @@ import javafx.scene.Node;
 import main.backend.Controller;
 import main.backend.characters.Sprite;
 import main.backend.collidables.Collidable;
+import main.backend.inventory.Collectable;
 
-public abstract class Weapon extends Collidable {
+public abstract class Weapon extends Collidable implements Collectable {
     //x for the x-axis position
     //y for the y-axis position
     //r for the angle (in degrees) between it and the positive x-axis
