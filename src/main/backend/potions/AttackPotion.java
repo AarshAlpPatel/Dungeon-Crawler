@@ -18,6 +18,12 @@ public class AttackPotion extends Potion {
                 Player.getInstance().getMainWeapon().getDamage() + power);
     }
 
+    public void resetDamage() {
+        Player.getInstance().getMainWeapon().setDamage(
+                Player.getInstance().getMainWeapon().getDamage() - power
+        );
+    }
+
     @Override
     public void setPower() {
         switch (rarity) {
