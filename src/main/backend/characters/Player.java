@@ -138,4 +138,8 @@ public class Player extends Sprite {
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
+
+    public Inventory getInventory() {
+        return this.inventory;
+    }
 }

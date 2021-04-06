@@ -52,8 +52,10 @@ public class InventoryScreen {
         HBox weapons = new HBox(30);
 
         //Weapon playerMain = Player.getInstance().getMainWeapon();
-        Image main = weaponImage(Player.getInstance().getMainWeapon());
-        Image backup = weaponImage(Player.getInstance().getBackupWeapon());
+        Image main = weaponImage(Player.getInstance().getInventory().getWeapon(0));
+        if (Player.getInstance().getInventory().getWeapon(1) == null)
+            Player.getInstance().getInventory().addWeapon(new Axe(0, 0, false, 0, 0, 2));
+        Image backup = weaponImage(Player.getInstance().getInventory().getWeapon(1));
 
         //main weapon
         ImageView mainV = new ImageView(main);
@@ -160,6 +162,10 @@ public class InventoryScreen {
             else
                 initSlot(100, 100);
             this.handleMouseActions();
+            if (this.child == null) {
+                child = new Pane();
+                add(child);
+            }
             this.type = type;
         }
 
@@ -185,14 +191,16 @@ public class InventoryScreen {
         }
 
         public void remove(Node child) {
-            if (child != null)
+            if (child == null)
                 this.getChildren().remove(child);
         }
 
         public void handleMouseActions() {
             this.setOnMousePressed(e -> {
                 clickCount++;
-                //rect.setOpacity(0.5);
+            });
+            this.setOnMouseReleased(e -> {
+                System.out.println(clickCount);
                 if (selected != null) {
                     if (selected == this) {
                         //deselect
@@ -209,9 +217,6 @@ public class InventoryScreen {
                     selected = this;
                     handleSelect();
                 }
-            });
-            this.setOnMouseReleased(e -> {
-                System.out.println(clickCount);
             });
             this.setOnMouseEntered(e -> {
                 inventoryScreen.setCursor(Cursor.HAND);
@@ -251,12 +256,7 @@ public class InventoryScreen {
         }
 
         private void handleSwap() {
-            Node item1;
-            if (!(selected.getChildren().get(selected.getChildren().size() - 1) instanceof ImageView)) {
-                item1 = null;
-            } else {
-                item1 = selected.getChildren().get(selected.getChildren().size() - 1);
-            }
+            Node item1 = selected.getChildren().get(selected.getChildren().size() - 1);
             Node item2 = this.child;
             selected.remove(item1);
             this.remove(item2);
