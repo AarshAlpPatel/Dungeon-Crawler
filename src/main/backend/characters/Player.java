@@ -30,7 +30,6 @@ public class Player extends Sprite {
     private Player(double x, double y, double attackMultiplier, double speed,
             int health, int regeneration, Weapon weapon, String name, String imagePath) {
         super(x, y, attackMultiplier, speed, health, regeneration, weapon, name, imagePath, 100);
-        this.inventory = new Inventory();
     }
 
     public void resetPlayer() {
@@ -136,5 +135,9 @@ public class Player extends Sprite {
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
+    }
+
+    public Inventory getInventory() {
+        return this.inventory;
     }
 }
