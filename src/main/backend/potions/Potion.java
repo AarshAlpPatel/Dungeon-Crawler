@@ -1,32 +1,54 @@
 package main.backend.potions;
 
-import javafx.scene.image.ImageView;
+import javafx.geometry.Point2D;
+import main.backend.characters.Upgradeable;
+import main.backend.collidables.Collidable;
+import main.backend.inventory.Collectable;
 
-public abstract class Potion {
+public abstract class Potion extends Collidable implements Upgradeable, Collectable {
     //image of potion
-    protected ImageView image;
     protected String name;
-    protected int count;
+    protected Point2D position;
 
-    //health or attack power
-    protected int power;
+    private static String[] rarityChoices = {"common", "rare", "epic"};
+    
+    Upgradeable obj;
 
     //common, rare, epic
     protected String rarity;
 
-    public Potion(String imagePath, int count, String name, String rarity) {
-        image = new ImageView("main/design/images/" + imagePath);
+    protected double power;
+
+    protected Potion(double x, double y, String imagePath, String name, String rarity) {
+        super(x, y, 50, "main/design/images/potions/" + imagePath, 0, 0);
         this.name = name;
-        this.count = count;
         this.rarity = rarity;
-        setPower();
+        obj = null;
     }
 
-    public ImageView getImage() {
-        return this.image;
+    public static String getRandomRarity() {
+        return rarityChoices[(int)(Math.random()*rarityChoices.length)];
     }
 
-    public abstract void use();
+    @Override
+    public double getAttackMultiplier() {
+        return obj.getAttackMultiplier();
+    }
+
+    @Override
+    public double getSpeed() {
+        return obj.getSpeed();
+    }
+    
+    @Override
+    public void changeHealth(double health) {
+        obj.changeHealth(health);
+    }
+
+    public Upgradeable use(Upgradeable obj) {
+        this.obj = obj;
+        return this;
+    };
 
     public abstract void setPower();
 }

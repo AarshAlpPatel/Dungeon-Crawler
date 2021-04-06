@@ -20,6 +20,8 @@ public class GameManager {
     private static Scene scene;    //reference to the current room scene
     private static Point2D mousePosition;    //monitors where the mouse is located on the screen
 
+    private static boolean paused = false;
+
     /**
      * Sets all the keybinds for player actions.
      */
@@ -116,6 +118,14 @@ public class GameManager {
         timer.stop();
     }
 
+    public static void pauseGameLoop() {
+        paused = true;
+    }
+
+    public static void unpauseGameLoop() {
+        paused = false;
+    }
+
     /**
      * Display the game's win condition.
      */
@@ -143,7 +153,9 @@ public class GameManager {
             timer = new AnimationTimer() {
                 @Override
                 public void handle(long l) {
-                    Controller.run(mousePosition);   //runs every frame
+                    if (!paused) {
+                        Controller.run(mousePosition);   //runs every frame
+                    }
                 }
             };
         }
