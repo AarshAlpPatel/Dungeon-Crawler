@@ -5,6 +5,7 @@ import java.util.*;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import main.backend.characters.*;
+import main.backend.collidables.Collidable;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.*;
 import main.frontend.GameManager;
@@ -62,8 +63,6 @@ public class Controller {
         player.setWeapon(weapon);
         player.setPosition(new Point2D(x, y));
         player.setImage(imagePath);
-        player.setHealth(100.0);
-        player.setInventory(new Inventory(weapon));
         return player;
     }
 
@@ -232,7 +231,14 @@ public class Controller {
         GameManager.loseGame();
     }
 
-    public static void changePlayerHealth() {
-        Room.getHealthVal().setText(Player.getInstance().getHealth().toString());
+    public static void pickUpCollectable() {
+        Collidable c = RoomManager.getCurrent().pickUpCollectable(Player.getInstance());
+        if (c == null) {
+            System.out.println("Nothing to pick up");
+        } else {
+            if(!Player.getInstance().addToInventory(c)) {
+                RoomManager.getCurrent().addCollectable(c, Player.getInstance().getPosition());
+            }
+        }
     }
 }

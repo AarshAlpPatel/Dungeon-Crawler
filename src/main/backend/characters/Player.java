@@ -3,6 +3,7 @@ package main.backend.characters;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
 import main.backend.Controller;
+import main.backend.collidables.Collidable;
 import main.backend.exceptions.EdgeOfScreen;
 import main.backend.exceptions.WallCollision;
 import main.backend.inventory.Inventory;
@@ -13,8 +14,9 @@ import main.backend.weapons.Weapon;
  * the Player class follows the Singleton design pattern
  */
 public class Player extends Sprite {
+    public static final int POTION_DURATION = 10000;    //in milliseconds!!!
+
     private static Player playerObj = null;
-    private Weapon backupWeapon = null;
     private boolean moveNorth = false;
     private boolean moveWest = false;
     private boolean moveSouth = false;
@@ -30,6 +32,7 @@ public class Player extends Sprite {
     private Player(double x, double y, double attackMultiplier, double speed,
             int health, int regeneration, Weapon weapon, String name, String imagePath) {
         super(x, y, attackMultiplier, speed, health, regeneration, weapon, name, imagePath, 100);
+        this.inventory = new Inventory();
     }
 
     public void resetPlayer() {
@@ -44,14 +47,14 @@ public class Player extends Sprite {
         return cash;
     }
 
-    public void setBackupWeapon(Weapon backupWeapon) {
-        inventory.removeWeapon(this.backupWeapon);
-        this.backupWeapon = backupWeapon;
-        inventory.addWeapon(backupWeapon);
+    public void setMainWeapon(Weapon w) {
+        this.mainWeapon = w;
     }
 
-    public Weapon getBackupWeapon() {
-        return backupWeapon;
+    public void switchWeapon(Weapon w) {
+        Controller.destroyImage(this.mainWeapon.getImage());
+        this.mainWeapon = w;
+        Controller.addImage(this.mainWeapon.getImage());
     }
 
     public void setMoveNorth(boolean b) {
@@ -73,18 +76,6 @@ public class Player extends Sprite {
     public void setHealthBox(ProgressBar healthBar, Text healthVal) {
         this.healthBar = healthBar;
         this.healthTextBox = healthVal;
-    }
-
-    public void setHealth(double health) {
-        this.health = health;
-    }
-
-    public void switchWeapons() {
-        if (this.backupWeapon != null) {
-            Weapon tmp = this.mainWeapon;
-            this.mainWeapon = this.backupWeapon;
-            this.backupWeapon = tmp;
-        }
     }
 
     public static Player getInstance() {
@@ -124,20 +115,32 @@ public class Player extends Sprite {
     }
 
     public void destroy() {
-        this.mainWeapon.destroyWeapon();
+        playerObj = null;
         Controller.loseGame();
     }
 
+    @Override
+    public void changeHealth(double hdiff) {
+        super.changeHealth(hdiff);
+        this.healthTextBox.setText(this.health.toString());
+    }
+    
     @Override
     public Double getHealth() {
         return this.health;
     }
 
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
-
     public Inventory getInventory() {
         return this.inventory;
+    }
+
+    public boolean addToInventory(Collidable c) {
+        return inventory.addCollectable(c);
+    }
+
+    @Override
+    public void takeDamage(double health) {
+        super.takeDamage(health);
+        this.healthTextBox.setText(this.health.toString());
     }
 }

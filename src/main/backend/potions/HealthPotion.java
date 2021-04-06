@@ -1,17 +1,11 @@
 package main.backend.potions;
 
-import main.backend.characters.Upgradeable;
+import main.backend.characters.Sprite;
 
 public class HealthPotion extends Potion {
-    public HealthPotion(double x, double y, String rarity) {
-        super(x, y, "health.png", "Health Potion", rarity);
+    public HealthPotion(double x, double y, String rarity, int duration) {
+        super(x, y, "health.png", "Health Potion", rarity, duration);
         setPower();
-    }
-
-    @Override
-    public Upgradeable use(Upgradeable obj) {
-        obj.changeHealth(power);
-        return obj;
     }
 
     @Override
@@ -29,5 +23,15 @@ public class HealthPotion extends Potion {
             default:
                 throw new RuntimeException("Invalid rarity for health potion");
         }
+    }
+
+    @Override
+    public void use(Sprite s) {
+        s.changeHealth(power);
+    }
+
+    @Override
+    public void remove(Sprite s) {
+        //do nothing
     }
 }

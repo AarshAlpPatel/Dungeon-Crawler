@@ -6,10 +6,12 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressBar;
 import main.backend.collidables.Collidable;
+import main.backend.potions.Potion;
+import main.backend.potions.PotionManager;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.Weapon;
 
-public abstract class Sprite extends Collidable implements Upgradeable {
+public abstract class Sprite extends Collidable {
     protected Point2D position;
     protected double attackMultiplier;
     protected double speed;
@@ -19,6 +21,7 @@ public abstract class Sprite extends Collidable implements Upgradeable {
     protected Weapon mainWeapon;
     protected String name;
     protected ProgressBar healthBar;
+    protected PotionManager potions;
 
     protected Sprite(double x, double y, double attackMultiplier, double speed, 
                      double health, int regeneration, Weapon weapon, String name, 
@@ -36,20 +39,11 @@ public abstract class Sprite extends Collidable implements Upgradeable {
         this.healthBar.setProgress(1.0);
         this.healthBar.setPrefWidth(this.image.getBoundsInParent().getWidth());
         this.healthBar.setScaleShape(false);
+        this.potions = new PotionManager(this);
     }
 
     public Point2D getPosition() {
         return this.position;
-    }
-
-    @Override
-    public double getAttackMultiplier() {
-        return this.attackMultiplier;
-    }
-
-    @Override
-    public double getSpeed() {
-        return this.speed;
     }
 
     public int getRegeneration() {
@@ -67,7 +61,9 @@ public abstract class Sprite extends Collidable implements Upgradeable {
     @Override
     public ArrayList<Node> getImage() {
         ArrayList<Node> images = super.getImage();
-        images.addAll(this.mainWeapon.getImage());
+        if (this.mainWeapon != null) {
+            images.addAll(this.mainWeapon.getImage());
+        }
         return images;
     }
 
@@ -93,9 +89,23 @@ public abstract class Sprite extends Collidable implements Upgradeable {
         this.mainWeapon = mainWeapon;
     }
 
-    @Override
+    public void changeAttackMultiplier(double adiff) {
+        System.out.println("CHANGE ATTACK MULTIPLIER: " + adiff);
+        this.attackMultiplier += adiff;
+    }
+
+    public void changeSpeed(double sdiff) {
+        System.out.println("CHANGE SPEED: " + sdiff);
+        this.speed += sdiff;
+    }
+
     public void changeHealth(double hdiff) {
-        this.health += hdiff;
+        if (this.health + hdiff > maxHealth) {
+            this.health = maxHealth;
+        } else {
+            this.health += hdiff;
+        }
+        this.healthBar.setProgress(this.health / this.maxHealth);
     }
 
     @Override
@@ -123,7 +133,7 @@ public abstract class Sprite extends Collidable implements Upgradeable {
     }
 
     public void hit(Sprite s) {
-        s.takeDamage(mainWeapon.getDamage() * this.getAttackMultiplier());
+        s.takeDamage(mainWeapon.getDamage() * this.attackMultiplier);
     }
 
     public void takeDamage(double damage) {
@@ -137,6 +147,10 @@ public abstract class Sprite extends Collidable implements Upgradeable {
         if (this instanceof Enemy) {
             System.out.println(health);
         }
+    }
+
+    public void applyPotion(Potion p) {
+        this.potions.add(p);
     }
 
     public abstract Double getHealth();

@@ -30,9 +30,13 @@ public class GameManager {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.H) {
+                    pauseGameLoop();
                     MainScreen.setScene(InventoryScreen.getScene());
                 } else if (event.getCode() == KeyCode.G) {
+                    pauseGameLoop();
                     MainScreen.setScene(ShopScreen.getScene());
+                } else if (event.getCode() == KeyCode.F) {
+                    Controller.pickUpCollectable();
                 } else {
                     //set the direction which the player is traveling
                     Controller.setDirection(event.getCode().toString(), true);
@@ -71,6 +75,10 @@ public class GameManager {
         GameManager.screen = screen;
         GameManager.scene = scene;
         setKeybinds();
+    }
+
+    public static Scene getScene() {
+        return scene;
     }
 
     /**

@@ -7,9 +7,9 @@ import javafx.scene.Node;
 import main.backend.Controller;
 import main.backend.characters.Sprite;
 import main.backend.collidables.Collidable;
-import main.backend.inventory.Collectable;
+import main.backend.rooms.RoomManager;
 
-public abstract class Weapon extends Collidable implements Collectable {
+public abstract class Weapon extends Collidable {
     //x for the x-axis position
     //y for the y-axis position
     //r for the angle (in degrees) between it and the positive x-axis
@@ -43,7 +43,7 @@ public abstract class Weapon extends Collidable implements Collectable {
     protected Weapon(double x, double y, double r, int damage, double range, double aoe,
                      String imagePath, boolean dropped, int maxsize, double rof,
                      double translateX, double translateY, double attackInterval) {
-        super(x, y, maxsize, imagePath, translateX, translateY);
+        super(x, y, maxsize, "weapons/" + imagePath, translateX, translateY);
         this.position = new Point2D(x, y);
         this.r = r;
         this.damage = damage;
@@ -107,12 +107,7 @@ public abstract class Weapon extends Collidable implements Collectable {
 
     public void dropWeapon() {
         dropped = true;
-    }
-
-    public void destroyWeapon() {
-        ArrayList<Node> image = new ArrayList<>();
-        image.add(this.image);
-        Controller.destroyImage(image);
+        RoomManager.getCurrent().addCollectable(this, this.getPosition());
     }
 
     public int animate() {

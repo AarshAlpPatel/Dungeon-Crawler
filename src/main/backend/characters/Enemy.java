@@ -49,7 +49,9 @@ public class Enemy extends Sprite {
     @Override
     public ArrayList<Node> getImage() {
         ArrayList<Node> images = super.getImage();
-        images.add(this.healthBar);
+        if (!isDead()) {
+            images.add(this.healthBar);
+        }
         return images;
     }
 
@@ -60,12 +62,15 @@ public class Enemy extends Sprite {
     @Override
     public void destroy() {
         ArrayList<Node> images = this.getImage();
+        images.add(this.healthBar);
         Controller.destroyImage(images);
         images.clear();
-
         setImage(deathImagePath);
         images.add(this.image);
         Controller.addImage(images);
+
+        this.mainWeapon.dropWeapon();
+        this.mainWeapon = null;
     }
 
     public void setWeaponDirection() {

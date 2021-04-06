@@ -4,7 +4,6 @@ import java.util.*;
 
 import javafx.scene.Node;
 import main.backend.Controller;
-import main.backend.weapons.WeaponManager;
 
 public class EnemyManager {
     private Enemy[] enemies;
@@ -12,7 +11,6 @@ public class EnemyManager {
     private boolean[] playerHits;
     private int enemyCounter = 0;
     private static double rangeOffset = 40;
-    private WeaponManager weaponManager;
     private int difficulty;
 
     public EnemyManager(int enemyCount, int difficulty) {
@@ -20,7 +18,6 @@ public class EnemyManager {
         this.enemiesHit = new boolean[enemyCount];
         this.playerHits = new boolean[enemyCount];
         this.enemyCounter = 0;
-        weaponManager = new WeaponManager(enemyCount);
         this.difficulty = difficulty;
         generateEnemies(enemyCount, difficulty);
     }
@@ -99,7 +96,6 @@ public class EnemyManager {
             // } else {
             //     this.enemies[i] = randomlyChooseEnemy();
             // }
-            weaponManager.addWeapon(this.enemies[i].getMainWeapon());
         }
     }
 
@@ -124,12 +120,13 @@ public class EnemyManager {
         for (int i = 0; i < enemies.length; ++i) {
             //System.out.println(i + ": " + enemies[i].getMainWeapon().distance
             // (Player.getInstance()) + ", " + enemies[i].getMainWeapon().isAttacking());
-            if (enemies[i].getMainWeapon().isAttacking()) {
+            if (enemies[i].isDead()) {
+                continue;
+            } else if (enemies[i].getMainWeapon().isAttacking()) {
                 int res = enemies[i].getMainWeapon().animate();
                 if (enemies[i].getMainWeapon().collidesWith(Player.getInstance())
                     && !playerHits[i]) {
                     enemies[i].hit(Player.getInstance());
-                    Controller.changePlayerHealth();
                     playerHits[i] = true;
                 }
                 if (res == 3) {

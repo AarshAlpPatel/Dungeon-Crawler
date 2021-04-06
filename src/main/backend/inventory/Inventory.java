@@ -2,6 +2,8 @@ package main.backend.inventory;
 
 import java.util.ArrayList;
 
+import main.backend.characters.Player;
+import main.backend.collidables.Collidable;
 import main.backend.exceptions.TooManyPotions;
 import main.backend.exceptions.TooManyWeapons;
 import main.backend.potions.Potion;
@@ -21,10 +23,31 @@ public class Inventory {
 
     private int numPotions;
 
-    public Inventory(Weapon weapon) {
+    public Inventory() {
         weapons = new ArrayList<>(MAX_WEAPONS);
         potions = new ArrayList<>(MAX_POTIONS);
-        addWeapon(weapon);
+    }
+
+    public boolean addCollectable(Collidable c) {
+        try {
+            if (c instanceof Weapon) {
+                addWeapon((Weapon)c);
+            } else if (c instanceof Potion) {
+                /*
+                * TEMPORARY CODE PLEASE CHANGE BEFORE FINAL PRESENTATION BECAUSE SUPPOSED TO ADD TO INVENTORY FIRST THEN USE NOT JUST STRAIGHT APPLY
+                */
+                Player.getInstance().applyPotion((Potion)c);
+            } else {
+                throw new IllegalArgumentException("Invalid collectable");
+            }
+            return true;
+        } catch (TooManyWeapons e) {
+            System.out.println("Cannot add weapon, inventory full");
+            return false;
+        } catch (TooManyPotions e) {
+            System.out.println("Cannot add potion, inventory full");
+            return false;
+        }
     }
 
     public void addPotion(Potion potion) {
@@ -38,16 +61,11 @@ public class Inventory {
         }
     }
 
-    public Potion removePotion(int index) {
-        if (index >= potions.size()) {
-            throw new IllegalArgumentException("No potions found.");
-        }
-        Potion removed = potions.get(index);
-        potions.remove(index);
-        return removed;
+    public Potion dropPotion(int index) {
+        return dropPotion(potions.get(index));
     }
 
-    public Potion removePotion(Potion potion) {
+    public Potion dropPotion(Potion potion) {
         if (potion == null) {
             throw new IllegalArgumentException("No null potions available.");
         }
@@ -72,17 +90,11 @@ public class Inventory {
         weapons.add(weapon);
     }
 
-    public Weapon removeWeapon(int index) {
-        if (index >= weapons.size()) {
-            throw new IllegalArgumentException("No weapons found.");
-        }
-//        Weapon removed = weapons.get(index);
-//        weapons.remove(index);
-//        return removed;
-        return weapons.remove(index);
+    public Weapon dropWeapon(int index) {
+        return dropWeapon(weapons.get(index));
     }
 
-    public Weapon removeWeapon(Weapon weapon) {
+    public Weapon dropWeapon(Weapon weapon) {
         if (weapon == null) {
             throw new IllegalArgumentException("No null weapons available.");
         }
@@ -108,10 +120,10 @@ public class Inventory {
     }
 
     public Weapon getWeapon(int i) {
-        return weapons.get(i);
+        return (i < weapons.size()) ? weapons.get(i) : null;
     }
 
     public Potion getPotion(int i) {
-        return potions.get(i);
+        return (i < potions.size()) ? potions.get(i) : null;
     }
 }

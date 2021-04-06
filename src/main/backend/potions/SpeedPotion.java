@@ -1,14 +1,11 @@
 package main.backend.potions;
 
-public class SpeedPotion extends Potion {
-    public SpeedPotion(double x, double y, String rarity) {
-        super(x, y, "speed.png", "Speed Potion", rarity);
-        setPower();
-    }
+import main.backend.characters.Sprite;
 
-    @Override
-    public double getSpeed() {
-        return obj.getSpeed() + this.power;
+public class SpeedPotion extends Potion {
+    public SpeedPotion(double x, double y, String rarity, int duration) {
+        super(x, y, "speed.png", "Speed Potion", rarity, duration);
+        setPower();
     }
 
     @Override
@@ -26,5 +23,16 @@ public class SpeedPotion extends Potion {
             default:
                 throw new RuntimeException("Invalid rarity for speed potion");
         }
+    }
+
+    @Override
+    public void use(Sprite s) {
+        s.changeSpeed(power);
+        
+    }
+
+    @Override
+    public void remove(Sprite s) {
+        s.changeSpeed(-power);
     }
 }

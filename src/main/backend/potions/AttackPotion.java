@@ -1,17 +1,11 @@
 package main.backend.potions;
-
-import main.backend.characters.Player;
+import main.backend.characters.Sprite;
 
 public class AttackPotion extends Potion {
 
-    public AttackPotion(double x, double y, String rarity) {
-        super(x, y, "attack.png", "Attack Potion", rarity);
+    public AttackPotion(double x, double y, String rarity, int duration) {
+        super(x, y, "attack.png", "Attack Potion", rarity, duration);
         setPower();
-    }
-
-    @Override
-    public double getAttackMultiplier() {
-        return obj.getAttackMultiplier() + this.power;
     }
 
     public void setPower() {
@@ -28,5 +22,15 @@ public class AttackPotion extends Potion {
             default:
                 throw new RuntimeException("Invalid rarity for attack potion");
         }
+    }
+
+    @Override
+    public void use(Sprite s) {
+        s.changeAttackMultiplier(power);
+    }
+
+    @Override
+    public void remove(Sprite s) {
+        s.changeAttackMultiplier(-power);
     }
 }

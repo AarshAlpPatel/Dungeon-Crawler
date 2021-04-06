@@ -121,7 +121,10 @@ public class InventoryScreen {
         HBox bottomButtons = new HBox();
         Button exitInventory = new Button("Exit");
         exitInventory.getStyleClass().addAll("exit_button");
-        exitInventory.setOnAction(event -> MainScreen.setScene(Room.getScene()));
+        exitInventory.setOnAction(event -> {
+            MainScreen.setScene(GameManager.getScene());
+            GameManager.unpauseGameLoop();
+        });
         bottomButtons.getStyleClass().add("center");
         bottomButtons.getChildren().add(exitInventory);
 

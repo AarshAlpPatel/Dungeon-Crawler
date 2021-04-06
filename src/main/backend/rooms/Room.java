@@ -2,13 +2,16 @@ package main.backend.rooms;
 
 import java.util.ArrayList;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import main.backend.exceptions.EdgeOfScreen;
 import main.backend.exceptions.WallCollision;
 import main.backend.Controller;
 import main.backend.characters.Sprite;
+import main.backend.collidables.Collidable;
 import main.backend.collidables.WallManager;
 import main.backend.characters.EnemyManager;
+import main.backend.characters.Player;
 
 public class Room {
     protected static final int MAX_CONNECTIONS = 4;
@@ -16,11 +19,13 @@ public class Room {
     protected WallManager walls;
     protected EnemyManager enemies;
     private String difficulty;
+    protected ArrayList<Collidable> collectables;
 
     protected boolean visited;
 
     protected Room(String difficulty) {
         this.connections = new Room[MAX_CONNECTIONS];
+        this.collectables = new ArrayList<>();
         this.visited = false;
         this.difficulty = difficulty;
 
@@ -147,9 +152,29 @@ public class Room {
         walls = new WallManager(4, getConnections());
     }
 
+    public void addCollectable(Collidable c, Point2D p) {
+        this.collectables.add(c);
+        c.setImagePosition(p);
+        Controller.addImage(c.getImage());
+    }
+
+    public Collidable pickUpCollectable(Sprite s) {
+        for (Collidable c : collectables) {
+            if (c.collidesWith(s)) {
+                this.collectables.remove(c);
+                Controller.destroyImage(c.getImage());
+                return c;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Node> getImages() {
         ArrayList<Node> images = new ArrayList<>();
         images.addAll(enemies.getImages());
+        for (Collidable c : collectables) {
+            images.addAll(c.getImage());
+        }
         return images;
     }
 

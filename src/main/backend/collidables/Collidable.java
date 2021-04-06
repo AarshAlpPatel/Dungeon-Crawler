@@ -74,7 +74,7 @@ public abstract class Collidable {
         setImagePosition(new Point2D(x, y));
     }
     
-    protected void setImagePosition(Point2D position) {
+    public void setImagePosition(Point2D position) {
         this.image.setTranslateX(position.getX() - Controller.getLength() / 2);
         this.image.setTranslateY(position.getY() - Controller.getHeight() / 2);
         setPivot(position);
