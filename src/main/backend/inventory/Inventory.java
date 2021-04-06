@@ -17,6 +17,16 @@ public class Inventory {
     //backingArray for potions
     private ArrayList<Potion> potions;
 
+    private int numWeapons;
+
+    private int numPotions;
+
+    public Inventory(Weapon weapon) {
+        weapons = new ArrayList<>(MAX_WEAPONS);
+        potions = new ArrayList<>(MAX_POTIONS);
+        addWeapon(weapon);
+    }
+
     public void addPotion(Potion potion) {
         if (potion == null) {
             throw new IllegalArgumentException("Cannot add null weapons.");
@@ -37,6 +47,21 @@ public class Inventory {
         return removed;
     }
 
+    public Potion removePotion(Potion potion) {
+        if (potion == null) {
+            throw new IllegalArgumentException("No null potions available.");
+        }
+        Potion removed = null;
+        int i = 0;
+        while (i < MAX_POTIONS) {
+            if (potions.get(i).equals(potion)) {
+                removed = potions.get(i);
+                break;
+            }
+        }
+        return removed;
+    }
+
     public void addWeapon(Weapon weapon) {
         if (weapon == null) {
             throw new IllegalArgumentException("Cannot add null weapons.");
@@ -51,9 +76,35 @@ public class Inventory {
         if (index >= weapons.size()) {
             throw new IllegalArgumentException("No weapons found.");
         }
-        Weapon removed = weapons.get(index);
-        weapons.remove(index);
+//        Weapon removed = weapons.get(index);
+//        weapons.remove(index);
+//        return removed;
+        return weapons.remove(index);
+    }
+
+    public Weapon removeWeapon(Weapon weapon) {
+        if (weapon == null) {
+            throw new IllegalArgumentException("No null weapons available.");
+        }
+        Weapon removed = null;
+        int i = 0;
+        while (i < MAX_WEAPONS) {
+            if (weapons.get(i).equals(weapon)) {
+                removed = weapons.get(i);
+                break;
+            }
+        }
         return removed;
+    }
+
+    public int getNumWeapons() {
+        numWeapons = weapons.size();
+        return numWeapons;
+    }
+
+    public int getNumPotions() {
+        numPotions = potions.size();
+        return numPotions;
     }
 
     public Weapon getWeapon(int i) {

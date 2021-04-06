@@ -53,9 +53,12 @@ public class InventoryScreen {
 
         //Weapon playerMain = Player.getInstance().getMainWeapon();
         Image main = weaponImage(Player.getInstance().getInventory().getWeapon(0));
-        if (Player.getInstance().getInventory().getWeapon(1) == null)
+        if (Player.getInstance().getInventory().getNumWeapons() == 1)
             Player.getInstance().getInventory().addWeapon(new Axe(0, 0, false, 0, 0, 2));
-        Image backup = weaponImage(Player.getInstance().getInventory().getWeapon(1));
+        Image backup = null;
+        if (Player.getInstance().getInventory().getNumWeapons() == 2) {
+            backup = weaponImage(Player.getInstance().getInventory().getWeapon(1));
+        }
 
         //main weapon
         ImageView mainV = new ImageView(main);

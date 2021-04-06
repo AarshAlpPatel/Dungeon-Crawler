@@ -11,6 +11,7 @@ import main.frontend.GameManager;
 import main.frontend.MainScreen;
 import main.backend.rooms.*;
 import main.frontend.Room;
+import main.backend.inventory.*;
 
 /**
  * All communication from the frontend to the backend should come through the Controller.
@@ -62,7 +63,6 @@ public class Controller {
         player.setPosition(new Point2D(x, y));
         player.setImage(imagePath);
         player.setHealth(100.0);
-        //set up inventory
         player.setInventory(new Inventory(weapon));
         return player;
     }
