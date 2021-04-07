@@ -245,4 +245,13 @@ public class Controller {
             }
         }
     }
+
+    public static void dropCollectable(int index, String type) {
+        if (type.equals("weapon")) {
+            Player.getInstance().getInventory().getWeapon(index).playerDropWeapon();
+            Player.getInstance().getInventory().dropWeapon(index);
+        } else {
+            Player.getInstance().getInventory().dropPotion(index);
+        }
+    }
 }

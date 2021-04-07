@@ -82,9 +82,10 @@ public class Inventory {
         int i = 0;
         while (i < MAX_POTIONS) {
             if (potions.get(i).equals(potion)) {
-                removed = potions.get(i);
+                removed = potions.remove(i);
                 break;
             }
+            i++;
         }
         return removed;
     }
@@ -121,9 +122,10 @@ public class Inventory {
         int i = 0;
         while (i < MAX_WEAPONS) {
             if (weapons.get(i).equals(weapon)) {
-                removed = weapons.get(i);
+                removed = weapons.remove(i);
                 break;
             }
+            i++;
         }
         return removed;
     }
