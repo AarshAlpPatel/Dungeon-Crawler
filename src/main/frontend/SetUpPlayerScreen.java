@@ -9,6 +9,8 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.*;
 
 import main.backend.Controller;
+import main.backend.characters.Player;
+import main.backend.inventory.Inventory;
 
 public class SetUpPlayerScreen {
 
