@@ -45,8 +45,8 @@ public class Milestone5 extends ApplicationTest {
         press(KeyCode.H);
         release(KeyCode.H);
         verifyThat(Player.getInstance().getMainWeapon().getRawImage(), NodeMatchers.isVisible());
-        if (Player.getInstance().getBackupWeapon() != null)
-            verifyThat(Player.getInstance().getBackupWeapon().getRawImage(), NodeMatchers.isVisible());
+//        if (Player.getInstance().getBackupWeapon() != null)
+//            verifyThat(Player.getInstance().getBackupWeapon().getRawImage(), NodeMatchers.isVisible());
         //Player.getInstance().getInventory() matches images in inventory screen
     }
 

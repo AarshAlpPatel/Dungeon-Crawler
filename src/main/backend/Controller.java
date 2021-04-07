@@ -63,6 +63,10 @@ public class Controller {
         player.setWeapon(weapon);
         player.setPosition(new Point2D(x, y));
         player.setImage(imagePath);
+        if (Player.getInstance().getInventory().isEmpty())
+            player.getInventory().addWeapon(weapon);
+        else
+            player.getInventory().setWeapon(weapon, 0);
         return player;
     }
 

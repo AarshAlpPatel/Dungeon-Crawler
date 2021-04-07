@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.transform.*;
 import main.backend.Controller;
+import main.backend.weapons.*;
 
 public abstract class Collidable {
     protected ImageView image;
@@ -103,6 +104,21 @@ public abstract class Collidable {
     }
 
     public ImageView getRawImage() {
+        if (this instanceof Dagger) {
+            return new ImageView(
+                    new Image("/main/design/images/dagger-drag.png", 200, 200, false, false)
+            );
+        }
+        if (this instanceof Axe) {
+            return new ImageView(
+                    new Image("/main/design/images/axe-angle.png", 300, 300, false, false)
+            );
+        }
+        if (this instanceof Spear) {
+            return new ImageView(
+                    new Image("/main/design/images/spear-angle.png", 300, 300, false, false)
+            );
+        }
         return this.image;
     }
 }

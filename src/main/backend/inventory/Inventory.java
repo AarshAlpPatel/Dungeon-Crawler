@@ -56,9 +56,18 @@ public class Inventory {
         }
         if (potions.size() >= MAX_POTIONS) { //this means its full of potions
             throw new TooManyPotions("Too many potions being added. Please drop one.");
-        } else {
-            potions.add(potion);
         }
+        potions.add(potion);
+    }
+
+    public void setPotion(Potion potion, int index) {
+        if (potion == null) {
+            throw new IllegalArgumentException("Cannot add null potions.");
+        }
+        if (index == MAX_POTIONS) {
+            throw new TooManyWeapons("You tried adding a sixth potion. Tough luck kid.");
+        }
+       potions.set(index, potion);
     }
 
     public Potion dropPotion(int index) {
@@ -84,10 +93,20 @@ public class Inventory {
         if (weapon == null) {
             throw new IllegalArgumentException("Cannot add null weapons.");
         }
-        if (weapons.size() > MAX_WEAPONS) { //this means its full of weapons
+        if (weapons.size() >= MAX_WEAPONS) { //this means its full of weapons
             throw new TooManyWeapons("Too many weapons being added. Please drop one.");
         }
         weapons.add(weapon);
+    }
+
+    public void setWeapon(Weapon weapon, int index) {
+        if (weapon == null) {
+            throw new IllegalArgumentException("Cannot add null weapons.");
+        }
+        if (index == MAX_POTIONS) {
+            throw new TooManyWeapons("You tried adding a third weapon. Tough luck kid.");
+        }
+        weapons.set(index, weapon);
     }
 
     public Weapon dropWeapon(int index) {
@@ -119,11 +138,23 @@ public class Inventory {
         return numPotions;
     }
 
+    public ArrayList<Weapon> getWeapons() {
+        return weapons;
+    }
+
+    public ArrayList<Potion> getPotions() {
+        return potions;
+    }
+
     public Weapon getWeapon(int i) {
         return (i < weapons.size()) ? weapons.get(i) : null;
     }
 
     public Potion getPotion(int i) {
         return (i < potions.size()) ? potions.get(i) : null;
+    }
+
+    public boolean isEmpty() {
+        return weapons.isEmpty() && potions.isEmpty();
     }
 }
