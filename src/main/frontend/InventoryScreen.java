@@ -154,16 +154,16 @@ public class InventoryScreen {
     public static Scene getScene() {
 
         //check player inventory
-        System.out.print("\nWeapons: ");
-        for (Weapon weapon : Player.getInstance().getInventory().getWeapons()) {
-            System.out.print(weapon.toString() + " ");
-        }
-        System.out.println();
-        System.out.print("Potions: ");
-        for (Potion potion : Player.getInstance().getInventory().getPotions()) {
-            System.out.print(potion.toString() + " ");
-        }
-        System.out.println();
+//        System.out.print("\nWeapons: ");
+//        for (Weapon weapon : Player.getInstance().getInventory().getWeapons()) {
+//            System.out.print(weapon.toString() + " ");
+//        }
+//        System.out.println();
+//        System.out.print("Potions: ");
+//        for (Potion potion : Player.getInstance().getInventory().getPotions()) {
+//            System.out.print(potion.toString() + " ");
+//        }
+//        System.out.println();
 
         HBox emptyPaneTop = new HBox();
         emptyPaneTop.setPadding(new Insets(0, 0, 50, 0));

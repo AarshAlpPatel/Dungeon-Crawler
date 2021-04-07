@@ -138,13 +138,13 @@ public class Inventory {
         return numPotions;
     }
 
-    public ArrayList<Weapon> getWeapons() {
-        return weapons;
-    }
-
-    public ArrayList<Potion> getPotions() {
-        return potions;
-    }
+//    public ArrayList<Weapon> getWeapons() {
+//        return weapons;
+//    }
+//
+//    public ArrayList<Potion> getPotions() {
+//        return potions;
+//    }
 
     public Weapon getWeapon(int i) {
         return (i < weapons.size()) ? weapons.get(i) : null;
