@@ -11,7 +11,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import main.backend.Controller;
 import main.backend.characters.Player;
+import main.backend.exceptions.IllegalDropException;
 import main.backend.potions.Potion;
 import main.backend.weapons.*;
 
@@ -31,6 +33,12 @@ public class InventoryScreen {
 
     //keeps track of selected slot for slot actions
     private static Slot selected;
+
+    //drop button
+    private static Button drop;
+
+    //holds messages
+    private static HBox emptyPaneTop;
 
     //slots
     private static Slot mainWeapon;
@@ -127,15 +135,36 @@ public class InventoryScreen {
 
     //exit button
     private static HBox createBottomButtons() {
-        HBox bottomButtons = new HBox();
+        HBox bottomButtons = new HBox(40);
+
         Button exitInventory = new Button("Exit");
         exitInventory.getStyleClass().addAll("exit_button");
         exitInventory.setOnAction(event -> {
             MainScreen.setScene(GameManager.getScene());
+            if (selected != null)
+                selected.handleDeselect();
             GameManager.unpauseGameLoop();
         });
         bottomButtons.getStyleClass().add("center");
-        bottomButtons.getChildren().add(exitInventory);
+
+        drop = new Button("Drop");
+        drop.getStyleClass().addAll("drop_button");
+        if (selected == null) {
+            drop.setDisable(true);
+        }
+        drop.setOnAction(event -> {
+            Label dropMessage = new Label();
+            dropMessage.getStyleClass().add("message");
+            try {
+                selected.handleDrop();
+            } catch (IllegalDropException ide) {
+                System.out.println(ide.getMessage());
+                dropMessage.setText(ide.getMessage());
+                emptyPaneTop.getChildren().add(dropMessage);
+                emptyPaneTop.setPadding(new Insets(6, 0, 2, 0));
+            }
+        });
+        bottomButtons.getChildren().addAll(exitInventory, drop);
 
         return bottomButtons;
     }
@@ -165,8 +194,9 @@ public class InventoryScreen {
 //        }
 //        System.out.println();
 
-        HBox emptyPaneTop = new HBox();
-        emptyPaneTop.setPadding(new Insets(0, 0, 50, 0));
+        emptyPaneTop = new HBox();
+        emptyPaneTop.getStyleClass().add("center");
+        emptyPaneTop.setPadding(new Insets(25, 0, 10, 0));
         screenHolder = new StackPane();
         screen = new VBox(25);
         screen.getStyleClass().addAll("screen", "center");
@@ -236,6 +266,10 @@ public class InventoryScreen {
                 this.getChildren().remove(child);
         }
 
+        private boolean isEmpty() {
+            return !(this.getChildren().get(this.getChildren().size() - 1) instanceof ImageView);
+        }
+
         public void handleMouseActions() {
             this.setOnMousePressed(e -> {
                 clickCount++;
@@ -250,7 +284,7 @@ public class InventoryScreen {
                         //swap items
                         if (this.getChildren().get(this.getChildren().size() - 1) instanceof ImageView
                             && this.getChildren().size() == selected.getChildren().size()) {
-                            handleSwap();
+                            handleSwap(this);
                         } else {
                             handleDeselect();
                         }
@@ -295,15 +329,23 @@ public class InventoryScreen {
         private void handleSelect() {
             rect.setFill(Color.RED);
             rect.setOpacity(0.5);
+            if (!selected.isEmpty())
+                drop.setDisable(false);
         }
 
         private void handleDeselect() {
+            if (emptyPaneTop.getChildren().size() == 1) {
+                emptyPaneTop.getChildren().remove(0);
+                emptyPaneTop.setPadding(new Insets(25, 0, 10, 0));
+            }
+
             selected.reset();
             selected = null;
+            drop.setDisable(true);
             this.reset();
         }
 
-        private void handleSwap() {
+        private void handleSwap(Slot other) {
             if (selected.type.equals("Weapon")) {
                 //swapping weapons
                 Weapon main = Player.getInstance().getInventory().getWeapon(0);
@@ -311,21 +353,44 @@ public class InventoryScreen {
 
                 Player.getInstance().getInventory().setWeapon(main, 1);
                 Player.getInstance().getInventory().setWeapon(sec, 0);
-                this.getChildren().remove(this.getChildren().size() - 1);
+                other.getChildren().remove(other.getChildren().size() - 1);
                 selected.getChildren().remove(selected.getChildren().size() - 1);
                 setUpWeaponSlots();
+                selected.handleDeselect();
                 Player.getInstance().switchWeapon(Player.getInstance().getInventory().getWeapon(0));
             } else {
                 //swapping potions
                 Potion selPotion = Player.getInstance().getInventory().getPotion(selected.num - 1);
-                Potion thisPotion = Player.getInstance().getInventory().getPotion(this.num - 1);
+                Potion thisPotion = Player.getInstance().getInventory().getPotion(other.num - 1);
 
-                Player.getInstance().getInventory().setPotion(selPotion, this.num - 1);
+                Player.getInstance().getInventory().setPotion(selPotion, other.num - 1);
                 Player.getInstance().getInventory().setPotion(thisPotion, selected.num - 1);
-                this.getChildren().remove(this.getChildren().size() - 1);
+                other.getChildren().remove(other.getChildren().size() - 1);
                 selected.getChildren().remove(selected.getChildren().size() - 1);
-                setUpPotionSlots(this, selected);
+                setUpPotionSlots(other, selected);
+                selected.handleDeselect();
             }
+        }
+
+        private void handleDrop() {
+            if (selected.type.equals("Weapon")) {
+                //weapon drops
+                if (selected.num == 1) {
+                    throw new IllegalDropException("Cannot drop main weapon.");
+                }
+                if (emptyPaneTop.getChildren().size() == 1) {//remove message
+                    emptyPaneTop.getChildren().remove(0);
+                    emptyPaneTop.setPadding(new Insets(25, 0, 10, 0));
+                }
+                selected.getChildren().remove(selected.getChildren().size() - 1);
+                //this.getChildren().remove(this.getChildren().size() - 1);
+                Controller.dropCollectable(1, "weapon");
+            } else {
+                //potion drops
+                selected.getChildren().remove(selected.getChildren().size() - 1);
+                Controller.dropCollectable(selected.num - 1, "potion");
+            }
+            selected.handleDeselect();
         }
     }
 }

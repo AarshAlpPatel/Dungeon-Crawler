@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import main.backend.Controller;
+import main.backend.characters.Player;
 import main.backend.characters.Sprite;
 import main.backend.collidables.Collidable;
 import main.backend.rooms.RoomManager;
@@ -108,6 +109,11 @@ public abstract class Weapon extends Collidable {
     public void dropWeapon() {
         dropped = true;
         RoomManager.getCurrent().addCollectable(this, this.getPosition());
+    }
+
+    public void playerDropWeapon() {
+        dropped = true;
+        RoomManager.getCurrent().addCollectable(this, Player.getInstance().getPosition());
     }
 
     public int animate() {

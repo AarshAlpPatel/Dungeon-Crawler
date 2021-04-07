@@ -52,6 +52,7 @@ public class Player extends Sprite {
     }
 
     public void switchWeapon(Weapon w) {
+        w.setAttackInterval(w.getROF());
         Controller.destroyImage(this.mainWeapon.getImage());
         this.mainWeapon = w;
         Controller.addImage(this.mainWeapon.getImage());
