@@ -1,0 +1,32 @@
+.shopBack {
+    -fx-background-color: #2a6666;
+    -fx-opacity: 0.5;
+}
+
+.screen {
+    -fx-background-image: url("/main/design/images/dungeon.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.center {
+    -fx-alignment: center;
+}
+
+.rect {
+    -fx-arc-height: 10px;
+    -fx-arc-width: 10px;
+    -fx-fill: #1d9179;
+    -fx-border-radius: 15px;
+    -fx-border-color: #292626;
+    -fx-opacity: 0.7;
+}
+
+.slot_rect {
+    -fx-arc-height: 10px;
+    -fx-arc-width: 10px;
+    -fx-fill: #454b4e;
+    -fx-border-radius: 15px;
+    -fx-border-color: #292626;
+    -fx-opacity: 1;
+}
