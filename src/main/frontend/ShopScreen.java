@@ -2,6 +2,8 @@ package main.frontend;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -29,12 +31,6 @@ public class ShopScreen {
     private static HBox createPanels() {
         HBox panels = new HBox(48);
         panels.getStyleClass().addAll("center");
-//        Rectangle potions = new Rectangle(200, 500);
-//        potions.getStyleClass().add("rect");
-//        Rectangle weapons = new Rectangle(200, 500);
-//        weapons.getStyleClass().add("rect");
-//        Rectangle checkout = new Rectangle(200, 500);
-//        checkout.getStyleClass().add("rect");
         Panel potions = new Panel("potion");
         Panel weapons = new Panel("weapon");
         Panel checkout = new Panel("checkout");
@@ -116,7 +112,25 @@ public class ShopScreen {
         private VBox createCheckout() {
             VBox checkout = new VBox();
 
+            //update upon image being clicked
+            ImageView image = new ImageView(
+                    new Image("/main/design/images/dagger-angle.png", 100, 100, false, false)
+            );
+            Label name = new Label("Dagger");
+            name.getStyleClass().add("label");
+            VBox quantifier = createQuantifier();
+            Button buy = createBuyButton();
             return checkout;
+        }
+
+        private VBox createQuantifier() {
+            VBox quantifier = new VBox();
+            return quantifier;
+        }
+
+        private Button createBuyButton() {
+            Button buy = new Button();
+            return buy;
         }
     }
 }

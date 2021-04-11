@@ -9,6 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.transform.*;
 import main.backend.Controller;
+import main.backend.potions.AttackPotion;
+import main.backend.potions.HealthPotion;
+import main.backend.potions.SpeedPotion;
 import main.backend.weapons.*;
 
 public abstract class Collidable {
@@ -111,12 +114,27 @@ public abstract class Collidable {
         }
         if (this instanceof Axe) {
             return new ImageView(
-                    new Image("/main/design/images/axe-angle.png", 300, 300, false, false)
+                    new Image("/main/design/images/axe-angle.png", 200, 200, false, false)
             );
         }
         if (this instanceof Spear) {
             return new ImageView(
                     new Image("/main/design/images/spear-angle.png", 300, 300, false, false)
+            );
+        }
+        if (this instanceof AttackPotion) {
+            return new ImageView(
+                    new Image("/main/design/images/potions/attack.png", 51, 76, false, false)
+            );
+        }
+        if (this instanceof HealthPotion) {
+            return new ImageView(
+                    new Image("/main/design/images/potions/health.png", 51, 76, false, false)
+            );
+        }
+        if (this instanceof SpeedPotion) {
+            return new ImageView(
+                    new Image("/main/design/images/potions/speed.png", 51, 76, false, false)
             );
         }
         return this.image;

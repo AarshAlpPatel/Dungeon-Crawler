@@ -38,6 +38,9 @@ public class RoomManager {
             return new BossRoom(); 
         } else if (type.equals("end")) {
             return new EndRoom();
+        } else if (type.equals("treasure")) {
+            //for testing
+            return new TreasureRoom();
         } else {
             return new Room(type);
         }
@@ -73,7 +76,13 @@ public class RoomManager {
         Room lastRoom = tmp;
 
         for (int i = 6; i < 9; ++i) {
-            Room newRoom = createRoom(types.get(i));
+            //remove the if, keep the else
+            Room newRoom;
+            if (i == 6) {
+                newRoom = createRoom("treasure");
+            } else {
+                newRoom = createRoom(types.get(i));
+            }
             setConnection(current, newRoom);
         }
 

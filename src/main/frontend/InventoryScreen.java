@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -114,7 +115,35 @@ public class InventoryScreen {
     private static HBox createItemsHBox() {
         HBox items = new HBox(10);
         items.getStyleClass().add("center");
-        item1 = new Slot("Item", 1);
+        item1 = Player.getInstance().getInventory().getPotion(0) == null ?
+                new Slot("Item", 1) :
+                new Slot(Player.getInstance().getInventory()
+                        .getPotion(0).getRawImage(), "Item", 1);
+
+        item2 = Player.getInstance().getInventory().getPotion(1) == null ?
+                new Slot("Item", 2) :
+                new Slot(Player.getInstance().getInventory()
+                        .getPotion(1).getRawImage(), "Item", 2);
+
+        item3 = Player.getInstance().getInventory().getPotion(2) == null ?
+                new Slot("Item", 3) :
+                new Slot(Player.getInstance().getInventory()
+                        .getPotion(2).getRawImage(), "Item", 3);
+
+        item4 = Player.getInstance().getInventory().getPotion(3) == null ?
+                new Slot("Item", 4) :
+                new Slot(Player.getInstance().getInventory()
+                        .getPotion(3).getRawImage(), "Item", 4);
+
+        item5 = Player.getInstance().getInventory().getPotion(4) == null ?
+                new Slot("Item", 5) :
+                new Slot(Player.getInstance().getInventory()
+                        .getPotion(4).getRawImage(), "Item", 5);
+
+        items.getChildren().addAll(item1, item2, item3, item4, item5);
+
+        return items;
+
 //        VBox cash = new VBox(10);
 //        cash.getStyleClass().addAll("center");
 //        Label cashNum = new Label(Player.getInstance().getCash().toString());
@@ -123,14 +152,7 @@ public class InventoryScreen {
 //                new ImageView(
 //                        new Image("/main/design/images/coin.png", 40, 40, false, false)),
 //                cashNum);
-//        item1.getChildren().add(cash);
-        item2 = new Slot("Item", 2);
-        item3 = new Slot("Item", 3);
-        item4 = new Slot("Item", 4);
-        item5 = new Slot("Item", 5);
-        items.getChildren().addAll(item1, item2, item3, item4, item5);
-
-        return items;
+//        item1.getChildren().add(cash)
     }
 
     //exit button
@@ -140,14 +162,12 @@ public class InventoryScreen {
         Button exitInventory = new Button("Exit");
         exitInventory.getStyleClass().addAll("exit_button");
         exitInventory.setOnAction(event -> {
-            MainScreen.setScene(GameManager.getScene());
-            if (selected != null)
-                selected.handleDeselect();
-            GameManager.unpauseGameLoop();
+            handleExit();
         });
         bottomButtons.getStyleClass().add("center");
 
         drop = new Button("Drop");
+        drop.setId("drop");
         drop.getStyleClass().addAll("drop_button");
         if (selected == null) {
             drop.setDisable(true);
@@ -169,6 +189,13 @@ public class InventoryScreen {
         return bottomButtons;
     }
 
+    private static void handleExit() {
+        MainScreen.setScene(GameManager.getScene());
+        if (selected != null)
+            selected.handleDeselect();
+        GameManager.unpauseGameLoop();
+    }
+
     private static void setUpWeaponSlots() {
         mainWeapon.getChildren().add(Player.getInstance().getInventory().getWeapon(0).getRawImage());
         if (Player.getInstance().getInventory().getNumWeapons() == 2)
@@ -180,24 +207,33 @@ public class InventoryScreen {
         sec.getChildren().add(Player.getInstance().getInventory().getPotion(sec.num - 1).getRawImage());
     }
 
-    public static Scene getScene() {
+    private static void setKeyBinds() {
+        screenHolder.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.H) {
+                handleExit();
+            }
+        });
+    }
 
-        //check player inventory
-//        System.out.print("\nWeapons: ");
-//        for (Weapon weapon : Player.getInstance().getInventory().getWeapons()) {
-//            System.out.print(weapon.toString() + " ");
-//        }
-//        System.out.println();
-//        System.out.print("Potions: ");
-//        for (Potion potion : Player.getInstance().getInventory().getPotions()) {
-//            System.out.print(potion.toString() + " ");
-//        }
-//        System.out.println();
+    public static Slot getSelected() {
+        return selected;
+    }
+
+    public static String getSelectedID() {
+        return selected.getId();
+    }
+
+    public static Rectangle getSelectedRectangle() {
+        return selected.rect;
+    }
+
+    public static Scene getScene() {
 
         emptyPaneTop = new HBox();
         emptyPaneTop.getStyleClass().add("center");
         emptyPaneTop.setPadding(new Insets(25, 0, 10, 0));
         screenHolder = new StackPane();
+        setKeyBinds();
         screen = new VBox(25);
         screen.getStyleClass().addAll("screen", "center");
         StackPane inventory = createBackground();
@@ -218,7 +254,7 @@ public class InventoryScreen {
         return inventoryScreen;
     }
 
-    private static class Slot extends StackPane {
+    public static class Slot extends StackPane {
         int clickCount = 0;
         Node child;
         String type;
@@ -232,18 +268,20 @@ public class InventoryScreen {
             else
                 initSlot(100, 100);
             this.handleMouseActions();
-            if (this.child == null) {
-                child = new Pane();
-                add(child);
-            }
+//            if (this.child == null) {
+//                child = new Pane();
+//                add(child);
+//            }
             this.type = type;
             this.num = num;
+            this.setId(type + num);
+            System.out.println(this.getId());
         }
 
         public Slot(Node child, String type, int num) {
             this(type, num);
-            add(child);
             this.child = child;
+            add(child);
         }
 
         public void initSlot(int d1, int d2) {

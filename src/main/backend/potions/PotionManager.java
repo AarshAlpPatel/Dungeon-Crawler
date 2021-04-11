@@ -38,7 +38,7 @@ public class PotionManager {
         } else if (name.equals("speed")) {
             return new SpeedPotion(x, y, rarity, duration);
         } else {
-            throw new IllegalArgumentException("Weapon name not recognized");
+            throw new IllegalArgumentException("Potion name not recognized");
         }
     }
 

@@ -1,8 +1,10 @@
 package main.backend.potions;
 
 import javafx.geometry.Point2D;
+import main.backend.characters.Player;
 import main.backend.characters.Sprite;
 import main.backend.collidables.Collidable;
+import main.backend.rooms.RoomManager;
 
 public abstract class Potion extends Collidable {
     //image of potion
@@ -20,6 +22,10 @@ public abstract class Potion extends Collidable {
         this.name = name;
         this.rarity = rarity;
         this.duration = duration;
+    }
+
+    public void dropPotion() {
+        RoomManager.getCurrent().addCollectable(this, Player.getInstance().getPosition());
     }
 
     public abstract void setPower();
