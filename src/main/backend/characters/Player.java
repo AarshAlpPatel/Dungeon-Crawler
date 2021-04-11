@@ -35,7 +35,7 @@ public class Player extends Sprite {
         this.inventory = new Inventory();
     }
 
-    public void resetPlayer() {
+    public static void resetPlayer() {
         playerObj = null;
     }
 

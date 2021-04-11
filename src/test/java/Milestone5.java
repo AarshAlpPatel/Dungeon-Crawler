@@ -9,6 +9,7 @@ import junit.framework.TestCase;
 import main.backend.Controller;
 import main.backend.characters.Enemy;
 import main.backend.characters.Player;
+import main.backend.exceptions.IllegalDropException;
 import main.backend.potions.AttackPotion;
 import main.backend.potions.HealthPotion;
 import main.backend.potions.SpeedPotion;
@@ -66,7 +67,7 @@ public class Milestone5 extends ApplicationTest {
         startGame();
 
         assertEquals(1, Player.getInstance().getInventory().getWeapons().size());
-        assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Dagger);
+        assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Spear);
         assertTrue(Player.getInstance().getInventory().getPotions().isEmpty());
     }
 
@@ -111,42 +112,9 @@ public class Milestone5 extends ApplicationTest {
                 NodeMatchers.isVisible());
     }
 
-    private void pickUpWeapon() {
-        clickOn("#toGame");
-        clickOn("#nameField");
-        type(KeyCode.N);
-        clickOn("#weaponRight");
-        clickOn("Start Game");
-
-        findEnemyRoom();
-        String dir = killLastEnemy();
-        KeyCode kTP = dir.equals("North") ? KeyCode.W : KeyCode.S;
-
-        press(kTP);
-        press(kTP);
-        press(kTP);
-        release(kTP);
-
-        press(KeyCode.F);
-        release(KeyCode.F);
-    }
-
-    public void findEnemyRoom() {
-        Room current = RoomManager.getCurrent();
-        if (!(current.getNextRoom(Door.WEST) instanceof TreasureRoom)) {
-            goWest();
-        } else if (!(current.getNextRoom(Door.NORTH) instanceof TreasureRoom)) {
-            goNorth();
-        } else if (!(current.getNextRoom(Door.EAST) instanceof TreasureRoom)) {
-            goEast();
-        } else {
-            goSouth();
-        }
-    }
-
     @Test
     public void testSwitch() {
-        pickUpWeapon();
+        Door dirTraveled = pickUpWeapon();
 
         assertNotNull(Player.getInstance().getInventory().getWeapon(1));
         press(KeyCode.H);
@@ -160,9 +128,28 @@ public class Milestone5 extends ApplicationTest {
         press(KeyCode.H);
         release(KeyCode.H);
         Player.getInstance().setPosition(new Point2D(MainScreen.getMidX(), MainScreen.getMidY()));
-        goSouth();
+        findStartRoom(dirTraveled);
         verifyThat(Player.getInstance().getInventory().getWeapon(0).getRawImage(),
                 NodeMatchers.isVisible());
+    }
+
+    private void findStartRoom(Door dirTraveled) {
+        switch (dirTraveled) {
+            case EAST:
+                goWest();
+                break;
+            case NORTH:
+                goSouth();
+                break;
+            case WEST:
+                goEast();
+                break;
+            case SOUTH:
+                goNorth();
+                break;
+            default :
+                throw new IllegalArgumentException("Unknown Direction");
+        }
     }
 
     @Test
@@ -183,21 +170,27 @@ public class Milestone5 extends ApplicationTest {
     public void pickUpPotions() {
         startGame();
         findTreasureRoom();
-        pickUpPotion(400, 400);
+        Player.getInstance().setPosition(new Point2D(200, 200));
+        press(KeyCode.F);
+        release(KeyCode.F);
         assertNotNull(Player.getInstance().getInventory().getPotion(0));
         assertTrue(Player.getInstance().getInventory().getPotion(0) instanceof HealthPotion);
         press(KeyCode.H);
         release(KeyCode.H);
         verifyThat(Player.getInstance().getInventory().getPotion(0).getRawImage(), NodeMatchers.isVisible());
         assertEquals(1, Player.getInstance().getInventory().getPotions().size());
+        press(KeyCode.H);
+        release(KeyCode.H);
 
-        pickUpPotion(200, 200);
+        pickUpPotion(400, 400);
         assertNotNull(Player.getInstance().getInventory().getPotion(1));
         assertTrue(Player.getInstance().getInventory().getPotion(1) instanceof AttackPotion);
         press(KeyCode.H);
         release(KeyCode.H);
         verifyThat(Player.getInstance().getInventory().getPotion(1).getRawImage(), NodeMatchers.isVisible());
         assertEquals(2, Player.getInstance().getInventory().getPotions().size());
+        press(KeyCode.H);
+        release(KeyCode.H);
 
         pickUpPotion(600, 600);
         assertNotNull(Player.getInstance().getInventory().getPotion(2));
@@ -243,6 +236,140 @@ public class Milestone5 extends ApplicationTest {
         verifyThat("Drop", NodeMatchers.isDisabled());
     }
 
+    @Test
+    public void testHealthPotionUse() {
+        startGame();
+        getHit();
+        double startingHealth = Player.getInstance().getHealth();
+        Player.getInstance().setPosition(new Point2D(400, 400));
+        findTreasureRoom();
+        //test Health Potion
+        Player.getInstance().setPosition(new Point2D(200, 200));
+        pickupAndUseFirstPotion();
+        TestCase.assertEquals(startingHealth + 20, Player.getInstance().getHealth());
+    }
+
+    @Test
+    public void testAttackPotionUse() {
+        startGame();
+        findTreasureRoom();
+        double startingAM = Player.getInstance().getAttackMultiplier();
+        Player.getInstance().setPosition(new Point2D(400, 400));
+        pickupAndUseFirstPotion();
+        TestCase.assertEquals(startingAM + 5, Player.getInstance().getAttackMultiplier());
+    }
+
+    @Test
+    public void testSpeedPotionUse() {
+        startGame();
+        findTreasureRoom();
+        double startingSpeed = Player.getInstance().getThisSpeed();
+        Player.getInstance().setPosition(new Point2D(600, 600));
+        pickupAndUseFirstPotion();
+        TestCase.assertEquals(startingSpeed + 1, Player.getInstance().getThisSpeed());
+    }
+
+    @Test
+    public void testOverfill() {
+        startGame();
+        findEnemyRoom();
+        String dirKilled = killEnemy(RoomManager.getCurrentEnemies().getEnemyCounter() - 1);
+        KeyCode ktp;
+        if (dirKilled.equals("North")) {
+            ktp = KeyCode.W;
+        } else {
+            ktp = KeyCode.S;
+        }
+
+        press(ktp);
+        press(ktp);
+        press(ktp);
+        release(ktp);
+
+        press(KeyCode.F);
+        release(KeyCode.F);
+        assertEquals(2, Player.getInstance().getInventory().getNumWeapons());
+        
+        //make sure inventory doesnt change when trying to pick up another weapon
+        String dirKilled2 = killEnemy(RoomManager.getCurrentEnemies().getEnemyCounter() - 1);
+        if (dirKilled.equals("North")) {
+            ktp = KeyCode.W;
+        } else {
+            ktp = KeyCode.S;
+        }
+
+        press(ktp);
+        press(ktp);
+        press(ktp);
+        release(ktp);
+        press(KeyCode.F);
+        release(KeyCode.F);
+        assertEquals(2, Player.getInstance().getInventory().getNumWeapons());
+    }
+
+    private Door pickUpWeapon() {
+        startGame();
+
+        Door dirTraveled = findEnemyRoom();
+        String dir = killEnemy(RoomManager.getCurrentEnemies().getEnemyCounter() - 1);
+        KeyCode kTP = dir.equals("North") ? KeyCode.W : KeyCode.S;
+
+        press(kTP);
+        press(kTP);
+        press(kTP);
+        release(kTP);
+
+        press(KeyCode.F);
+        release(KeyCode.F);
+
+        return dirTraveled;
+    }
+
+    public Door findEnemyRoom() {
+        Room current = RoomManager.getCurrent();
+        if (!(current.getNextRoom(Door.WEST) instanceof TreasureRoom)) {
+            goWest();
+            return Door.WEST;
+        } else if (!(current.getNextRoom(Door.NORTH) instanceof TreasureRoom)) {
+            goNorth();
+            return Door.NORTH;
+        } else if (!(current.getNextRoom(Door.EAST) instanceof TreasureRoom)) {
+            goEast();
+            return Door.EAST;
+        } else {
+            goSouth();
+            return Door.SOUTH;
+        }
+    }
+
+    private void pickupAndUseFirstPotion() {
+        press(KeyCode.F);
+        release(KeyCode.F);
+        press(KeyCode.H);
+        release(KeyCode.H);
+        assertTrue(InventoryScreen.getUse().isDisabled());
+        clickOn("#Item1");
+        assertFalse(InventoryScreen.getUse().isDisabled());
+        clickOn("Use");
+        press(KeyCode.H);
+        release(KeyCode.H);
+    }
+
+    public void getHit() {
+        Room start = RoomManager.getCurrent();
+        Door dirTraveled = findEnemyRoom();
+        while (Player.getInstance().getHealth() > 80)
+            Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[0].getPosition());
+        //back to start
+        Player.getInstance().setPosition(new Point2D(400, 400));
+        switch (dirTraveled) {
+            case EAST -> goWest();
+            case WEST -> goEast();
+            case NORTH -> goSouth();
+            case SOUTH -> goNorth();
+        }
+    }
+
     public void pickUpPotion(int x, int y) {
         //Room current = RoomManager.getCurrent();
         Player.getInstance().setPosition(new Point2D(x, y));
@@ -267,6 +394,7 @@ public class Milestone5 extends ApplicationTest {
         clickOn("#toGame");
         clickOn("#nameField");
         type(KeyCode.N);
+        clickOn("#weaponRight");
         clickOn("Start Game");
     }
 
@@ -276,10 +404,9 @@ public class Milestone5 extends ApplicationTest {
         release(KeyCode.H);
     }
 
-    public String killLastEnemy() {
+    public String killEnemy(int index) {
         int numAlive = 0;
         String directionKilled;
-        int index = RoomManager.getCurrentEnemies().getEnemyCounter() - 1;
         if (RoomManager.getCurrentEnemies().getEnemies()[index].getPosition().getY()
                 < MainScreen.getMidY()) {
             Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[index]
@@ -348,101 +475,5 @@ public class Milestone5 extends ApplicationTest {
             press(KeyCode.A);
         }
         release(KeyCode.A);
-    }
-
-    public void goNorthSetAmount() {
-        int i = 0;
-        while (i < 30) {
-            press(KeyCode.W);
-            i++;
-        }
-        release(KeyCode.W);
-    }
-
-    public void goSouthSetAmount() {
-        int i = 0;
-        while (i < 30) {
-            press(KeyCode.S);
-            i++;
-        }
-        release(KeyCode.S);
-    }
-
-    public void goEastSetAmount() {
-        for (int i = 0; i < 2; i++) {
-            press(KeyCode.S);
-        }
-        release(KeyCode.S);
-        int i = 0;
-        while (i < 30) {
-            press(KeyCode.D);
-            i++;
-        }
-        release(KeyCode.D);
-    }
-
-    public void goWestSetAmount() {
-        for (int i = 0; i < 2; i++) {
-            press(KeyCode.S);
-        }
-        release(KeyCode.S);
-        int i = 0;
-        while (i < 30) {
-            press(KeyCode.A);
-            i++;
-        }
-        release(KeyCode.A);
-    }
-
-    public Door findOpenDoor(Room current, Door lastRoomDirection) {
-        int i = 0;
-        Door[] directions = Door.values();
-        while (current.getNextRoom(directions[i]) == null || directions[i] == lastRoomDirection) {
-            i++;
-        }
-        Point2D middle = new Point2D(MainScreen.getMidX(), MainScreen.getMidY());
-        Player.getInstance().setPosition(middle);
-        switch (directions[i]) {
-            case EAST:
-                goEast();
-                return Door.EAST;
-            case WEST:
-                goWest();
-                return Door.WEST;
-            case NORTH:
-                goNorthSetAmount();
-                return Door.NORTH;
-            case SOUTH:
-                goSouth();
-                return Door.SOUTH;
-            default:
-        }
-        goEast();
-        return null;
-    }
-
-    public Door findOpenDoorSetAmount(@NotNull Room current, Door lastRoomDirection) {
-        int i = 0;
-        Door[] directions = Door.values();
-        while (current.getNextRoom(directions[i]) == null || directions[i] == lastRoomDirection) {
-            i++;
-        }
-        Player.getInstance().setPosition(new Point2D(MainScreen.getMidX(), MainScreen.getMidY()));
-        switch (directions[i]) {
-            case EAST:
-                goEastSetAmount();
-                return Door.EAST;
-            case WEST:
-                goWestSetAmount();
-                return Door.WEST;
-            case NORTH:
-                goNorthSetAmount();
-                return Door.NORTH;
-            case SOUTH:
-                goSouthSetAmount();
-                return Door.SOUTH;
-            default:
-        }
-        return null;
     }
 }

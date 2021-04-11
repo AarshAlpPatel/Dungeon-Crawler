@@ -56,6 +56,7 @@ public class Controller {
      */
     public static Player createPlayer(double x, double y, String name, String weaponName,
                                       String imagePath) {
+        Player.resetPlayer();
         Player player = Player.getInstance();
         Weapon weapon = WeaponManager.create(weaponName, x, y, false, 2.5, 10, -1);
         weapon.setAttackInterval(weapon.getROF());
@@ -65,8 +66,6 @@ public class Controller {
         player.setImage(imagePath);
         if (Player.getInstance().getInventory().isEmpty())
             player.getInventory().addWeapon(weapon);
-        else
-            player.getInventory().setWeapon(weapon, 0);
         return player;
     }
 
@@ -251,7 +250,9 @@ public class Controller {
             Player.getInstance().getInventory().getWeapon(index).playerDropWeapon();
             Player.getInstance().getInventory().dropWeapon(index);
         } else {
+            //this places it on the main screen again
             Player.getInstance().getInventory().getPotion(index).dropPotion();
+            //this deletes it from inventory
             Player.getInstance().getInventory().dropPotion(index);
         }
     }
