@@ -1,6 +1,7 @@
 package main.backend.inventory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import main.backend.characters.Player;
 import main.backend.collidables.Collidable;
@@ -33,10 +34,12 @@ public class Inventory {
             if (c instanceof Weapon) {
                 addWeapon((Weapon)c);
             } else if (c instanceof Potion) {
-                /*
-                * TEMPORARY CODE PLEASE CHANGE BEFORE FINAL PRESENTATION BECAUSE SUPPOSED TO ADD TO INVENTORY FIRST THEN USE NOT JUST STRAIGHT APPLY
-                */
-                Player.getInstance().applyPotion((Potion)c);
+//                /*
+//                * TEMPORARY CODE PLEASE CHANGE BEFORE FINAL PRESENTATION BECAUSE SUPPOSED TO ADD TO INVENTORY FIRST THEN USE NOT JUST STRAIGHT APPLY
+//                */
+//                Player.getInstance().applyPotion((Potion)c);
+                addPotion((Potion) c);
+                printInventory();
             } else {
                 throw new IllegalArgumentException("Invalid collectable");
             }
@@ -47,6 +50,17 @@ public class Inventory {
         } catch (TooManyPotions e) {
             System.out.println("Cannot add potion, inventory full");
             return false;
+        }
+    }
+
+    private void printInventory() {
+        System.out.print("\nWeapons: ");
+        for (int i = 0; i < 2; i++) {
+            System.out.print(getWeapon(i) + ", ");
+        }
+        System.out.println("\nPotions: ");
+        for (int i = 0; i < 5; i++) {
+            System.out.print(getPotion(i) + ", ");
         }
     }
 
@@ -87,6 +101,7 @@ public class Inventory {
             }
             i++;
         }
+        printInventory();
         return removed;
     }
 
@@ -140,14 +155,6 @@ public class Inventory {
         return numPotions;
     }
 
-//    public ArrayList<Weapon> getWeapons() {
-//        return weapons;
-//    }
-//
-//    public ArrayList<Potion> getPotions() {
-//        return potions;
-//    }
-
     public Weapon getWeapon(int i) {
         return (i < weapons.size()) ? weapons.get(i) : null;
     }
@@ -158,5 +165,13 @@ public class Inventory {
 
     public boolean isEmpty() {
         return weapons.isEmpty() && potions.isEmpty();
+    }
+
+    public List<Weapon> getWeapons() {
+        return this.weapons;
+    }
+
+    public List<Potion> getPotions() {
+        return this.potions;
     }
 }

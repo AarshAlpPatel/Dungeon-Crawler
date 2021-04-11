@@ -251,6 +251,7 @@ public class Controller {
             Player.getInstance().getInventory().getWeapon(index).playerDropWeapon();
             Player.getInstance().getInventory().dropWeapon(index);
         } else {
+            Player.getInstance().getInventory().getPotion(index).dropPotion();
             Player.getInstance().getInventory().dropPotion(index);
         }
     }
