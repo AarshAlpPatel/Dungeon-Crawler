@@ -19,6 +19,7 @@ import main.backend.potions.Potion;
 import main.backend.weapons.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class InventoryScreen {
@@ -28,9 +29,6 @@ public class InventoryScreen {
 
     //main screen
     private static VBox screen;
-
-    //finding the closest rectangle to the item being dragged
-    private static List<Rectangle> rectangles = new ArrayList<>();
 
     //keeps track of selected slot for slot actions
     private static Slot selected;
@@ -44,17 +42,15 @@ public class InventoryScreen {
     //holds messages
     private static HBox emptyPaneTop;
 
-    //if a potion is applied, this is updated
-    private static Potion potionUsed;
+    //all of the potions used that need to be applied
+    private static List<Potion> potionsUsed = new ArrayList<>(5);
 
     //slots
     private static Slot mainWeapon;
     private static Slot backupWeapon;
-    private static Slot item1;
-    private static Slot item2;
-    private static Slot item3;
-    private static Slot item4;
-    private static Slot item5;
+
+    //list of the item slots
+    private static ArrayList<Slot> itemsList;
 
     private static StackPane screenHolder;
 
@@ -71,10 +67,7 @@ public class InventoryScreen {
     private static HBox createWeaponHBox() {
         HBox weapons = new HBox(30);
 
-        //Weapon playerMain = Player.getInstance().getMainWeapon();
         Image main = weaponImage(Player.getInstance().getInventory().getWeapon(0));
-//        if (Player.getInstance().getInventory().getNumWeapons() == 1)
-//            Player.getInstance().getInventory().addWeapon(new Axe(0, 0, false, 0, 0, 2));
         Image backup = null;
         if (Player.getInstance().getInventory().getNumWeapons() == 2) {
             backup = weaponImage(Player.getInstance().getInventory().getWeapon(1));
@@ -114,32 +107,39 @@ public class InventoryScreen {
 
     //creates slots for items, first item is money
     private static HBox createItemsHBox() {
+        itemsList = new ArrayList<>();
         HBox items = new HBox(10);
         items.getStyleClass().add("center");
-        item1 = Player.getInstance().getInventory().getPotion(0) == null ?
+        Slot item1 = Player.getInstance().getInventory().getPotion(0) == null ?
                 new Slot("Item", 1) :
                 new Slot(Player.getInstance().getInventory()
                         .getPotion(0).getRawImage(), "Item", 1);
 
-        item2 = Player.getInstance().getInventory().getPotion(1) == null ?
+        Slot item2 = Player.getInstance().getInventory().getPotion(1) == null ?
                 new Slot("Item", 2) :
                 new Slot(Player.getInstance().getInventory()
                         .getPotion(1).getRawImage(), "Item", 2);
 
-        item3 = Player.getInstance().getInventory().getPotion(2) == null ?
+        Slot item3 = Player.getInstance().getInventory().getPotion(2) == null ?
                 new Slot("Item", 3) :
                 new Slot(Player.getInstance().getInventory()
                         .getPotion(2).getRawImage(), "Item", 3);
 
-        item4 = Player.getInstance().getInventory().getPotion(3) == null ?
+        Slot item4 = Player.getInstance().getInventory().getPotion(3) == null ?
                 new Slot("Item", 4) :
                 new Slot(Player.getInstance().getInventory()
                         .getPotion(3).getRawImage(), "Item", 4);
 
-        item5 = Player.getInstance().getInventory().getPotion(4) == null ?
+        Slot item5 = Player.getInstance().getInventory().getPotion(4) == null ?
                 new Slot("Item", 5) :
                 new Slot(Player.getInstance().getInventory()
                         .getPotion(4).getRawImage(), "Item", 5);
+
+        itemsList.add(item1);
+        itemsList.add(item2);
+        itemsList.add(item3);
+        itemsList.add(item4);
+        itemsList.add(item5);
 
         items.getChildren().addAll(item1, item2, item3, item4, item5);
 
@@ -198,9 +198,12 @@ public class InventoryScreen {
         if (selected != null)
             selected.handleDeselect();
         GameManager.unpauseGameLoop();
-        if (potionUsed != null) {
-            Player.getInstance().applyPotion(potionUsed);
-            potionUsed = null;
+        if (!potionsUsed.isEmpty()) {
+            Potion current = potionsUsed.get(0);
+            for (Potion potion : potionsUsed) {
+                Player.getInstance().applyPotion(potion);
+            }
+            potionsUsed.clear();
         }
     }
 
@@ -213,6 +216,22 @@ public class InventoryScreen {
     private static void setUpPotionSlots(Slot first, Slot sec) {
         first.getChildren().add(Player.getInstance().getInventory().getPotion(first.num - 1).getRawImage());
         sec.getChildren().add(Player.getInstance().getInventory().getPotion(sec.num - 1).getRawImage());
+    }
+
+    private static void resetPotionSlots() {
+        //sliding things down
+        for (Slot slot : itemsList) {
+            if (!slot.isEmpty())
+                slot.getChildren().remove(slot.getChildren().size() - 1);
+        }
+
+        for (int i = 0; i < 5; i++) {
+            if (Player.getInstance().getInventory().getPotion(i) == null) {
+                break;
+            } else {
+                itemsList.get(i).add(Player.getInstance().getInventory().getPotion(i).getRawImage());
+            }
+        }
     }
 
     private static void setKeyBinds() {
@@ -443,6 +462,7 @@ public class InventoryScreen {
                 //potion drops
                 selected.getChildren().remove(selected.getChildren().size() - 1);
                 Controller.dropCollectable(selected.num - 1, "potion");
+                resetPotionSlots();
             }
             selected.handleDeselect();
         }
@@ -455,9 +475,11 @@ public class InventoryScreen {
                 case 5 -> 4;
                 default -> 0;
             };
-            potionUsed = Player.getInstance().getInventory().getPotion(index);
+            potionsUsed.add(Player.getInstance().getInventory().getPotion(index));
             selected.getChildren().remove(selected.getChildren().size() - 1);
             Player.getInstance().getInventory().dropPotion(index);
+            selected.handleDeselect();
+            resetPotionSlots();
         }
     }
 }

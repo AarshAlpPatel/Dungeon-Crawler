@@ -1,7 +1,6 @@
 package test.java;
 
 import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
@@ -9,7 +8,6 @@ import junit.framework.TestCase;
 import main.backend.Controller;
 import main.backend.characters.Enemy;
 import main.backend.characters.Player;
-import main.backend.exceptions.IllegalDropException;
 import main.backend.potions.AttackPotion;
 import main.backend.potions.HealthPotion;
 import main.backend.potions.SpeedPotion;
@@ -24,7 +22,6 @@ import main.frontend.GameManager;
 import main.frontend.InventoryScreen;
 import main.frontend.MainScreen;
 import main.frontend.WelcomeScreen;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -135,20 +132,11 @@ public class Milestone5 extends ApplicationTest {
 
     private void findStartRoom(Door dirTraveled) {
         switch (dirTraveled) {
-            case EAST:
-                goWest();
-                break;
-            case NORTH:
-                goSouth();
-                break;
-            case WEST:
-                goEast();
-                break;
-            case SOUTH:
-                goNorth();
-                break;
-            default :
-                throw new IllegalArgumentException("Unknown Direction");
+            case EAST -> goWest();
+            case NORTH -> goSouth();
+            case WEST -> goEast();
+            case SOUTH -> goNorth();
+            default -> throw new IllegalArgumentException("Unknown Direction");
         }
     }
 
