@@ -13,7 +13,7 @@
     -fx-alignment: center;
 }
 
-.exit_button {
+.use_button {
     -fx-font-size: 30px;
     -fx-font-weight: bold;
     -fx-font-family: "Bernard MT Condensed";

@@ -9,13 +9,11 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.*;
 
 import main.backend.Controller;
-import main.backend.characters.Player;
-import main.backend.inventory.Inventory;
 
 public class SetUpPlayerScreen {
 
-    private static int indexC = 0; //character
-    private static int indexW = 0; //weapon
+    private static int indexC; //character
+    private static int indexW; //weapon
     private static String[] characters = {
         "char1.gif",
         "char2.gif", 
@@ -163,6 +161,9 @@ public class SetUpPlayerScreen {
     }
 
     public static Scene getScene() {
+        indexC = 0;
+        indexW = 0;
+
         //top is the customization panel and bottom are the start and back buttons
         VBox screen = new VBox();
         Scene playerSetUp = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());

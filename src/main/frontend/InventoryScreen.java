@@ -38,8 +38,14 @@ public class InventoryScreen {
     //drop button
     private static Button drop;
 
+    //use button
+    private static Button use;
+
     //holds messages
     private static HBox emptyPaneTop;
+
+    //if a potion is applied, this is updated
+    private static Potion potionUsed;
 
     //slots
     private static Slot mainWeapon;
@@ -50,11 +56,6 @@ public class InventoryScreen {
     private static Slot item4;
     private static Slot item5;
 
-    /*
-     * when the image starts getting dragged, this gets covered by the dragBox,
-     * effectively rendering all of the other mouseEntering and exiting actions
-     * for the slots underneath useless because they are no longer visible to the mouse
-     */
     private static StackPane screenHolder;
 
     //sets up the blue, translucent background and StackPane for holding all of the slots
@@ -159,10 +160,13 @@ public class InventoryScreen {
     private static HBox createBottomButtons() {
         HBox bottomButtons = new HBox(40);
 
-        Button exitInventory = new Button("Exit");
-        exitInventory.getStyleClass().addAll("exit_button");
-        exitInventory.setOnAction(event -> {
-            handleExit();
+        use = new Button("Use");
+        use.getStyleClass().addAll("use_button");
+        if (selected == null || selected.type.equals("Weapon")) {
+            use.setDisable(true);
+        }
+        use.setOnAction(event -> {
+            selected.handleUse();
         });
         bottomButtons.getStyleClass().add("center");
 
@@ -184,7 +188,7 @@ public class InventoryScreen {
                 emptyPaneTop.setPadding(new Insets(6, 0, 2, 0));
             }
         });
-        bottomButtons.getChildren().addAll(exitInventory, drop);
+        bottomButtons.getChildren().addAll(use, drop);
 
         return bottomButtons;
     }
@@ -194,6 +198,10 @@ public class InventoryScreen {
         if (selected != null)
             selected.handleDeselect();
         GameManager.unpauseGameLoop();
+        if (potionUsed != null) {
+            Player.getInstance().applyPotion(potionUsed);
+            potionUsed = null;
+        }
     }
 
     private static void setUpWeaponSlots() {
@@ -208,8 +216,9 @@ public class InventoryScreen {
     }
 
     private static void setKeyBinds() {
-        screenHolder.setOnKeyPressed(event -> {
+        inventoryScreen.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.H) {
+                System.out.println("Exit handled");
                 handleExit();
             }
         });
@@ -227,13 +236,16 @@ public class InventoryScreen {
         return selected.rect;
     }
 
+    public static Button getUse() {
+        return use;
+    }
+
     public static Scene getScene() {
 
         emptyPaneTop = new HBox();
         emptyPaneTop.getStyleClass().add("center");
         emptyPaneTop.setPadding(new Insets(25, 0, 10, 0));
         screenHolder = new StackPane();
-        setKeyBinds();
         screen = new VBox(25);
         screen.getStyleClass().addAll("screen", "center");
         StackPane inventory = createBackground();
@@ -250,6 +262,7 @@ public class InventoryScreen {
         screenHolder.getChildren().addAll(screen);
 
         inventoryScreen = new Scene(screenHolder, MainScreen.getLength(), MainScreen.getHeight());
+        setKeyBinds();
         inventoryScreen.getStylesheets().add("/main/design/Inventory.css");
         return inventoryScreen;
     }
@@ -369,6 +382,8 @@ public class InventoryScreen {
             rect.setOpacity(0.5);
             if (!selected.isEmpty())
                 drop.setDisable(false);
+            if (!selected.type.equals("Weapon") && !selected.isEmpty())
+                use.setDisable(false);
         }
 
         private void handleDeselect() {
@@ -380,6 +395,7 @@ public class InventoryScreen {
             selected.reset();
             selected = null;
             drop.setDisable(true);
+            use.setDisable(true);
             this.reset();
         }
 
@@ -429,6 +445,19 @@ public class InventoryScreen {
                 Controller.dropCollectable(selected.num - 1, "potion");
             }
             selected.handleDeselect();
+        }
+
+        private void handleUse() { //only for potions
+            int index = switch (num) {
+                case 2 -> 1;
+                case 3 -> 2;
+                case 4 -> 3;
+                case 5 -> 4;
+                default -> 0;
+            };
+            potionUsed = Player.getInstance().getInventory().getPotion(index);
+            selected.getChildren().remove(selected.getChildren().size() - 1);
+            Player.getInstance().getInventory().dropPotion(index);
         }
     }
 }

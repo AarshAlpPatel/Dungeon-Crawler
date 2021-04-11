@@ -10,6 +10,7 @@ import javafx.scene.*;
  */
 public class MainScreen extends Application {
     private static Stage stage;
+    private static Scene currentScene;
     private static final double LENGTH = 800;
     private static final double HEIGHT = 800;
     private static final double MIN_X = 0;
@@ -22,7 +23,12 @@ public class MainScreen extends Application {
     }
 
     public static void setScene(Scene s) {
+        currentScene = s;
         stage.setScene(s);
+    }
+
+    public static Scene getCurrentScene() {
+        return currentScene;
     }
 
     public static double getWallWidth() {
@@ -56,8 +62,6 @@ public class MainScreen extends Application {
     public static double getDoorWidth() {
         return DOOR_WIDTH;
     }
-
-    //protected static Button toGame;
 
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;

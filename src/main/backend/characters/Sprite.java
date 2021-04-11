@@ -94,9 +94,17 @@ public abstract class Sprite extends Collidable {
         this.attackMultiplier += adiff;
     }
 
+    public Double getAttackMultiplier() {
+        return this.attackMultiplier;
+    }
+
     public void changeSpeed(double sdiff) {
         System.out.println("CHANGE SPEED: " + sdiff);
         this.speed += sdiff;
+    }
+
+    public Double getThisSpeed() {
+        return this.speed;
     }
 
     public void changeHealth(double hdiff) {
