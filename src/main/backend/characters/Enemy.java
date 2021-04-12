@@ -13,6 +13,7 @@ public class Enemy extends Sprite {
     protected double healthBarYOffset;
     protected String deathImagePath;
     protected boolean direction;
+    protected static String[] weapons = {"dagger", "spear", "axe"};
 
     protected Enemy(double x, double y, double attackMultiplier, double speed,
                     int health, int regeneration, Weapon weapon, String name,

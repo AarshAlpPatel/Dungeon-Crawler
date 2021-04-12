@@ -15,6 +15,7 @@ import main.backend.rooms.Door;
 import main.backend.rooms.Room;
 import main.backend.rooms.RoomManager;
 import main.backend.rooms.TreasureRoom;
+import main.backend.weapons.Axe;
 import main.backend.weapons.Dagger;
 import main.backend.weapons.Spear;
 import main.backend.weapons.Weapon;
@@ -102,7 +103,7 @@ public class Milestone5 extends ApplicationTest {
     public void testWeaponPickUp() {
         pickUpWeapon();
         assertNotNull(Player.getInstance().getInventory().getWeapon(1));
-        assertTrue(Player.getInstance().getInventory().getWeapon(1) instanceof Dagger);
+        assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Dagger || Player.getInstance().getInventory().getWeapon(0) instanceof Spear || Player.getInstance().getInventory().getWeapon(0) instanceof Axe);
         press(KeyCode.H);
         release(KeyCode.H);
         verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(),
@@ -119,7 +120,7 @@ public class Milestone5 extends ApplicationTest {
         Weapon startingWeapon = Player.getInstance().getInventory().getWeapon(0);
         clickOn("#Weapon1");
         clickOn("#Weapon2");
-        assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Dagger);
+        assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Dagger || Player.getInstance().getInventory().getWeapon(0) instanceof Spear || Player.getInstance().getInventory().getWeapon(0) instanceof Axe);
         assertEquals(startingWeapon.getClass(),
                 Player.getInstance().getInventory().getWeapon(1).getClass());
         press(KeyCode.H);
