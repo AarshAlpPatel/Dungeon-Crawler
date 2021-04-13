@@ -33,8 +33,8 @@ public class GameManager {
                     pauseGameLoop();
                     MainScreen.setScene(InventoryScreen.getScene());
                 } else if (event.getCode() == KeyCode.G) {
-//                    pauseGameLoop();
-//                    MainScreen.setScene(ShopScreen.getScene());
+                    pauseGameLoop();
+                    MainScreen.setScene(ShopScreen.getScene());
                 } else if (event.getCode() == KeyCode.F) {
                     Controller.pickUpCollectable();
                 } else {
