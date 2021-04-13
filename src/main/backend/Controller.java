@@ -6,6 +6,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import main.backend.characters.*;
 import main.backend.collidables.Collidable;
+import main.backend.potions.Potion;
+import main.backend.potions.PotionManager;
 import main.backend.rooms.RoomManager;
 import main.backend.weapons.*;
 import main.frontend.GameManager;
@@ -255,5 +257,15 @@ public class Controller {
             //this deletes it from inventory
             Player.getInstance().getInventory().dropPotion(index);
         }
+    }
+
+    public static Weapon createWeapon(String name) {
+        return WeaponManager.create(name, Player.getInstance().getPosition().getX(),
+                Player.getInstance().getPosition().getY(), false,
+                2.5, 10, -1);
+    }
+
+    public static Potion createPotion(String name) {
+        return PotionManager.create(name, "common", Player.getInstance().getPosition().getX(), Player.getInstance().getPosition().getY(), Player.POTION_DURATION);
     }
 }

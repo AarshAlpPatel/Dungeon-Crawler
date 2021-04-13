@@ -33,7 +33,16 @@
 
 .label {
     -fx-text-fill: white;
-    -fx-font-size: 10px;
+    -fx-font-size: 20px;
     -fx-font-family: "Bernard MT Condensed";
     -fx-font-weight: bold;
+}
+
+.button {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Bernard MT Condensed";
+    -fx-text-fill: white;
+    -fx-min-width: 175px;
+    -fx-background-color: #0d28b1;
 }

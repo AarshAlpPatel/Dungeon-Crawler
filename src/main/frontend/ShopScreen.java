@@ -6,17 +6,27 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import main.backend.Controller;
+import main.backend.characters.Player;
+import main.backend.collidables.Collidable;
+import main.backend.exceptions.TooManyPotions;
+import main.backend.exceptions.TooManyWeapons;
+import main.backend.weapons.*;
+import main.backend.potions.*;
 
 import java.util.Stack;
 
 public class ShopScreen {
     private static Scene shopScreen;
     private static VBox screen;
+    private static Slot selected;
+    private static Panel checkoutPanel;
 
     private static StackPane createBackground() {
         StackPane shop = new StackPane();
@@ -33,9 +43,25 @@ public class ShopScreen {
         panels.getStyleClass().addAll("center");
         Panel potions = new Panel("potion");
         Panel weapons = new Panel("weapon");
-        Panel checkout = new Panel("checkout");
-        panels.getChildren().addAll(potions, weapons, checkout);
+        checkoutPanel = new Panel("checkout");
+        panels.getChildren().addAll(potions, weapons, checkoutPanel);
         return panels;
+    }
+
+    private static void setKeyBinds() {
+        shopScreen.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.G) {
+                System.out.println("Exit handled");
+                handleExit();
+            }
+        });
+    }
+
+    private static void handleExit() {
+        MainScreen.setScene(GameManager.getScene());
+        if (selected != null)
+            selected.handleDeselect();
+        GameManager.unpauseGameLoop();
     }
 
     public static Scene getScene() {
@@ -49,6 +75,7 @@ public class ShopScreen {
         screen.getStyleClass().addAll("center", "screen");
 
         shopScreen = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());
+        setKeyBinds();
         shopScreen.getStylesheets().add("main/design/Shop.css");
         return shopScreen;
     }
@@ -58,7 +85,12 @@ public class ShopScreen {
         //potions, weapons, or checkout
         String type;
 
-        public Panel(String type) {
+        VBox checkoutSlot = new VBox(20);
+        VBox checkout = new VBox(20);
+
+        Integer quantity = 1;
+
+        Panel(String type) {
             this.type = type;
             initPanel();
         }
@@ -69,68 +101,214 @@ public class ShopScreen {
             this.getStyleClass().add("center");
             rect.getStyleClass().add("rect");
             switch (type) {
-                case "weapon" :
-                    this.getChildren().add(
-                            createSlots("dagger-angle.png", "axe-angle.png", "spear-angle.png"));
-                    break;
-                case "potion" :
-                    this.getChildren().add(
-                            createSlots("potions/health.png", "potions/attack.png", "potions/speed.png"));
-                    break;
-                case "checkout" :
-                    this.getChildren().add(createCheckout());
-                    break;
-                default :
-                    throw new RuntimeException("Unrecognized panel type entered.");
+                case "weapon" -> this.getChildren().add(
+                        createSlots("Dagger", "Axe", "Spear"));
+                case "potion" -> this.getChildren().add(
+                        createSlots("Health Potion", "Attack Potion", "Speed Potion"));
+                case "checkout" -> this.getChildren().add(createBaseCheckout());
+                default -> throw new RuntimeException("Unrecognized panel type entered.");
             }
         }
 
-        private VBox createSlots(String path1, String path2, String path3) {
-            VBox slots = new VBox(40);
+        private VBox createSlots(String name1, String name2, String name3) {
+            VBox slots = new VBox(30);
             slots.getStyleClass().add("center");
 
-            StackPane slot1 = createSlot(path1);
-            StackPane slot2 = createSlot(path2);
-            StackPane slot3 = createSlot(path3);
+            Slot slot1 = new Slot(name1, type);
+            //System.out.println(name1);
+            Slot slot2 = new Slot(name2, type);
+            Slot slot3 = new Slot(name3, type);
 
             slots.getChildren().addAll(slot1, slot2, slot3);
             return slots;
         }
 
-        private StackPane createSlot(String path) {
-            StackPane slot1 = new StackPane();
-            slot1.getStyleClass().add("center");
-            Rectangle rect1 = new Rectangle(100, 100);
-            rect1.getStyleClass().addAll("slot_rect");
-            ImageView image1 = new ImageView(
-                    new Image("/main/design/images/" + path, 100, 100, true, false)
-            );
-            slot1.getChildren().addAll(rect1, image1);
-            return slot1;
-        }
-
-        private VBox createCheckout() {
-            VBox checkout = new VBox();
+        private VBox createBaseCheckout() {
+            checkout.getChildren().clear();
+            checkout.getStyleClass().add("center");
 
             //update upon image being clicked
-            ImageView image = new ImageView(
-                    new Image("/main/design/images/dagger-angle.png", 100, 100, false, false)
-            );
-            Label name = new Label("Dagger");
-            name.getStyleClass().add("label");
-            VBox quantifier = createQuantifier();
-            Button buy = createBuyButton();
+            checkout.getChildren().add(new Label("Choose an item."));
             return checkout;
         }
 
-        private VBox createQuantifier() {
-            VBox quantifier = new VBox();
+        private void updateCheckout(ImageView image, String name) {
+            this.checkoutSlot.getChildren().clear();
+            checkout.getChildren().clear();
+            this.checkoutSlot.getChildren().add(image);
+            this.checkoutSlot.getStyleClass().add("center");
+            //description.getChildren().clear();
+            String power = switch (name) {
+                case "Dagger" -> "Damage: 7\nSpeed: 20";
+                case "Spear" -> "Damage: 10\nSpeed: 15";
+                case "Axe" -> "Damage: 20\nSpeed: 7";
+                case "Health Potion" -> "20 health";
+                case "Attack Potion" -> "+5 for 10 seconds";
+                case "Speed Potion" -> "+1 for 10 seconds";
+                default -> "null";
+            };
+            VBox description = new VBox(10);
+            description.getStyleClass().add("center");
+            Label nameL = new Label(name);
+            Label powerL = new Label(power);
+            powerL.getStyleClass().add("center");
+            description.getChildren().addAll(nameL, powerL);
+            //this.description = description;
+            this.checkoutSlot.getChildren().add(description);
+            Button buy = createBuyButton();
+            checkout.getChildren().addAll(checkoutSlot, buy);
+        }
+
+        private HBox createQuantifier() {
+            //VBox quantifier = new VBox();
+            Label quantityLabel = new Label(quantity.toString());
+
+            Image add = new Image("main/design/images/addButton.png", 25, 26, true, false);
+            ImageView addButton = new ImageView(add);
+            addButton.setOnMouseClicked(event -> {
+                if (quantity < 5) {
+                    quantity++;
+                }
+                quantityLabel.setText(quantity.toString());
+                System.out.println(quantity);
+            });
+
+            Image subtract = new Image("main/design/images/subtractButton.png", 25, 26, true, false);
+            ImageView subtractButton = new ImageView(subtract);
+            subtractButton.setOnMouseClicked(event -> {
+                if (quantity > 1) {
+                    quantity--;
+                }
+                quantityLabel.setText(quantity.toString());
+                System.out.println(quantity);
+            });
+
+            HBox quantifier = new HBox(10);
+            quantifier.getStyleClass().add("center");
+            quantifier.getChildren().addAll(subtractButton, quantityLabel, addButton);
             return quantifier;
         }
 
         private Button createBuyButton() {
-            Button buy = new Button();
+            Button buy = new Button("Buy");
+            buy.setOnAction(event -> {
+                try {
+                    if (selected.type.equals("weapon")) {
+                        Player.getInstance().getInventory().addWeapon((Weapon) getCollidable(selected.name));
+                    } else {
+                        Player.getInstance().getInventory().addPotion((Potion) getCollidable(selected.name));
+                    }
+                } catch (TooManyWeapons | TooManyPotions tmw) {
+                    System.out.println(tmw.getMessage());
+                }
+            });
             return buy;
+        }
+
+        private Collidable getCollidable(String name) {
+            return switch (name) {
+                case "Dagger" -> Controller.createWeapon("dagger");
+                case "Axe" -> Controller.createWeapon("axe");
+                case "Spear" -> Controller.createWeapon("spear");
+                case "Health Potion" -> Controller.createPotion("health");
+                case "Attack Potion" -> Controller.createPotion("attack");
+                case "Speed Potion" -> Controller.createPotion("speed");
+                default -> throw new IllegalArgumentException("Invalid name given.");
+            };
+        }
+    }
+
+    private static class Slot extends StackPane {
+        private String name;
+        private String path;
+        private String type;
+        private ImageView item;
+
+        Slot(String name, String type) {
+            System.out.println("Name: " + name);
+            this.name = name;
+            setPath();
+            //System.out.println(path);
+            this.type = type;
+            int x;
+            int y;
+            if (this.type.equals("weapon")) {
+                x = 120;
+                y = 120;
+            } else {
+                x = 51;
+                y = 76;
+            }
+            initSlot(x, y);
+            this.handleMouseActions();
+        }
+
+        private void setPath() {
+            System.out.println(name);
+            path = switch (name) {
+                case "Axe" -> "axe-angle.png";
+                case "Spear" -> "spear-angle.png";
+                case "Dagger" -> "dagger-angle.png";
+                case "Health Potion" -> "potions/health.png";
+                case "Attack Potion" -> "potions/attack.png";
+                case "Speed Potion" -> "potions/speed.png";
+                default -> "dagger-drag.png";
+            };
+        }
+
+        private void initSlot(int x, int y) {
+            this.getStyleClass().add("center");
+            Rectangle rect1 = new Rectangle(120, 120);
+            rect1.getStyleClass().addAll("slot_rect");
+            this.item = new ImageView(
+                    new Image("main/design/images/" + path, x, y, true, false)
+            );
+            this.getChildren().addAll(rect1, item);
+        }
+
+        private void handleMouseActions() {
+            this.setOnMouseEntered(event -> {
+                //change color, opacity, same as inventory
+            });
+            this.setOnMouseExited(event -> {
+                //reset
+            });
+            this.setOnMouseReleased(e -> {
+                if (selected != null) {
+                    if (selected == this) {
+                        //deselect
+                        handleDeselect();
+                    } else {
+                        selected.handleDeselect();
+                        selected = this;
+                        handleSelect();
+                    }
+                } else {
+                    selected = this;
+                    handleSelect();
+                }
+            });
+        }
+
+        private void handleSelect() {
+            checkoutPanel.updateCheckout(new ImageView(getImage()), name);
+        }
+
+        private void handleDeselect() {
+            selected = null;
+            checkoutPanel.createBaseCheckout();
+        }
+
+        private Image getImage() {
+            return switch (name) {
+                case "Dagger" -> new Image("/main/design/images/dagger-drag.png", 150, 150, false, false);
+                case "Axe" -> new Image("/main/design/images/axe-angle.png", 150, 150, false, false);
+                case "Spear" -> new Image("/main/design/images/spear-drag.png", 150, 150, false, false);
+                case "Health Potion" -> new Image("/main/design/images/potions/health.png", 51, 76, false, false);
+                case "Attack Potion" -> new Image("/main/design/images/potions/attack.png", 51, 76, false, false);
+                case "Speed Potion" -> new Image("/main/design/images/potions/speed.png", 51, 76, false, false);
+                default -> new Image("/main/design/images/dagger-drag.png");
+            };
         }
     }
 }
