@@ -227,11 +227,9 @@ public class ShopScreen {
                     handleBuy();
                 } catch (TooManyPotions | TooManyWeapons | NotEnoughFundsException e) {
                     System.out.println(e.getMessage());
+                    Player.getInstance().setCash(Player.getInstance().getCash() + selected.price);
                     message.setText(e.getMessage());
                     message.setTextFill(Color.WHITE);
-                } catch (TooManyWeapons | TooManyPotions tmw) {
-                    System.out.println(tmw.getMessage());
-                    Player.getInstance().setCash(Player.getInstance().getCash() + selected.price);
                 }
             });
             return buy;
