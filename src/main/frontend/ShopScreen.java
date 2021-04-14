@@ -11,10 +11,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import main.backend.Controller;
 import main.backend.characters.Player;
 import main.backend.collidables.Collidable;
+import main.backend.exceptions.NotEnoughFundsException;
 import main.backend.exceptions.TooManyPotions;
 import main.backend.exceptions.TooManyWeapons;
 import main.backend.weapons.*;
@@ -26,6 +28,7 @@ public class ShopScreen {
     private static Slot selected;
     private static Panel checkoutPanel;
     private static Label cashValue = new Label(Player.getInstance().getCash().toString());
+    private static Label message;
 
     private static StackPane createBackground() {
         StackPane shop = new StackPane();
@@ -67,13 +70,17 @@ public class ShopScreen {
     public static Scene getScene() {
         screen = new VBox();
         HBox emptyTop = new HBox();
+        message = new Label("Welcome to the shop!");
+        emptyTop.getStyleClass().add("center");
+        emptyTop.getChildren().add(message);
+        emptyTop.setPadding(new Insets(10, 0, 25, 0));
         StackPane shop = createBackground();
         HBox panels = createPanels();
         shop.getChildren().add(panels);
         HBox cashBottom = new HBox();
         cashBottom.getChildren().addAll(new ImageView("/main/design/images/coin.png"), cashValue);
         cashBottom.getStyleClass().add("center");
-        cashBottom.setPadding(new Insets(50, 0, 0, 0));
+        cashBottom.setPadding(new Insets(25, 0, 0, 0));
         screen.getChildren().addAll(emptyTop, shop, cashBottom);
         screen.getStyleClass().addAll("center", "screen");
 
@@ -217,26 +224,37 @@ public class ShopScreen {
             Button buy = new Button("Buy");
             buy.setOnAction(event -> {
                 try {
-                    Player.getInstance().setCash(Player.getInstance().getCash() - selected.price);
-                    if (Player.getInstance().getCash() >= 0) {
-                        if (selected.type.equals("weapon")) {
-                            Player.getInstance().getInventory().addWeapon((Weapon)
-                                    getCollidable(selected.name));
-                        } else {
-                            Player.getInstance().getInventory().addPotion((Potion)
-                                    getCollidable(selected.name));
-                        }
-                    }
-                    Room.cashValue.setText(Player.getInstance().getCash().toString());
-                    cashValue.setText(Player.getInstance().getCash().toString());
-                    System.out.println(selected.price);
-                    System.out.println(Player.getInstance().getCash());
-                } catch (TooManyWeapons | TooManyPotions tmw) {
-                    System.out.println(tmw.getMessage());
+                    handleBuy();
+                } catch (TooManyPotions | TooManyWeapons | NotEnoughFundsException e) {
+                    System.out.println(e.getMessage());
                     Player.getInstance().setCash(Player.getInstance().getCash() + selected.price);
+                    message.setText(e.getMessage());
+                    message.setTextFill(Color.WHITE);
                 }
             });
             return buy;
+        }
+
+        private void handleBuy() {
+            if (Player.getInstance().getCash() < 0) {
+                throw new NotEnoughFundsException("Out of money!");
+            }
+            Player.getInstance().setCash(Player.getInstance().getCash() - selected.price);
+            if (Player.getInstance().getCash() >= 0) {
+                if (selected.type.equals("weapon")) {
+                    Player.getInstance().getInventory().addWeapon((Weapon) getCollidable(selected.name));
+                } else {
+                    Player.getInstance().getInventory().addPotion((Potion) getCollidable(selected.name));
+                }
+                Room.cashValue.setText(Player.getInstance().getCash().toString());
+                cashValue.setText(Player.getInstance().getCash().toString());
+                message.setText("Purchase Confirmed!");
+                message.setTextFill(Color.CYAN);
+            } else {
+                throw new NotEnoughFundsException("Insufficient funds for purchase.");
+            }
+            System.out.println(selected.price);
+            System.out.println(Player.getInstance().getCash());
         }
 
         private Collidable getCollidable(String name) {
@@ -369,6 +387,8 @@ public class ShopScreen {
         private void handleDeselect() {
             selected = null;
             checkoutPanel.createBaseCheckout();
+            message.setText("Welcome to the shop!");
+            message.setTextFill(Color.WHITE);
         }
 
         private Image getImage() {
