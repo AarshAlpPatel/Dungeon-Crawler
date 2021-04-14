@@ -111,7 +111,7 @@ public abstract class Weapon extends Collidable {
         dropped = true;
         Random rand = new Random();
         int chance = rand.nextInt(10);
-        if (chance < 1) {
+        if (chance < 10) {
             RoomManager.getCurrent().addCollectable(this, this.getPosition());
         }
     }
