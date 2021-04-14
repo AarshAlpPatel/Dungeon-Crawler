@@ -273,10 +273,13 @@ public class Milestone5 extends ApplicationTest {
         press(ktp);
         press(ktp);
         press(ktp);
+        press(ktp);
         release(ktp);
 
-        press(KeyCode.F);
-        release(KeyCode.F);
+        for (int i = 0; i < 7; i++) {
+            press(KeyCode.F);
+            release(KeyCode.F);
+        }
         assertEquals(2, Player.getInstance().getInventory().getNumWeapons());
         
         //make sure inventory doesnt change when trying to pick up another weapon
@@ -303,6 +306,8 @@ public class Milestone5 extends ApplicationTest {
         String dir = killEnemy(RoomManager.getCurrentEnemies().getEnemyCounter() - 1);
         KeyCode kTP = dir.equals("North") ? KeyCode.W : KeyCode.S;
 
+        press(kTP);
+        press(kTP);
         press(kTP);
         press(kTP);
         press(kTP);

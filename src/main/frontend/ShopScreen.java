@@ -68,8 +68,11 @@ public class ShopScreen {
         StackPane shop = createBackground();
         HBox panels = createPanels();
         shop.getChildren().add(panels);
-        HBox emptyBottom = new HBox();
-        screen.getChildren().addAll(emptyTop, shop, emptyBottom);
+        HBox cashBottom = new HBox();
+        cashBottom.getChildren().addAll(new ImageView("/main/design/images/coin.png"), Room.cashValue);
+        cashBottom.getStyleClass().add("center");
+        cashBottom.setPadding(new Insets(50, 0, 0, 0));
+        screen.getChildren().addAll(emptyTop, shop, cashBottom);
         screen.getStyleClass().addAll("center", "screen");
 
         shopScreen = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());
@@ -191,13 +194,20 @@ public class ShopScreen {
             Button buy = new Button("Buy");
             buy.setOnAction(event -> {
                 try {
-                    if (selected.type.equals("weapon")) {
-                        Player.getInstance().getInventory().addWeapon((Weapon) getCollidable(selected.name));
-                    } else {
-                        Player.getInstance().getInventory().addPotion((Potion) getCollidable(selected.name));
+                    Player.getInstance().setCash(Player.getInstance().getCash() - selected.price);
+                    if (Player.getInstance().getCash() >= 0) {
+                        if (selected.type.equals("weapon")) {
+                            Player.getInstance().getInventory().addWeapon((Weapon) getCollidable(selected.name));
+                        } else {
+                            Player.getInstance().getInventory().addPotion((Potion) getCollidable(selected.name));
+                        }
                     }
+                    Room.cashValue.setText(Player.getInstance().getCash().toString());
+                    System.out.println(selected.price);
+                    System.out.println(Player.getInstance().getCash());
                 } catch (TooManyWeapons | TooManyPotions tmw) {
                     System.out.println(tmw.getMessage());
+                    Player.getInstance().setCash(Player.getInstance().getCash() + selected.price);
                 }
             });
             return buy;
@@ -221,11 +231,13 @@ public class ShopScreen {
         private String path;
         private String type;
         private ImageView item;
+        private int price;
 
         Slot(String name, String type) {
             System.out.println("Name: " + name);
             this.name = name;
             setPath();
+            setPrice();
             //System.out.println(path);
             this.type = type;
             int x;
@@ -239,6 +251,15 @@ public class ShopScreen {
             }
             initSlot(x, y);
             this.handleMouseActions();
+        }
+
+        private void setPrice() {
+            this.price = switch (name) {
+                case "Axe" -> 200;
+                case "Spear" -> 150;
+                case "Dagger" -> 100;
+                default -> 50;
+            };
         }
 
         private void setPath() {
