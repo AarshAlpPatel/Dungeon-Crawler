@@ -13,7 +13,6 @@ import main.backend.weapons.*;
 import main.frontend.GameManager;
 import main.frontend.MainScreen;
 import main.backend.rooms.*;
-import main.frontend.Room;
 import main.backend.inventory.*;
 
 /**
@@ -66,8 +65,9 @@ public class Controller {
         player.setWeapon(weapon);
         player.setPosition(new Point2D(x, y));
         player.setImage(imagePath);
-        if (Player.getInstance().getInventory().isEmpty())
+        if (Player.getInstance().getInventory().isEmpty()) {
             player.getInventory().addWeapon(weapon);
+        }
         return player;
     }
 
@@ -241,7 +241,7 @@ public class Controller {
         if (c == null) {
             System.out.println("Nothing to pick up");
         } else {
-            if(!Player.getInstance().addToInventory(c)) {
+            if (!Player.getInstance().addToInventory(c)) {
                 RoomManager.getCurrent().addCollectable(c, Player.getInstance().getPosition());
             }
         }
@@ -266,6 +266,7 @@ public class Controller {
     }
 
     public static Potion createPotion(String name) {
-        return PotionManager.create(name, "common", Player.getInstance().getPosition().getX(), Player.getInstance().getPosition().getY(), Player.POTION_DURATION);
+        return PotionManager.create(name, "common", Player.getInstance().getPosition().getX(),
+                Player.getInstance().getPosition().getY(), Player.POTION_DURATION);
     }
 }

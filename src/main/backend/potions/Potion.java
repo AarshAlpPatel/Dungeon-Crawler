@@ -17,7 +17,8 @@ public abstract class Potion extends Collidable {
 
     protected double power;
 
-    protected Potion(double x, double y, String imagePath, String name, String rarity, int duration) {
+    protected Potion(double x, double y, String imagePath, String name,
+                     String rarity, int duration) {
         super(x, y, 50, "potions/" + imagePath, 0, 0);
         this.name = name;
         this.rarity = rarity;

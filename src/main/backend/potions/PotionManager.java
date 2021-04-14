@@ -19,11 +19,11 @@ public class PotionManager {
     }
 
     private static String getRandomType() {
-        return allPotionTypes[(int)(Math.random()*allPotionTypes.length)];
+        return allPotionTypes[(int) (Math.random() * allPotionTypes.length)];
     }
 
     private static String getRandomRarity() {
-        return allRarityTypes[(int)(Math.random()*allRarityTypes.length)];
+        return allRarityTypes[(int) (Math.random() * allRarityTypes.length)];
     }
 
     public static Potion createRandom(double x, double y, int duration) {
@@ -50,7 +50,7 @@ public class PotionManager {
         this.potions.add(p);
         if (s != null) {
             p.use(s);
-            new Timer().schedule( 
+            new Timer().schedule(
                 new TimerTask() {
                     @Override
                     public void run() {

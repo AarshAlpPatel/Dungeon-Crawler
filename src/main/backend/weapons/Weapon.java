@@ -1,11 +1,8 @@
 package main.backend.weapons;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import main.backend.Controller;
 import main.backend.characters.Player;
 import main.backend.characters.Sprite;
 import main.backend.collidables.Collidable;

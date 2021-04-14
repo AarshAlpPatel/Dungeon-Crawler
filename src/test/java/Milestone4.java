@@ -8,6 +8,7 @@ import main.backend.Controller;
 import main.backend.characters.*;
 import main.backend.rooms.Door;
 import main.backend.rooms.RoomManager;
+import main.backend.rooms.TreasureRoom;
 import main.frontend.MainScreen;
 import main.backend.rooms.Room;
 import main.frontend.WelcomeScreen;
@@ -62,7 +63,7 @@ public class Milestone4 extends ApplicationTest {
     @Test
     public void checkForEnemies() {
         startGame();
-        goEast();
+        findEnemyRoom();
         assertTrue(RoomManager.getCurrentEnemies().getEnemies().length > 0);
         verifyThat(RoomManager.getCurrentEnemies().getEnemies()[0].getRawImage(),
                 NodeMatchers.isVisible());
@@ -71,7 +72,7 @@ public class Milestone4 extends ApplicationTest {
     @Test
     public void testThreeTypes() {
         startGame();
-        goEast();
+        findEnemyRoom();
         verifyThat(new ImageView("main/design/images/enemies/bat/base/bat-base.gif"),
                 NodeMatchers.isVisible());
         verifyThat(new ImageView("main/design/images/enemies/snake/base/snake_base.gif"),
@@ -106,9 +107,9 @@ public class Milestone4 extends ApplicationTest {
     @Test
     public void testPlayerAttack() {
         startGame();
-        goEast();
+        findEnemyRoom();
         Player.getInstance().setPosition(RoomManager.getCurrentEnemies().
-                getEnemies()[0].getPosition().subtract(100, 0));
+                getEnemies()[0].getPosition().subtract(80, 0));
         for (int j = 0; j < 10; j++) {
             clickOn(RoomManager.getCurrentEnemies().getEnemies()[0].getRawImage());
         }
@@ -129,7 +130,7 @@ public class Milestone4 extends ApplicationTest {
     public void testEnemyCounter() {
         startGame();
         assertEquals(0, RoomManager.getCurrentEnemies().getEnemyCounter());
-        goWest();
+        findEnemyRoom();
         assertEquals(RoomManager.getCurrentEnemies().getEnemies().length,
                 RoomManager.getCurrentEnemies().getEnemyCounter());
         int numAlive = killEnemy(RoomManager.getCurrentEnemies().getEnemies().length - 1);
@@ -171,10 +172,10 @@ public class Milestone4 extends ApplicationTest {
         if (RoomManager.getCurrentEnemies().getEnemies()[index].getPosition().getY()
                 < MainScreen.getMidY()) {
             Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[index]
-                    .getPosition().add(0, 100));
+                    .getPosition().add(0, 80));
         } else {
             Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[index]
-                    .getPosition().subtract(0, 100));
+                    .getPosition().subtract(0, 80));
         }
         while (!RoomManager.getCurrentEnemies().getEnemies()[index].isDead()) {
             clickOn(RoomManager.getCurrentEnemies().getEnemies()[index].getRawImage());
@@ -193,6 +194,23 @@ public class Milestone4 extends ApplicationTest {
             }
         }
         return numAlive;
+    }
+
+    public Door findEnemyRoom() {
+        Room current = RoomManager.getCurrent();
+        if (!(current.getNextRoom(Door.WEST) instanceof TreasureRoom)) {
+            goWest();
+            return Door.WEST;
+        } else if (!(current.getNextRoom(Door.NORTH) instanceof TreasureRoom)) {
+            goNorth();
+            return Door.NORTH;
+        } else if (!(current.getNextRoom(Door.EAST) instanceof TreasureRoom)) {
+            goEast();
+            return Door.EAST;
+        } else {
+            goSouth();
+            return Door.SOUTH;
+        }
     }
 
     //@Test
@@ -233,7 +251,7 @@ public class Milestone4 extends ApplicationTest {
     @Test
     public void testRoomDifficulty() {
         startGame();
-        goEast();
+        findEnemyRoom();
         switch (RoomManager.getCurrentEnemies().getDifficulty()) {
         case 1 :
             assertEquals(4, RoomManager.getCurrentEnemies().getEnemies().length);
@@ -252,8 +270,7 @@ public class Milestone4 extends ApplicationTest {
     @Test
     public void testEnemyAttack() {
         startGame();
-        goNorth();
-        //verifyThat(new Label("100"), NodeMatchers.isVisible());
+        findEnemyRoom();
         while (Player.getInstance().getHealth() > 80) {
             Player.getInstance().setPosition(RoomManager.getCurrentEnemies()
                     .getEnemies()[0].getPosition());
@@ -264,7 +281,7 @@ public class Milestone4 extends ApplicationTest {
     @Test
     public void testLoseGame() {
         startGame();
-        goEast();
+        findEnemyRoom();
         while (Player.getInstance().getHealth() > 0) {
             Player.getInstance().setPosition(RoomManager.getCurrentEnemies()
                     .getEnemies()[0].getPosition());

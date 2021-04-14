@@ -3,7 +3,6 @@ package main.backend.inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.backend.characters.Player;
 import main.backend.collidables.Collidable;
 import main.backend.exceptions.TooManyPotions;
 import main.backend.exceptions.TooManyWeapons;
@@ -32,12 +31,13 @@ public class Inventory {
     public boolean addCollectable(Collidable c) {
         try {
             if (c instanceof Weapon) {
-                addWeapon((Weapon)c);
+                addWeapon((Weapon) c);
             } else if (c instanceof Potion) {
-//                /*
-//                * TEMPORARY CODE PLEASE CHANGE BEFORE FINAL PRESENTATION BECAUSE SUPPOSED TO ADD TO INVENTORY FIRST THEN USE NOT JUST STRAIGHT APPLY
-//                */
-//                Player.getInstance().applyPotion((Potion)c);
+                //
+                // TEMPORARY CODE PLEASE CHANGE BEFORE FINAL PRESENTATION BECAUSE SUPPOSED TO ADD
+                // TO INVENTORY FIRST THEN USE NOT JUST STRAIGHT APPLY
+                //
+                //Player.getInstance().applyPotion((Potion)c);
                 addPotion((Potion) c);
                 printInventory();
             } else {
@@ -81,7 +81,7 @@ public class Inventory {
         if (index == MAX_POTIONS) {
             throw new TooManyWeapons("You tried adding a sixth potion. Tough luck kid.");
         }
-       potions.set(index, potion);
+        potions.set(index, potion);
     }
 
     public Potion dropPotion(int index) {

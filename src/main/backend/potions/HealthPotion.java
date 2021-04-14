@@ -11,17 +11,17 @@ public class HealthPotion extends Potion {
     @Override
     public void setPower() {
         switch (rarity) {
-            case "common" :
-                this.power = 20;
-                break;
-            case "rare" :
-                this.power = 40;
-                break;
-            case "epic" :
-                this.power = 60;
-                break;
-            default:
-                throw new RuntimeException("Invalid rarity for health potion");
+        case "common" :
+            this.power = 20;
+            break;
+        case "rare" :
+            this.power = 40;
+            break;
+        case "epic" :
+            this.power = 60;
+            break;
+        default:
+            throw new RuntimeException("Invalid rarity for health potion");
         }
     }
 

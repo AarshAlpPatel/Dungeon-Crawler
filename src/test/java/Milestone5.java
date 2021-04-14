@@ -15,7 +15,6 @@ import main.backend.rooms.Door;
 import main.backend.rooms.Room;
 import main.backend.rooms.RoomManager;
 import main.backend.rooms.TreasureRoom;
-import main.backend.weapons.Axe;
 import main.backend.weapons.Dagger;
 import main.backend.weapons.Spear;
 import main.backend.weapons.Weapon;
@@ -108,7 +107,8 @@ public class Milestone5 extends ApplicationTest {
         assertTrue(Player.getInstance().getInventory().getWeapon(1) instanceof Dagger);
         press(KeyCode.H);
         release(KeyCode.H);
-        verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(), NodeMatchers.isVisible());
+        verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(),
+                NodeMatchers.isVisible());
         assertEquals(2, Player.getInstance().getInventory().getWeapons().size());
         press(KeyCode.H);
         release(KeyCode.H);
@@ -116,7 +116,9 @@ public class Milestone5 extends ApplicationTest {
         /*
         pickUpWeapon();
         assertNotNull(Player.getInstance().getInventory().getWeapon(1));
-        assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Dagger || Player.getInstance().getInventory().getWeapon(0) instanceof Spear || Player.getInstance().getInventory().getWeapon(0) instanceof Axe);
+        assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Dagger ||
+            Player.getInstance().getInventory().getWeapon(0) instanceof Spear ||
+            Player.getInstance().getInventory().getWeapon(0) instanceof Axe);
         press(KeyCode.H);
         release(KeyCode.H);
         verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(),
@@ -127,12 +129,13 @@ public class Milestone5 extends ApplicationTest {
     public void testSwitch() {
         startGame();
         findTreasureRoom();
-        pickUpWeapon(200,400);
+        pickUpWeapon(200, 400);
         assertNotNull(Player.getInstance().getInventory().getWeapon(1));
         assertTrue(Player.getInstance().getInventory().getWeapon(1) instanceof Dagger);
         press(KeyCode.H);
         release(KeyCode.H);
-        verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(), NodeMatchers.isVisible());
+        verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(),
+                NodeMatchers.isVisible());
         assertEquals(2, Player.getInstance().getInventory().getWeapons().size());
         Weapon startingWeapon = Player.getInstance().getInventory().getWeapon(0);
         clickOn("#Weapon1");
@@ -154,7 +157,9 @@ public class Milestone5 extends ApplicationTest {
         Weapon startingWeapon = Player.getInstance().getInventory().getWeapon(0);
         clickOn("#Weapon1");
         clickOn("#Weapon2");
-        assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Dagger || Player.getInstance().getInventory().getWeapon(0) instanceof Spear || Player.getInstance().getInventory().getWeapon(0) instanceof Axe);
+        assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Dagger
+            || Player.getInstance().getInventory().getWeapon(0) instanceof Spear
+            || Player.getInstance().getInventory().getWeapon(0) instanceof Axe);
         assertEquals(startingWeapon.getClass(),
                 Player.getInstance().getInventory().getWeapon(1).getClass());
         press(KeyCode.H);
@@ -167,11 +172,20 @@ public class Milestone5 extends ApplicationTest {
 
     private void findStartRoom(Door dirTraveled) {
         switch (dirTraveled) {
-            case EAST -> goWest();
-            case NORTH -> goSouth();
-            case WEST -> goEast();
-            case SOUTH -> goNorth();
-            default -> throw new IllegalArgumentException("Unknown Direction");
+        case EAST:
+            goWest();
+            break;
+        case NORTH:
+            goSouth();
+            break;
+        case WEST:
+            goEast();
+            break;
+        case SOUTH:
+            goNorth();
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown Direction");
         }
     }
 
@@ -200,7 +214,8 @@ public class Milestone5 extends ApplicationTest {
         assertTrue(Player.getInstance().getInventory().getPotion(0) instanceof HealthPotion);
         press(KeyCode.H);
         release(KeyCode.H);
-        verifyThat(Player.getInstance().getInventory().getPotion(0).getRawImage(), NodeMatchers.isVisible());
+        verifyThat(Player.getInstance().getInventory().getPotion(0).getRawImage(),
+                NodeMatchers.isVisible());
         assertEquals(1, Player.getInstance().getInventory().getPotions().size());
         press(KeyCode.H);
         release(KeyCode.H);
@@ -210,7 +225,8 @@ public class Milestone5 extends ApplicationTest {
         assertTrue(Player.getInstance().getInventory().getPotion(1) instanceof AttackPotion);
         press(KeyCode.H);
         release(KeyCode.H);
-        verifyThat(Player.getInstance().getInventory().getPotion(1).getRawImage(), NodeMatchers.isVisible());
+        verifyThat(Player.getInstance().getInventory().getPotion(1).getRawImage(),
+                NodeMatchers.isVisible());
         assertEquals(2, Player.getInstance().getInventory().getPotions().size());
         press(KeyCode.H);
         release(KeyCode.H);
@@ -220,7 +236,8 @@ public class Milestone5 extends ApplicationTest {
         assertTrue(Player.getInstance().getInventory().getPotion(2) instanceof SpeedPotion);
         press(KeyCode.H);
         release(KeyCode.H);
-        verifyThat(Player.getInstance().getInventory().getPotion(2).getRawImage(), NodeMatchers.isVisible());
+        verifyThat(Player.getInstance().getInventory().getPotion(2).getRawImage(),
+                NodeMatchers.isVisible());
         assertEquals(3, Player.getInstance().getInventory().getPotions().size());
     }
 
@@ -235,7 +252,8 @@ public class Milestone5 extends ApplicationTest {
         assertTrue(Player.getInstance().getInventory().getWeapon(1) instanceof Dagger);
         press(KeyCode.H);
         release(KeyCode.H);
-        verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(), NodeMatchers.isVisible());
+        verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(),
+                NodeMatchers.isVisible());
         assertEquals(2, Player.getInstance().getInventory().getWeapons().size());
         press(KeyCode.H);
         release(KeyCode.H);
@@ -244,8 +262,10 @@ public class Milestone5 extends ApplicationTest {
         release(KeyCode.H);
         clickOn("#Weapon1");
         clickOn("Drop");
-        assertEquals(2, Player.getInstance().getInventory().getWeapons().size()); //means not dropped
-        verifyThat(Player.getInstance().getInventory().getWeapon(0).getRawImage(), NodeMatchers.isVisible());
+        assertEquals(2, Player.getInstance().getInventory().
+                getWeapons().size()); //means not dropped
+        verifyThat(Player.getInstance().getInventory().getWeapon(0).getRawImage(),
+                NodeMatchers.isVisible());
         verifyThat("Cannot drop main weapon.", NodeMatchers.isVisible());
         clickOn("#Weapon1"); //deselect
 
@@ -309,14 +329,15 @@ public class Milestone5 extends ApplicationTest {
     public void testOverfill() {
         startGame();
         findTreasureRoom();
-        pickUpWeapon(200,400);
+        pickUpWeapon(200, 400);
         assertEquals(2, Player.getInstance().getInventory().getNumWeapons());
         press(KeyCode.H);
         release(KeyCode.H);
-        verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(), NodeMatchers.isVisible());
+        verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(),
+                NodeMatchers.isVisible());
         assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Spear);
         assertTrue(Player.getInstance().getInventory().getWeapon(1) instanceof Dagger);
-        pickUpWeapon(600,200);
+        pickUpWeapon(600, 200);
         assertEquals(2, Player.getInstance().getInventory().getNumWeapons());
         assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Spear);
         assertTrue(Player.getInstance().getInventory().getWeapon(1) instanceof Dagger);
@@ -365,15 +386,26 @@ public class Milestone5 extends ApplicationTest {
     public void getHit() {
         Room start = RoomManager.getCurrent();
         Door dirTraveled = findEnemyRoom();
-        while (Player.getInstance().getHealth() > 80)
-            Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[0].getPosition());
+        while (Player.getInstance().getHealth() > 80) {
+            Player.getInstance().setPosition(RoomManager.getCurrentEnemies()
+                    .getEnemies()[0].getPosition());
+        }
         //back to start
         Player.getInstance().setPosition(new Point2D(400, 400));
         switch (dirTraveled) {
-            case EAST -> goWest();
-            case WEST -> goEast();
-            case NORTH -> goSouth();
-            case SOUTH -> goNorth();
+        case EAST:
+            goWest();
+            break;
+        case WEST:
+            goEast();
+            break;
+        case NORTH:
+            goSouth();
+            break;
+        case SOUTH:
+            goNorth();
+            break;
+        default:
         }
     }
 

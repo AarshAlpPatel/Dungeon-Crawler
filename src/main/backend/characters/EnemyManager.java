@@ -3,7 +3,6 @@ package main.backend.characters;
 import java.util.*;
 
 import javafx.scene.Node;
-import main.backend.Controller;
 
 public class EnemyManager {
     private Enemy[] enemies;

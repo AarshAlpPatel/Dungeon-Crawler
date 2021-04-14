@@ -61,8 +61,9 @@ public class ShopScreen {
 
     private static void handleExit() {
         MainScreen.setScene(GameManager.getScene());
-        if (selected != null)
+        if (selected != null) {
             selected.handleDeselect();
+        }
         GameManager.unpauseGameLoop();
     }
 
@@ -92,12 +93,12 @@ public class ShopScreen {
     private static class Panel extends StackPane {
 
         //potions, weapons, or checkout
-        String type;
+        private String type;
 
-        VBox checkoutSlot = new VBox(20);
-        VBox checkout = new VBox(20);
+        private VBox checkoutSlot = new VBox(20);
+        private VBox checkout = new VBox(20);
 
-        Integer quantity = 1;
+        private Integer quantity = 1;
 
         Panel(String type) {
             this.type = type;
@@ -110,12 +111,18 @@ public class ShopScreen {
             this.getStyleClass().add("center");
             rect.getStyleClass().add("rect");
             switch (type) {
-                case "weapon" -> this.getChildren().add(
-                        createSlots("Dagger", "Axe", "Spear"));
-                case "potion" -> this.getChildren().add(
-                        createSlots("Health Potion", "Attack Potion", "Speed Potion"));
-                case "checkout" -> this.getChildren().add(createBaseCheckout());
-                default -> throw new RuntimeException("Unrecognized panel type entered.");
+            case "weapon":
+                this.getChildren().add(createSlots("Dagger", "Axe", "Spear"));
+                break;
+            case "potion":
+                this.getChildren().add(createSlots("Health Potion", "Attack Potion",
+                        "Speed Potion"));
+                break;
+            case "checkout":
+                this.getChildren().add(createBaseCheckout());
+                break;
+            default:
+                throw new RuntimeException("Unrecognized panel type entered.");
             }
         }
 
@@ -147,15 +154,29 @@ public class ShopScreen {
             this.checkoutSlot.getChildren().add(image);
             this.checkoutSlot.getStyleClass().add("center");
             //description.getChildren().clear();
-            String power = switch (name) {
-                case "Dagger" -> "Damage: 7\nSpeed: 20";
-                case "Spear" -> "Damage: 10\nSpeed: 15";
-                case "Axe" -> "Damage: 20\nSpeed: 7";
-                case "Health Potion" -> "20 health";
-                case "Attack Potion" -> "+5 for 10 seconds";
-                case "Speed Potion" -> "+1 for 10 seconds";
-                default -> "null";
-            };
+            String power;
+            switch (name) {
+            case "Dagger":
+                power = "Damage: 7\nSpeed: 20";
+                break;
+            case "Spear":
+                power = "Damage: 10\nSpeed: 15";
+                break;
+            case "Axe":
+                power = "Damage: 20\nSpeed: 7";
+                break;
+            case "Health Potion":
+                power = "20 health";
+                break;
+            case "Attack Potion":
+                power = "+5 for 10 seconds";
+                break;
+            case "Speed Potion":
+                power = "+1 for 10 seconds";
+                break;
+            default:
+                power = "null";
+            }
             VBox description = new VBox(10);
             description.getStyleClass().add("center");
             Label nameL = new Label(name);
@@ -182,7 +203,8 @@ public class ShopScreen {
                 System.out.println(quantity);
             });
 
-            Image subtract = new Image("main/design/images/subtractButton.png", 25, 26, true, false);
+            Image subtract = new Image("main/design/images/subtractButton.png", 25, 26,
+                    true, false);
             ImageView subtractButton = new ImageView(subtract);
             subtractButton.setOnMouseClicked(event -> {
                 if (quantity > 1) {
@@ -207,6 +229,8 @@ public class ShopScreen {
                     System.out.println(e.getMessage());
                     message.setText(e.getMessage());
                     message.setTextFill(Color.WHITE);
+                } catch (TooManyWeapons | TooManyPotions tmw) {
+                    System.out.println(tmw.getMessage());
                     Player.getInstance().setCash(Player.getInstance().getCash() + selected.price);
                 }
             });
@@ -236,15 +260,22 @@ public class ShopScreen {
         }
 
         private Collidable getCollidable(String name) {
-            return switch (name) {
-                case "Dagger" -> Controller.createWeapon("dagger");
-                case "Axe" -> Controller.createWeapon("axe");
-                case "Spear" -> Controller.createWeapon("spear");
-                case "Health Potion" -> Controller.createPotion("health");
-                case "Attack Potion" -> Controller.createPotion("attack");
-                case "Speed Potion" -> Controller.createPotion("speed");
-                default -> throw new IllegalArgumentException("Invalid name given.");
-            };
+            switch (name) {
+            case "Dagger":
+                return Controller.createWeapon("dagger");
+            case "Axe":
+                return Controller.createWeapon("axe");
+            case "Spear":
+                return Controller.createWeapon("spear");
+            case "Health Potion":
+                return Controller.createPotion("health");
+            case "Attack Potion":
+                return Controller.createPotion("attack");
+            case "Speed Potion":
+                return Controller.createPotion("speed");
+            default:
+                throw new IllegalArgumentException("Invalid name given.");
+            }
         }
     }
 
@@ -276,25 +307,45 @@ public class ShopScreen {
         }
 
         private void setPrice() {
-            this.price = switch (name) {
-                case "Axe" -> 200;
-                case "Spear" -> 150;
-                case "Dagger" -> 100;
-                default -> 50;
-            };
+            switch (name) {
+            case "Axe":
+                this.price = 200;
+                break;
+            case "Spear":
+                this.price = 150;
+                break;
+            case "Dagger":
+                this.price = 100;
+                break;
+            default:
+                this.price = 50;
+            }
         }
 
         private void setPath() {
             System.out.println(name);
-            path = switch (name) {
-                case "Axe" -> "axe-angle.png";
-                case "Spear" -> "spear-angle.png";
-                case "Dagger" -> "dagger-angle.png";
-                case "Health Potion" -> "potions/health.png";
-                case "Attack Potion" -> "potions/attack.png";
-                case "Speed Potion" -> "potions/speed.png";
-                default -> "dagger-drag.png";
-            };
+            switch (name) {
+            case "Axe":
+                path = "axe-angle.png";
+                break;
+            case "Spear":
+                path = "spear-angle.png";
+                break;
+            case "Dagger":
+                path = "dagger-angle.png";
+                break;
+            case "Health Potion":
+                path = "potions/health.png";
+                break;
+            case "Attack Potion":
+                path = "potions/attack.png";
+                break;
+            case "Speed Potion":
+                path = "potions/speed.png";
+                break;
+            default:
+                path = "dagger-drag.png";
+            }
         }
 
         private void initSlot(int x, int y) {
@@ -343,15 +394,28 @@ public class ShopScreen {
         }
 
         private Image getImage() {
-            return switch (name) {
-                case "Dagger" -> new Image("/main/design/images/dagger-drag.png", 150, 150, false, false);
-                case "Axe" -> new Image("/main/design/images/axe-angle.png", 150, 150, false, false);
-                case "Spear" -> new Image("/main/design/images/spear-drag.png", 150, 150, false, false);
-                case "Health Potion" -> new Image("/main/design/images/potions/health.png", 51, 76, false, false);
-                case "Attack Potion" -> new Image("/main/design/images/potions/attack.png", 51, 76, false, false);
-                case "Speed Potion" -> new Image("/main/design/images/potions/speed.png", 51, 76, false, false);
-                default -> new Image("/main/design/images/dagger-drag.png");
-            };
+            switch (name) {
+            case "Dagger":
+                return new Image("/main/design/images/dagger-drag.png", 150, 150,
+                        false, false);
+            case "Axe":
+                return new Image("/main/design/images/axe-angle.png", 150, 150,
+                        false, false);
+            case "Spear":
+                return new Image("/main/design/images/spear-drag.png", 150, 150,
+                        false, false);
+            case "Health Potion":
+                return new Image("/main/design/images/potions/health.png", 51, 76,
+                        false, false);
+            case "Attack Potion":
+                return new Image("/main/design/images/potions/attack.png", 51, 76,
+                        false, false);
+            case "Speed Potion":
+                return new Image("/main/design/images/potions/speed.png", 51, 76,
+                        false, false);
+            default:
+                return new Image("/main/design/images/dagger-drag.png");
+            }
         }
     }
 }
