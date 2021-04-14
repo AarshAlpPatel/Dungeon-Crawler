@@ -27,9 +27,7 @@ import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 import static org.testfx.api.FxToolkit.setupApplication;
 
-public class
-
-Milestone4 extends ApplicationTest {
+public class Milestone4 extends ApplicationTest {
     private Stage stage;
     private static FxRobot robot;
 
