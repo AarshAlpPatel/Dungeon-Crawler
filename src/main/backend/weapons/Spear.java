@@ -4,7 +4,7 @@ public class Spear extends Weapon {
     public Spear(double x, double y, boolean dropped, double translateX,
                  double translateY, double attackInterval) {
         super(x, y, 0, 10, 30, 0, "spearh.png",
-                dropped, 120, 15, translateX, translateY, attackInterval);
+                dropped, 80, 15, translateX, translateY, attackInterval);
     }
 
     @Override

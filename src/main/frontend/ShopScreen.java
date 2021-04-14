@@ -20,8 +20,6 @@ import main.backend.exceptions.TooManyWeapons;
 import main.backend.weapons.*;
 import main.backend.potions.*;
 
-import java.util.Stack;
-
 public class ShopScreen {
     private static Scene shopScreen;
     private static VBox screen;
