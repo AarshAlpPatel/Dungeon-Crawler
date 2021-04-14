@@ -101,17 +101,51 @@ public class Milestone5 extends ApplicationTest {
 
     @Test
     public void testWeaponPickUp() {
+        startGame();
+        findTreasureRoom();
+        pickUpWeapon(200, 400);
+        assertNotNull(Player.getInstance().getInventory().getWeapon(1));
+        assertTrue(Player.getInstance().getInventory().getWeapon(1) instanceof Dagger);
+        press(KeyCode.H);
+        release(KeyCode.H);
+        verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(), NodeMatchers.isVisible());
+        assertEquals(2, Player.getInstance().getInventory().getWeapons().size());
+        press(KeyCode.H);
+        release(KeyCode.H);
+
+        /*
         pickUpWeapon();
         assertNotNull(Player.getInstance().getInventory().getWeapon(1));
         assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Dagger || Player.getInstance().getInventory().getWeapon(0) instanceof Spear || Player.getInstance().getInventory().getWeapon(0) instanceof Axe);
         press(KeyCode.H);
         release(KeyCode.H);
         verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(),
-                NodeMatchers.isVisible());
+                NodeMatchers.isVisible()); */
     }
 
     @Test
     public void testSwitch() {
+        startGame();
+        findTreasureRoom();
+        pickUpWeapon(200,400);
+        assertNotNull(Player.getInstance().getInventory().getWeapon(1));
+        assertTrue(Player.getInstance().getInventory().getWeapon(1) instanceof Dagger);
+        press(KeyCode.H);
+        release(KeyCode.H);
+        verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(), NodeMatchers.isVisible());
+        assertEquals(2, Player.getInstance().getInventory().getWeapons().size());
+        Weapon startingWeapon = Player.getInstance().getInventory().getWeapon(0);
+        clickOn("#Weapon1");
+        clickOn("#Weapon2");
+        assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Dagger);
+        assertEquals(startingWeapon.getClass(),
+                Player.getInstance().getInventory().getWeapon(1).getClass());
+        press(KeyCode.H);
+        release(KeyCode.H);
+
+
+
+        /*
         Door dirTraveled = pickUpWeapon();
 
         assertNotNull(Player.getInstance().getInventory().getWeapon(1));
@@ -128,7 +162,7 @@ public class Milestone5 extends ApplicationTest {
         Player.getInstance().setPosition(new Point2D(MainScreen.getMidX(), MainScreen.getMidY()));
         findStartRoom(dirTraveled);
         verifyThat(Player.getInstance().getInventory().getWeapon(0).getRawImage(),
-                NodeMatchers.isVisible());
+                NodeMatchers.isVisible()); */
     }
 
     private void findStartRoom(Door dirTraveled) {
@@ -192,7 +226,20 @@ public class Milestone5 extends ApplicationTest {
 
     @Test
     public void testDrops() {
-        pickUpWeapon();
+        startGame();
+        findTreasureRoom();
+        Player.getInstance().setPosition(new Point2D(200, 400));
+        press(KeyCode.F);
+        release(KeyCode.F);
+        assertNotNull(Player.getInstance().getInventory().getWeapon(1));
+        assertTrue(Player.getInstance().getInventory().getWeapon(1) instanceof Dagger);
+        press(KeyCode.H);
+        release(KeyCode.H);
+        verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(), NodeMatchers.isVisible());
+        assertEquals(2, Player.getInstance().getInventory().getWeapons().size());
+        press(KeyCode.H);
+        release(KeyCode.H);
+
         press(KeyCode.H);
         release(KeyCode.H);
         clickOn("#Weapon1");
@@ -261,62 +308,28 @@ public class Milestone5 extends ApplicationTest {
     @Test
     public void testOverfill() {
         startGame();
-        findEnemyRoom();
-        String dirKilled = killEnemy(RoomManager.getCurrentEnemies().getEnemyCounter() - 1);
-        KeyCode ktp;
-        if (dirKilled.equals("North")) {
-            ktp = KeyCode.W;
-        } else {
-            ktp = KeyCode.S;
-        }
-
-        press(ktp);
-        press(ktp);
-        press(ktp);
-        press(ktp);
-        release(ktp);
-
-        for (int i = 0; i < 7; i++) {
-            press(KeyCode.F);
-            release(KeyCode.F);
-        }
+        findTreasureRoom();
+        pickUpWeapon(200,400);
         assertEquals(2, Player.getInstance().getInventory().getNumWeapons());
-        
-        //make sure inventory doesnt change when trying to pick up another weapon
-        String dirKilled2 = killEnemy(RoomManager.getCurrentEnemies().getEnemyCounter() - 1);
-        if (dirKilled.equals("North")) {
-            ktp = KeyCode.W;
-        } else {
-            ktp = KeyCode.S;
-        }
-
-        press(ktp);
-        press(ktp);
-        press(ktp);
-        release(ktp);
-        press(KeyCode.F);
-        release(KeyCode.F);
+        press(KeyCode.H);
+        release(KeyCode.H);
+        verifyThat(Player.getInstance().getInventory().getWeapon(1).getRawImage(), NodeMatchers.isVisible());
+        assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Spear);
+        assertTrue(Player.getInstance().getInventory().getWeapon(1) instanceof Dagger);
+        pickUpWeapon(600,200);
         assertEquals(2, Player.getInstance().getInventory().getNumWeapons());
+        assertTrue(Player.getInstance().getInventory().getWeapon(0) instanceof Spear);
+        assertTrue(Player.getInstance().getInventory().getWeapon(1) instanceof Dagger);
+        press(KeyCode.H);
+        release(KeyCode.H);
+        verifyThat(new ImageView("/main/design/images/axeh.png"), NodeMatchers.isVisible());
+
     }
 
-    private Door pickUpWeapon() {
-        startGame();
-
-        Door dirTraveled = findEnemyRoom();
-        String dir = killEnemy(RoomManager.getCurrentEnemies().getEnemyCounter() - 1);
-        KeyCode kTP = dir.equals("North") ? KeyCode.W : KeyCode.S;
-
-        press(kTP);
-        press(kTP);
-        press(kTP);
-        press(kTP);
-        press(kTP);
-        release(kTP);
-
+    private void pickUpWeapon(int x, int y) {
+        Player.getInstance().setPosition(new Point2D(x, y));
         press(KeyCode.F);
         release(KeyCode.F);
-
-        return dirTraveled;
     }
 
     public Door findEnemyRoom() {
