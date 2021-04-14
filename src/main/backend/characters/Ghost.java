@@ -10,7 +10,7 @@ public class Ghost extends Enemy {
                 "ghost/base/ghost_base.gif", id, 50, "ghost/dead/ghost_dead.png");
         Random rand = new Random();
         int index = rand.nextInt(3);
-        Weapon weapon = WeaponManager.create(weapons[index], x, y, false, 4, 8, 180);
+        Weapon weapon = WeaponManager.create(weapons[0], x, y, false, 4, 8, 180);
         this.mainWeapon = weapon;
     }
 }

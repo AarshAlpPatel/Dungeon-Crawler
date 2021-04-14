@@ -1,6 +1,7 @@
 package main.backend.weapons;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -108,7 +109,11 @@ public abstract class Weapon extends Collidable {
 
     public void dropWeapon() {
         dropped = true;
-        RoomManager.getCurrent().addCollectable(this, this.getPosition());
+        Random rand = new Random();
+        int chance = rand.nextInt(10);
+        if (chance < 1) {
+            RoomManager.getCurrent().addCollectable(this, this.getPosition());
+        }
     }
 
     public void playerDropWeapon() {

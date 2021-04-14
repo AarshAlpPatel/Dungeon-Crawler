@@ -157,15 +157,4 @@ public class EnemyManager {
     public int getDifficulty() {
         return this.difficulty;
     }
-
-    //    public void setEnemyCounter(int enemyCounter) {
-    //        this.enemyCounter = enemyCounter;
-    //    }
-    //
-    //    public void killAllEnemies() {
-    //        for (Enemy enemy : enemies) {
-    //            enemy.destroy();
-    //            System.out.println(enemyCounter);
-    //        }
-    //    }
 }
