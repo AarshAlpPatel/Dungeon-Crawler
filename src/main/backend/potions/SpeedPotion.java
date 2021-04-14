@@ -11,17 +11,17 @@ public class SpeedPotion extends Potion {
     @Override
     public void setPower() {
         switch (rarity) {
-            case "common" :
-                this.power = 1.0;
-                break;
-            case "rare" :
-                this.power = 2.0;
-                break;
-            case "epic" :
-                this.power = 3.0;
-                break;
-            default:
-                throw new RuntimeException("Invalid rarity for speed potion");
+        case "common" :
+            this.power = 1.0;
+            break;
+        case "rare" :
+            this.power = 2.0;
+            break;
+        case "epic" :
+            this.power = 3.0;
+            break;
+        default:
+            throw new RuntimeException("Invalid rarity for speed potion");
         }
     }
 

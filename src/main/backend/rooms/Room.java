@@ -11,7 +11,6 @@ import main.backend.characters.Sprite;
 import main.backend.collidables.Collidable;
 import main.backend.collidables.WallManager;
 import main.backend.characters.EnemyManager;
-import main.backend.characters.Player;
 
 public class Room {
     protected static final int MAX_CONNECTIONS = 4;

@@ -10,10 +10,17 @@ public class AttackPotion extends Potion {
 
     public void setPower() {
         switch (rarity) {
-            case "common" -> this.power = 5;
-            case "rare" -> this.power = 10;
-            case "epic" -> this.power = 20;
-            default -> throw new RuntimeException("Invalid rarity for attack potion");
+        case "common":
+            this.power = 5;
+            break;
+        case "rare":
+            this.power = 10;
+            break;
+        case "epic":
+            this.power = 20;
+            break;
+        default:
+            throw new RuntimeException("Invalid rarity for attack potion");
         }
     }
 
