@@ -15,6 +15,7 @@ public class Room {
     private static Pane screen = null;
     private static BorderPane bPane = null;
     private static Text healthVal;
+    protected static Label cashValue;
 
     public static void reset() {
         if (screen != null) {
@@ -72,7 +73,7 @@ public class Room {
             hearts.getChildren().add(heart);
         }
 
-        Label cashValue = new Label(amountCash.toString());
+        cashValue = new Label(Player.getInstance().getCash().toString());
         cashValue.getStyleClass().add("cash_value");
 
         cash.getChildren().addAll(cashValue);
