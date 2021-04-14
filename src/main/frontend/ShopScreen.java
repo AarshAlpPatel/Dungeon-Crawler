@@ -25,6 +25,7 @@ public class ShopScreen {
     private static VBox screen;
     private static Slot selected;
     private static Panel checkoutPanel;
+    private static Label cashValue = new Label(Player.getInstance().getCash().toString());
 
     private static StackPane createBackground() {
         StackPane shop = new StackPane();
@@ -69,7 +70,7 @@ public class ShopScreen {
         HBox panels = createPanels();
         shop.getChildren().add(panels);
         HBox cashBottom = new HBox();
-        cashBottom.getChildren().addAll(new ImageView("/main/design/images/coin.png"), Room.cashValue);
+        cashBottom.getChildren().addAll(new ImageView("/main/design/images/coin.png"), cashValue);
         cashBottom.getStyleClass().add("center");
         cashBottom.setPadding(new Insets(50, 0, 0, 0));
         screen.getChildren().addAll(emptyTop, shop, cashBottom);
@@ -203,6 +204,7 @@ public class ShopScreen {
                         }
                     }
                     Room.cashValue.setText(Player.getInstance().getCash().toString());
+                    cashValue.setText(Player.getInstance().getCash().toString());
                     System.out.println(selected.price);
                     System.out.println(Player.getInstance().getCash());
                 } catch (TooManyWeapons | TooManyPotions tmw) {
