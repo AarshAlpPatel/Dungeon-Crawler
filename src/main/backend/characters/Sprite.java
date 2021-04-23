@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressBar;
+import main.backend.StatTracker;
 import main.backend.collidables.Collidable;
 import main.backend.potions.Potion;
 import main.backend.potions.PotionManager;
@@ -116,10 +117,10 @@ public abstract class Sprite extends Collidable {
         this.healthBar.setProgress(this.health / this.maxHealth);
     }
 
-    @Override
-    public String toString() {
-        return String.format("Character: %s", name);
-    }
+//    @Override
+//    public String toString() {
+//        return String.format("Character: %s", name);
+//    }
 
     public double getDistance(Sprite s) {
         return this.position.distance(s.position);
@@ -145,15 +146,22 @@ public abstract class Sprite extends Collidable {
     }
 
     public void takeDamage(double damage) {
+        double damageTaken = damage;
         if (this.health <= damage) {
+            damageTaken = this.health;
             this.health = 0.0;
-            this.destroy();
         } else {
             this.health -= damage;
             this.healthBar.setProgress(this.health / this.maxHealth);
         }
         if (this instanceof Enemy) {
             System.out.println(health);
+            StatTracker.addDamageDealt(damageTaken);
+        } else if (this instanceof Player){
+            StatTracker.addDamageTaken(damageTaken);
+        }
+        if (this.health == 0) {
+            this.destroy();
         }
     }
 

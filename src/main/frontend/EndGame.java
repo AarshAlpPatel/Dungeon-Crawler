@@ -6,11 +6,15 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import main.backend.Controller;
 
 public class EndGame {
+
     public static Scene getScene() {
         BorderPane screen = new BorderPane();
         Scene endGame = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());
+
+        Controller.stopTimer();
 
         VBox wonBox = new VBox(10);
         wonBox.setId("wonBox");

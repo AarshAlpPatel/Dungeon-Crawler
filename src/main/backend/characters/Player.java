@@ -3,6 +3,7 @@ package main.backend.characters;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
 import main.backend.Controller;
+import main.backend.StatTracker;
 import main.backend.collidables.Collidable;
 import main.backend.exceptions.EdgeOfScreen;
 import main.backend.exceptions.WallCollision;
@@ -24,6 +25,7 @@ public class Player extends Sprite {
     private Integer cash;
     private Text healthTextBox;
     private Inventory inventory;
+    private static StatTracker stats;
 
     private Player() {
         this(400, 400, 1, 4.0, 100, 5, null, null, "char1.gif");
@@ -33,6 +35,7 @@ public class Player extends Sprite {
             int health, int regeneration, Weapon weapon, String name, String imagePath) {
         super(x, y, attackMultiplier, speed, health, regeneration, weapon, name, imagePath, 100);
         this.inventory = new Inventory();
+        stats = new StatTracker();
     }
 
     public static void resetPlayer() {
@@ -49,6 +52,10 @@ public class Player extends Sprite {
 
     public void setMainWeapon(Weapon w) {
         this.mainWeapon = w;
+    }
+
+    public static StatTracker getStats() {
+        return stats;
     }
 
     public void switchWeapon(Weapon w) {

@@ -6,11 +6,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import main.backend.Controller;
+
+import java.util.List;
 
 public class LoseGame {
     public static Scene getScene() {
         BorderPane screen = new BorderPane();
         Scene loseGame = new Scene(screen, MainScreen.getLength(), MainScreen.getHeight());
+
+        Controller.stopTimer();
 
         VBox loseBox = new VBox(10);
         loseBox.setId("wonBox");
@@ -22,6 +27,14 @@ public class LoseGame {
         Label restart = new Label("Restart:");
         restart.getStyleClass().add("wonLabel");
 
+        System.out.println(" ====== Player stats: ====== ");
+        System.out.println("Hours: " + Controller.getTimeTaken()[0] +
+                ", Minutes: " + Controller.getTimeTaken()[1] +
+                ", Seconds: " + Controller.getTimeTaken()[2]);
+        List<Double> stats = Controller.getPlayerStats();
+        System.out.println("Dealt: " + stats.get(0).toString());
+        System.out.println("Taken: " + stats.get(1).toString());
+        System.out.println("Killed: " + stats.get(2).toString());
 
 
         ImageView wonToMain = new ImageView("/main/design/images/power.png");
