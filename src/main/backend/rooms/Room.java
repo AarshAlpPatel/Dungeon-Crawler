@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import main.backend.characters.StatTracker;
 import main.backend.exceptions.EdgeOfScreen;
 import main.backend.exceptions.WallCollision;
 import main.backend.Controller;

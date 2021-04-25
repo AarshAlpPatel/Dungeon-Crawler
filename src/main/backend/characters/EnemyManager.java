@@ -106,6 +106,9 @@ public class EnemyManager {
                 enemiesHit[i] = true;
                 if (enemies[i].isDead()) {
                     enemyCounter--;
+                    if (clear()) {
+                        StatTracker.changeScore(100);
+                    }
                 }
             }
         }
