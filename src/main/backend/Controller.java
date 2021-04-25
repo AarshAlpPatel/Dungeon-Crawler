@@ -269,4 +269,35 @@ public class Controller {
         return PotionManager.create(name, "common", Player.getInstance().getPosition().getX(),
                 Player.getInstance().getPosition().getY(), Player.POTION_DURATION);
     }
+
+    public static void startTimer() {
+        StatTracker.startTimer();
+    }
+
+    public static void stopTimer() {
+        StatTracker.finishTimer();
+    }
+
+    public static Integer[] getTimeTaken() {
+        return StatTracker.getElapsedTime();
+    }
+
+    public static String getDeathReason() {
+        return StatTracker.getDeathReason();
+    }
+
+    /**
+     * Returns the player's stats from the game as a list
+     * (damageDealt, damageTaken, monstersKilled)
+     *
+     * @return List of stats
+     */
+    public static List<Double> getPlayerStats() {
+        List<Double> list = new ArrayList<>(5);
+        list.add(StatTracker.getDamageDealt());
+        list.add(StatTracker.getDamageTaken());
+        list.add(StatTracker.getMonstersKilled());
+        list.add(StatTracker.getScore());
+        return list;
+    }
 }

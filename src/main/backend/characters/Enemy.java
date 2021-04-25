@@ -69,6 +69,7 @@ public class Enemy extends Sprite {
         setImage(deathImagePath);
         images.add(this.image);
         Controller.addImage(images);
+        Player.getInstance().getStats().addMonster();
 
         this.mainWeapon.dropWeapon();
         this.mainWeapon = null;

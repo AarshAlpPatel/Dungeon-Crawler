@@ -9,6 +9,7 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.*;
 
 import main.backend.Controller;
+import main.backend.characters.Player;
 
 public class SetUpPlayerScreen {
 
@@ -287,7 +288,12 @@ public class SetUpPlayerScreen {
                 if (diffCombo.getValue() != null) {
                     Controller.setDifficultyLevel(diffCombo.getValue());
                 }
+
                 MainScreen.setScene(Room.getScene());
+//                System.out.println(Player.getInstance());
+                Controller.startTimer();
+//                System.out.println(Player.getInstance().getStats());
+//                System.out.println(Player.getInstance().getStats().getStartTime());
             }
         });
 

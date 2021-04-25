@@ -1,8 +1,74 @@
-.wonLabel {
-    -fx-alignment: center;
-    -fx-font-size: 30px;
+/*lose screen*/
+.lose_screen {
+    -fx-background-image: url("/main/design/images/endScreen/bloodDripWithColoredBack.png");
+    -fx-background-color: white;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
 }
 
-.wonBox {
+/*win screen*/
+.win_screen {
+    -fx-background-image: url("/main/design/images/dungeon.jpg");
+    -fx-background-color: white;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.background_end {
+    -fx-background-color: #2a6666;
+    -fx-opacity: 0.5;
+}
+
+.main {
     -fx-alignment: center;
+    -fx-font-size: 100px;
+    -fx-font-family: "Bernard MT Condensed";
+    -fx-text-fill: white;
+}
+
+.center {
+    -fx-alignment: center;
+}
+
+.time {
+    -fx-font-family: "Agency FB";
+    -fx-font-size: 50px;
+    -fx-text-fill: white;
+}
+
+.stat {
+    -fx-font-family: "Courier New";
+    /*-fx-font-weight: bold;*/
+    -fx-font-size: 30px;
+    -fx-text-fill: white;
+}
+
+.sub {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
+/*Summary*/
+.summaryHolder {
+
+}
+
+.summaryRect {
+    -fx-arc-width: 20px;
+    -fx-arc-height: 20px;
+    -fx-fill: #2a6666;
+    -fx-opacity: 0.9;
+}
+
+.score {
+    -fx-font-size: 50px;
+    -fx-font-family: "Agency FB";
+    -fx-text-fill: #ffa500;
+}
+
+.toSum {
+    -fx-arc-width: 5px;
+    -fx-arc-height: 5px;
+    -fx-fill: #8a2317;
+    -fx-opacity: 1;
 }
