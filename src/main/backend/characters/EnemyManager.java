@@ -3,6 +3,8 @@ package main.backend.characters;
 import java.util.*;
 
 import javafx.scene.Node;
+import main.backend.rooms.BossRoom;
+import main.backend.rooms.RoomManager;
 
 public class EnemyManager {
     private Enemy[] enemies;
@@ -108,6 +110,9 @@ public class EnemyManager {
                     enemyCounter--;
                     if (clear()) {
                         StatTracker.changeScore(100);
+                        if (RoomManager.getCurrent() instanceof BossRoom) {
+                            StatTracker.changeScore(400);
+                        }
                     }
                 }
             }
