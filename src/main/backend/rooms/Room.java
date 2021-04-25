@@ -30,18 +30,21 @@ public class Room {
         this.difficulty = difficulty;
 
         if (difficulty.equals("empty")) {
-            this.enemies = new EnemyManager(0, 0);
+            this.enemies = new EnemyManager(0, 0, false);
         } else if (difficulty.equals("easy")) {
-            this.enemies = new EnemyManager(4, 1);
+            this.enemies = new EnemyManager(4, 1, false);
         } else if (difficulty.equals("medium")) {
-            this.enemies = new EnemyManager(5, 2);
+            this.enemies = new EnemyManager(5, 2, false);
         } else if (difficulty.equals("hard")) {
-            this.enemies = new EnemyManager(6, 3);
+            this.enemies = new EnemyManager(6, 3, false);
         } else if (difficulty.equals("boss")) {
-            this.enemies = new EnemyManager(8, 4);
-        } else {
-            throw new IllegalArgumentException("Invalid difficulty");
+            this.enemies = new EnemyManager(8, 4, true);
         }
+    }
+
+    protected void createEnemies(int count, int difficulty) {
+        this.enemies = new EnemyManager(count, difficulty, false);
+        Controller.addImage(this.enemies.getImages());
     }
 
     public String getDifficulty() {

@@ -7,6 +7,8 @@ import main.backend.collidables.Collidable;
 import main.backend.exceptions.TooManyPotions;
 import main.backend.exceptions.TooManyWeapons;
 import main.backend.potions.Potion;
+import main.backend.rooms.RoomManager;
+import main.backend.rooms.WeaponRoom;
 import main.backend.weapons.Weapon;
 
 public class Inventory {
@@ -31,13 +33,12 @@ public class Inventory {
     public boolean addCollectable(Collidable c) {
         try {
             if (c instanceof Weapon) {
+                if (RoomManager.getCurrent() instanceof WeaponRoom) {
+                    WeaponRoom r = (WeaponRoom)RoomManager.getCurrent();
+                    r.trigger((Weapon)c);
+                } 
                 addWeapon((Weapon) c);
             } else if (c instanceof Potion) {
-                //
-                // TEMPORARY CODE PLEASE CHANGE BEFORE FINAL PRESENTATION BECAUSE SUPPOSED TO ADD
-                // TO INVENTORY FIRST THEN USE NOT JUST STRAIGHT APPLY
-                //
-                //Player.getInstance().applyPotion((Potion)c);
                 addPotion((Potion) c);
                 printInventory();
             } else {

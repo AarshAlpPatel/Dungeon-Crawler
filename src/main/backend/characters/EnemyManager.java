@@ -14,13 +14,13 @@ public class EnemyManager {
     private static double rangeOffset = 40;
     private int difficulty;
 
-    public EnemyManager(int enemyCount, int difficulty) {
+    public EnemyManager(int enemyCount, int difficulty, boolean boss) {
         this.enemies = new Enemy[enemyCount];
         this.enemiesHit = new boolean[enemyCount];
         this.playerHits = new boolean[enemyCount];
         this.enemyCounter = 0;
         this.difficulty = difficulty;
-        generateEnemies(enemyCount, difficulty);
+        generateEnemies(enemyCount, difficulty, boss);
     }
 
     public Enemy create(double x, double y, String name) {
@@ -66,7 +66,7 @@ public class EnemyManager {
     //    }
     //}
 
-    public void generateEnemies(int enemies, int difficulty) {
+    public void generateEnemies(int enemies, int difficulty, boolean boss) {
         //will customize with different level enemies at a later time
 
         //added for testing purposes to verify that all types show up,
@@ -76,6 +76,10 @@ public class EnemyManager {
         //    new Ghost(getRandomPosition(), getRandomPosition(), this.enemyCounter++),
         //    new Snake(getRandomPosition(), getRandomPosition(), this.enemyCounter++)
         //};
+        if(boss) {
+            enemies--;
+        }
+
         for (int i = 0, j = 0; i < enemies; ++i, j++) {
             if (j == 3) { //delete eventually
                 j = 0;
@@ -97,6 +101,9 @@ public class EnemyManager {
             // } else {
             //     this.enemies[i] = randomlyChooseEnemy();
             // }
+        }
+        if(boss) {
+            this.enemies[enemies] = new Boss(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
         }
     }
 

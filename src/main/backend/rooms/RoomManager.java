@@ -60,8 +60,8 @@ public class RoomManager {
         current = createRoom("empty");
         rooms.add(current);
         types.add("potion");
-        types.add("potion");
-        types.add("potion");
+        types.add("weapon");
+        types.add("weapon");
         //types.add("empty");
         //types.add("empty");
         for (int i = 6; i < MAX_ROOMS - 2; ++i) {
