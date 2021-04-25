@@ -18,7 +18,7 @@ public class EnemyManager {
         this.enemies = new Enemy[enemyCount];
         this.enemiesHit = new boolean[enemyCount];
         this.playerHits = new boolean[enemyCount];
-        this.enemyCounter = 0;
+        this.enemyCounter = enemyCount;
         this.difficulty = difficulty;
         generateEnemies(enemyCount, difficulty, boss);
     }

@@ -11,7 +11,10 @@ public class WeaponManager {
             newWeapon = new Spear(x, y, dropped, translateX, translateY, attackInterval);
         } else if (weapon.equals("axe")) {
             newWeapon = new Axe(x, y, dropped, translateX, translateY, attackInterval);
-        } else {
+        } else if (weapon.equals("key")) {
+            newWeapon = new Key(x, y, dropped, translateX, translateY, attackInterval);
+        }
+        else {
             throw new IllegalArgumentException("Weapon name not recognized");
         }
 

@@ -45,6 +45,7 @@ public class Room {
     protected void createEnemies(int count, int difficulty) {
         this.enemies = new EnemyManager(count, difficulty, false);
         Controller.addImage(this.enemies.getImages());
+
     }
 
     public String getDifficulty() {
