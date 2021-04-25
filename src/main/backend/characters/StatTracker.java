@@ -1,5 +1,6 @@
-package main.backend;
+package main.backend.characters;
 
+import main.backend.characters.Enemy;
 import main.backend.characters.Player;
 
 public class StatTracker {
@@ -11,6 +12,11 @@ public class StatTracker {
     private static double damageTaken;
     private static double damageDealt;
 
+    private static double score;
+
+    protected static Enemy killer;
+    private static String deathReason;
+
     public static void startTimer() {
         if (startTime == null) startTime = System.nanoTime();
     }
@@ -19,10 +25,15 @@ public class StatTracker {
         if (finishTime == null) finishTime = System.nanoTime();
     }
 
-    public static void resetClock() {
+    public static void reset() {
         startTime = null;
         finishTime = null;
         elapsedTime = null;
+        monstersKilled = 0;
+        damageTaken = 0;
+        damageDealt = 0;
+        score = 0;
+        killer = null;
     }
 
     public static Integer[] getElapsedTime() {
@@ -49,9 +60,11 @@ public class StatTracker {
         return time;
     }
 
-    //delete
-    public static long getStartTime() {
-        return startTime;
+    public static String getDeathReason() {
+        if (killer == null) {
+            return "I have no idea how the hell ya died but ya did it. Congrats?";
+        }
+        return String.format("Died at the hands of a dreaded %s.", killer.getName());
     }
 
     public static double getMonstersKilled() {
@@ -76,5 +89,18 @@ public class StatTracker {
 
     public static void addDamageDealt(double damage) {
         damageDealt += damage;
+    }
+
+    public static double getScore() {
+        return score;
+    }
+
+    public static void changeScore(int points) {
+        score += points;
+
+        //100 for clearing a room
+        //20 per monster
+        //-1 per damage taken
+        //500 for clearing boss
     }
 }

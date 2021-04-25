@@ -282,6 +282,10 @@ public class Controller {
         return StatTracker.getElapsedTime();
     }
 
+    public static String getDeathReason() {
+        return StatTracker.getDeathReason();
+    }
+
     /**
      * Returns the player's stats from the game as a list
      * (damageDealt, damageTaken, monstersKilled)
@@ -289,10 +293,11 @@ public class Controller {
      * @return List of stats
      */
     public static List<Double> getPlayerStats() {
-        List<Double> list = new ArrayList<>(4);
+        List<Double> list = new ArrayList<>(5);
         list.add(StatTracker.getDamageDealt());
         list.add(StatTracker.getDamageTaken());
         list.add(StatTracker.getMonstersKilled());
+        list.add(StatTracker.getScore());
         return list;
     }
 }

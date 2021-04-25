@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressBar;
-import main.backend.StatTracker;
 import main.backend.collidables.Collidable;
 import main.backend.potions.Potion;
 import main.backend.potions.PotionManager;
@@ -143,6 +142,7 @@ public abstract class Sprite extends Collidable {
 
     public void hit(Sprite s) {
         s.takeDamage(mainWeapon.getDamage() * this.attackMultiplier);
+        if (this instanceof Enemy) StatTracker.killer = (Enemy) this;
     }
 
     public void takeDamage(double damage) {

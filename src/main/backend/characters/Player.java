@@ -3,7 +3,6 @@ package main.backend.characters;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
 import main.backend.Controller;
-import main.backend.StatTracker;
 import main.backend.collidables.Collidable;
 import main.backend.exceptions.EdgeOfScreen;
 import main.backend.exceptions.WallCollision;

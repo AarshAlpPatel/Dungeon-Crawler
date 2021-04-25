@@ -37,6 +37,12 @@ public class GameManager {
                     MainScreen.setScene(ShopScreen.getScene());
                 } else if (event.getCode() == KeyCode.F) {
                     Controller.pickUpCollectable();
+                } else if (event.getCode() == KeyCode.Q) {
+                    stopGameLoop();
+                    MainScreen.setScene(LoseGame.getScene());
+                } else if (event.getCode() == KeyCode.E) {
+                    stopGameLoop();
+                    MainScreen.setScene(WinGame.getScene());
                 } else {
                     //set the direction which the player is traveling
                     Controller.setDirection(event.getCode().toString(), true);
@@ -139,7 +145,7 @@ public class GameManager {
      */
     public static void winGame() {
         stopGameLoop();
-        MainScreen.setScene(EndGame.getScene());
+        MainScreen.setScene(WinGame.getScene());
     }
 
     /**
