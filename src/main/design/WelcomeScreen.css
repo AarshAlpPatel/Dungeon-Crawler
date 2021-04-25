@@ -20,3 +20,24 @@
     -fx-font-weight: bold;
     -fx-font-family: "Times New Roman";
 }
+
+.center {
+    -fx-alignment: center;
+}
+
+.label {
+    -fx-font-size: 25px;
+    -fx-font-family: "Bernard MT Condensed";
+    -fx-text-fill: #ffffff;
+}
+
+.info_title {
+    -fx-font-size: 50px;
+}
+
+.rect {
+    -fx-arc-width: 20px;
+    -fx-arc-height: 20px;
+    -fx-fill: #2a6666;
+    -fx-opacity: 0.8;
+}

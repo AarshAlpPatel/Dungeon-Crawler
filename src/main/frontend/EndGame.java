@@ -40,22 +40,19 @@ public abstract class EndGame {
         bottom.setPadding(new Insets(10, 0, 0, 0));
         bottom.getStyleClass().add("center");
 
-        HBox bottomButtons = new HBox(600);
+        HBox bottomButtons = new HBox(250);
         bottomButtons.getStyleClass().add("center");
 
         //toSummary Button
         StackPane toSum = createSumButton();
 
         //return to welcome screen
-        ImageView backToMenu = new ImageView(new Image("main/design/images/endScreen/backArrow.png", 60, 60, true, false));
-        backToMenu.setOnMouseReleased(e -> {
-            MainScreen.setScene(WelcomeScreen.getScene());
-            StatTracker.reset();
-        });
-        backToMenu.setOnMouseEntered(e -> endScene.setCursor(Cursor.HAND));
-        backToMenu.setOnMouseExited(e -> endScene.setCursor(Cursor.DEFAULT));
+        StackPane backToMenu = createBackButton();
 
-        bottomButtons.getChildren().addAll(backToMenu, toSum);
+        //exit game
+        StackPane exitGame = createExitButton();
+
+        bottomButtons.getChildren().addAll(backToMenu, exitGame, toSum);
         //stats.getChildren().addAll(damageDealt, damageTaken, monstersKilled, time, backToMenu);
         bottom.getChildren().addAll(bottomButtons);
         return bottom;
@@ -77,6 +74,34 @@ public abstract class EndGame {
             screenHolder.getChildren().get(0).setOpacity(0.5);
         });
         return toSum;
+    }
+
+    protected static StackPane createBackButton() {
+        StackPane back = new StackPane();
+        ImageView backToMenu = new ImageView(new Image("main/design/images/endScreen/backArrow.png", 60, 60, true, false));
+        back.getChildren().add(backToMenu);
+        back.setMaxSize(backToMenu.getFitHeight(), backToMenu.getFitWidth());
+        back.setOnMouseReleased(e -> {
+            MainScreen.setScene(WelcomeScreen.getScene());
+            StatTracker.reset();
+        });
+        back.setOnMouseEntered(e -> endScene.setCursor(Cursor.HAND));
+        back.setOnMouseExited(e -> endScene.setCursor(Cursor.DEFAULT));
+        return back;
+    }
+
+    protected static StackPane createExitButton() {
+        StackPane exit = new StackPane();
+        ImageView exitApp = new ImageView(new Image("main/design/images/exit.png", 60, 60, true, false));
+        exit.getChildren().add(exitApp);
+        exit.setMaxSize(exitApp.getFitHeight(), exitApp.getFitWidth());
+        exit.setOnMouseReleased(e -> {
+            MainScreen.close();
+            StatTracker.reset();
+        });
+        exit.setOnMouseEntered(e -> endScene.setCursor(Cursor.HAND));
+        exit.setOnMouseExited(e -> endScene.setCursor(Cursor.DEFAULT));
+        return exit;
     }
 
     protected static HBox createTopPane(Image image) {
@@ -106,6 +131,22 @@ public abstract class EndGame {
         return endScene;
     }
 
+    public static Scene getWinScene() {
+        return getEndScene(
+                "You Won!",
+                "Congratulations! You defeated the boss and made it out alive!",
+                new Image("main/design/images/endScreen/dancing.gif", 300, 300, true, false),
+                "win_screen");
+    }
+
+    public static Scene getLoseScene() {
+        return getEndScene(
+                "Game Over!",
+                Controller.getDeathReason(),
+                new Image("/main/design/images/endScreen/gSkull.gif", 300, 300, true, false),
+                "lose_screen");
+    }
+
     public static class Summary extends StackPane {
         //protected StackPane screenHolder;
         protected VBox screen;
@@ -129,7 +170,7 @@ public abstract class EndGame {
             closePane.setMaxWidth(rect.getWidth());
             closePane.setPadding(new Insets(0, 20, 25, 0));
             closePane.setAlignment(Pos.CENTER_RIGHT);
-            close = new ImageView("main/design/images/endScreen/exit.png");
+            close = new ImageView("main/design/images/exit.png");
             close.setOnMouseReleased(event -> {
                 screenHolder.getChildren().remove(this);
                 screenHolder.getChildren().get(0).setOpacity(1);

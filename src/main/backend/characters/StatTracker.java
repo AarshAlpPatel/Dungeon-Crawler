@@ -92,6 +92,7 @@ public class StatTracker {
     }
 
     public static double getScore() {
+        score = score + (monstersKilled * 20) - damageTaken;
         return score;
     }
 
