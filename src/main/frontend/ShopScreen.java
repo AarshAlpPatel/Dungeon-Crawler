@@ -45,8 +45,11 @@ public class ShopScreen {
         HBox panels = new HBox(48);
         panels.getStyleClass().addAll("center");
         Panel potions = new Panel("potion");
+        potions.setId("potionPanel");
         Panel weapons = new Panel("weapon");
+        weapons.setId("weaponsPanel");
         checkoutPanel = new Panel("checkout");
+        checkoutPanel.setId("checkoutPanel");
         panels.getChildren().addAll(potions, weapons, checkoutPanel);
         return panels;
     }
@@ -132,6 +135,7 @@ public class ShopScreen {
             slots.getStyleClass().add("center");
 
             Slot slot1 = new Slot(name1, type);
+            slot1.setId("slot1");
             //System.out.println(name1);
             Slot slot2 = new Slot(name2, type);
             Slot slot3 = new Slot(name3, type);

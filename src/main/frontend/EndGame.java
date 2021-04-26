@@ -62,6 +62,7 @@ public abstract class EndGame {
         StackPane toSum = new StackPane();
         ImageView sum = new ImageView(new Image("main/design/images/endScreen/summary.png", 75, 75, true, false));
         toSum.getChildren().add(sum);
+        toSum.setId("toSum");
         toSum.setMaxSize(sum.getFitHeight(), sum.getFitWidth());
         toSum.setOnMouseEntered(event -> {
             endScene.setCursor(Cursor.HAND);
@@ -80,6 +81,7 @@ public abstract class EndGame {
         StackPane back = new StackPane();
         ImageView backToMenu = new ImageView(new Image("main/design/images/endScreen/backArrow.png", 60, 60, true, false));
         back.getChildren().add(backToMenu);
+        back.setId("back");
         back.setMaxSize(backToMenu.getFitHeight(), backToMenu.getFitWidth());
         back.setOnMouseReleased(e -> {
             MainScreen.setScene(WelcomeScreen.getScene());
@@ -171,6 +173,7 @@ public abstract class EndGame {
             closePane.setPadding(new Insets(0, 20, 25, 0));
             closePane.setAlignment(Pos.CENTER_RIGHT);
             close = new ImageView("main/design/images/exit.png");
+            close.setId("closeSum");
             close.setOnMouseReleased(event -> {
                 screenHolder.getChildren().remove(this);
                 screenHolder.getChildren().get(0).setOpacity(1);

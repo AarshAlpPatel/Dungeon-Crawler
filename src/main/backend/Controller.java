@@ -288,7 +288,7 @@ public class Controller {
 
     /**
      * Returns the player's stats from the game as a list
-     * (damageDealt, damageTaken, monstersKilled)
+     * (damageDealt, damageTaken, monstersKilled, score)
      *
      * @return List of stats
      */
