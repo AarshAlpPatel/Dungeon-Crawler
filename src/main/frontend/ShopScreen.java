@@ -28,7 +28,7 @@ public class ShopScreen {
     private static VBox screen;
     private static Slot selected;
     private static Panel checkoutPanel;
-    private static Label cashValue = new Label(Player.getInstance().getCash().toString());
+    public static Label cashValue = new Label(Player.getInstance().getCash().toString());
     private static Label message;
 
     private static StackPane createBackground() {

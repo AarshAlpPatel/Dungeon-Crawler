@@ -15,7 +15,7 @@ public class Room {
     private static Pane screen = null;
     private static BorderPane bPane = null;
     private static Text healthVal;
-    protected static Label cashValue;
+    public static Label cashValue;
 
     public static void reset() {
         if (screen != null) {

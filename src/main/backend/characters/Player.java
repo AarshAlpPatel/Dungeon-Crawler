@@ -93,6 +93,7 @@ public class Player extends Sprite {
     }
 
     public void move() {
+
         double dx = 0;
         double dy = 0;
         if (moveNorth) {

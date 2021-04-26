@@ -290,10 +290,8 @@ public class SetUpPlayerScreen {
                 }
 
                 MainScreen.setScene(Room.getScene());
-//                System.out.println(Player.getInstance());
+                ShopScreen.cashValue.setText(Player.getInstance().getCash().toString());
                 Controller.startTimer();
-//                System.out.println(Player.getInstance().getStats());
-//                System.out.println(Player.getInstance().getStats().getStartTime());
             }
         });
 

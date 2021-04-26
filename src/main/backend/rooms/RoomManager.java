@@ -80,6 +80,8 @@ public class RoomManager {
             Room newRoom;
             if (i == 6) {
                 newRoom = createRoom("treasure");
+            } else if (i == 7) {
+                newRoom = createRoom("weapon");
             } else {
                 newRoom = createRoom(types.get(i));
             }
