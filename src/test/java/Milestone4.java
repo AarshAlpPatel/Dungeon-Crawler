@@ -12,7 +12,6 @@ import main.backend.rooms.TreasureRoom;
 import main.frontend.MainScreen;
 import main.backend.rooms.Room;
 import main.frontend.WelcomeScreen;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -448,7 +447,7 @@ public class Milestone4 extends ApplicationTest {
         return null;
     }
 
-    public Door findOpenDoorSetAmount(@NotNull Room current, Door lastRoomDirection) {
+    public Door findOpenDoorSetAmount(Room current, Door lastRoomDirection) {
         int i = 0;
         Door[] directions = Door.values();
         while (current.getNextRoom(directions[i]) == null || directions[i] == lastRoomDirection) {

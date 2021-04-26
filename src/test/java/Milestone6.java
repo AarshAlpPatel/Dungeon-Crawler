@@ -238,15 +238,15 @@ public class Milestone6 extends ApplicationTest {
     public Door findEnemyRoom() {
         Room current = RoomManager.getCurrent();
         if (!(current.getNextRoom(Door.WEST) instanceof TreasureRoom
-                || current.getNextRoom(Door.WEST) instanceof WeaponRoom)) {
+                && current.getNextRoom(Door.WEST) instanceof WeaponRoom)) {
             goWest();
             return Door.WEST;
         } else if (!(current.getNextRoom(Door.NORTH) instanceof TreasureRoom
-                || current.getNextRoom(Door.WEST) instanceof WeaponRoom)) {
+                && current.getNextRoom(Door.NORTH) instanceof WeaponRoom)) {
             goNorth();
             return Door.NORTH;
         } else if (!(current.getNextRoom(Door.EAST) instanceof TreasureRoom
-                || current.getNextRoom(Door.WEST) instanceof WeaponRoom)) {
+                && current.getNextRoom(Door.EAST) instanceof WeaponRoom)) {
             goEast();
             return Door.EAST;
         } else {
