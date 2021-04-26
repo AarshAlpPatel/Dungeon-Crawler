@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import main.backend.characters.StatTracker;
+import main.backend.weapons.Weapon;
 import main.backend.exceptions.EdgeOfScreen;
 import main.backend.exceptions.WallCollision;
 import main.backend.Controller;
@@ -12,6 +12,7 @@ import main.backend.characters.Sprite;
 import main.backend.collidables.Collidable;
 import main.backend.collidables.WallManager;
 import main.backend.characters.EnemyManager;
+import main.backend.weapons.WeaponManager;
 
 public class Room {
     protected static final int MAX_CONNECTIONS = 4;
@@ -69,6 +70,11 @@ public class Room {
     }
 
     public Door checkEdge(double x, double y) {
+        //challenge room locked door logic
+        Weapon generatedWeapon = WeaponManager.create("key", 400, 400, true, 2.5, 10, -1);
+        if (this instanceof WeaponRoom && !this.getImages().contains(generatedWeapon.getImage()) && !this.isClear()) {
+            return null;
+        }
         if (x <= Controller.getMinPlayerX() + 5
             && y >= Controller.getMidY() - RoomManager.getDoorWidth() / 2
             && y <= Controller.getMidY() + RoomManager.getDoorWidth() / 2
