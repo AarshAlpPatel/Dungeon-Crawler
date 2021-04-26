@@ -28,8 +28,12 @@ public class ShopScreen {
     private static VBox screen;
     private static Slot selected;
     private static Panel checkoutPanel;
-    public static Label cashValue = new Label(Player.getInstance().getCash().toString());
+    private static Label cashValue = new Label(Player.getInstance().getCash().toString());
     private static Label message;
+
+    public static Label getCashValue() {
+        return cashValue;
+    }
 
     private static StackPane createBackground() {
         StackPane shop = new StackPane();
@@ -259,7 +263,7 @@ public class ShopScreen {
                     Player.getInstance().getInventory().
                             addPotion((Potion) getCollidable(selected.name));
                 }
-                Room.cashValue.setText(Player.getInstance().getCash().toString());
+                Room.getCashValue().setText(Player.getInstance().getCash().toString());
                 cashValue.setText(Player.getInstance().getCash().toString());
                 message.setText("Purchase Confirmed!");
                 message.setTextFill(Color.CYAN);

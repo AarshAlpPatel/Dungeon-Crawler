@@ -2,13 +2,11 @@ package main.frontend;
 
 import javafx.geometry.*;
 import javafx.scene.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
 import javafx.scene.control.*;
-import main.backend.Controller;
 
 public class WelcomeScreen {
 
