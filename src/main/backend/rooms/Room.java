@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import main.backend.weapons.Axe;
 import main.backend.weapons.Weapon;
 import main.backend.exceptions.EdgeOfScreen;
 import main.backend.exceptions.WallCollision;

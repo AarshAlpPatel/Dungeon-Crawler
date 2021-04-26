@@ -3,6 +3,7 @@ package main.backend.weapons;
 import java.util.Random;
 
 import javafx.geometry.Point2D;
+import main.backend.characters.Boss;
 import main.backend.characters.Player;
 import main.backend.characters.Sprite;
 import main.backend.collidables.Collidable;

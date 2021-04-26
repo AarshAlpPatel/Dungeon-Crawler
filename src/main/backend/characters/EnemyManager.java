@@ -111,8 +111,8 @@ public class EnemyManager {
             //     this.enemies[i] = randomlyChooseEnemy();
             // }
         }
-        if(boss) {
-            this.enemies[enemies] = new Boss(getRandomPosition(), getRandomPosition(), this.enemyCounter++);
+        if (boss) {
+            this.enemies[enemies] = new Boss(400, 400, this.enemyCounter++);
         }
     }
 

@@ -9,10 +9,7 @@ import main.backend.Controller;
 import main.backend.characters.Enemy;
 import main.backend.characters.Player;
 import main.backend.characters.StatTracker;
-import main.backend.rooms.Door;
-import main.backend.rooms.Room;
-import main.backend.rooms.RoomManager;
-import main.backend.rooms.TreasureRoom;
+import main.backend.rooms.*;
 import main.frontend.GameManager;
 import main.frontend.MainScreen;
 import main.frontend.WelcomeScreen;
@@ -228,13 +225,16 @@ public class Milestone6 extends ApplicationTest {
 
     public Door findEnemyRoom() {
         Room current = RoomManager.getCurrent();
-        if (!(current.getNextRoom(Door.WEST) instanceof TreasureRoom)) {
+        if (!(current.getNextRoom(Door.WEST) instanceof TreasureRoom ||
+                current.getNextRoom(Door.WEST) instanceof WeaponRoom)) {
             goWest();
             return Door.WEST;
-        } else if (!(current.getNextRoom(Door.NORTH) instanceof TreasureRoom)) {
+        } else if (!(current.getNextRoom(Door.NORTH) instanceof TreasureRoom ||
+                current.getNextRoom(Door.WEST) instanceof WeaponRoom)) {
             goNorth();
             return Door.NORTH;
-        } else if (!(current.getNextRoom(Door.EAST) instanceof TreasureRoom)) {
+        } else if (!(current.getNextRoom(Door.EAST) instanceof TreasureRoom ||
+                current.getNextRoom(Door.WEST) instanceof WeaponRoom)) {
             goEast();
             return Door.EAST;
         } else {
