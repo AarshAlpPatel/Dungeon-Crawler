@@ -12,6 +12,8 @@ import main.backend.rooms.WeaponRoom;
 import main.backend.weapons.Weapon;
 import main.backend.characters.Bag;
 import main.backend.characters.Player;
+import main.frontend.Room;
+import main.frontend.ShopScreen;
 
 public class Inventory {
     private static final int MAX_WEAPONS = 2;
@@ -44,10 +46,12 @@ public class Inventory {
             } else if (c instanceof Potion) {
                 addPotion((Potion) c);
                 printInventory();
-            } else if (c instanceof Bag){
+            } else if (c instanceof Bag) {
                 Player.getInstance().setCash(Player.getInstance().getCash() + 200);
                 System.out.println(Player.getInstance().getCash());
                 //add line to update room's cash label
+                ShopScreen.cashValue.setText(Player.getInstance().getCash().toString());
+                Room.cashValue.setText(Player.getInstance().getCash().toString());
             } else {
                 throw new IllegalArgumentException("Invalid collectable");
             }
