@@ -10,6 +10,8 @@ import main.backend.potions.Potion;
 import main.backend.rooms.RoomManager;
 import main.backend.rooms.WeaponRoom;
 import main.backend.weapons.Weapon;
+import main.backend.characters.Bag;
+import main.backend.characters.Player;
 
 public class Inventory {
     private static final int MAX_WEAPONS = 2;
@@ -41,6 +43,8 @@ public class Inventory {
             } else if (c instanceof Potion) {
                 addPotion((Potion) c);
                 printInventory();
+            } else if (c instanceof Bag){
+                Player.getInstance().setCash(Player.getInstance().getCash() + 200);
             } else {
                 throw new IllegalArgumentException("Invalid collectable");
             }

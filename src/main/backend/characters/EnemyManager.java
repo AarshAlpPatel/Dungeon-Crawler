@@ -4,6 +4,7 @@ import java.util.*;
 
 import javafx.scene.Node;
 import main.backend.rooms.BossRoom;
+import main.backend.rooms.WeaponRoom;
 import main.backend.rooms.RoomManager;
 
 public class EnemyManager {
@@ -127,6 +128,9 @@ public class EnemyManager {
                         StatTracker.changeScore(100);
                         if (RoomManager.getCurrent() instanceof BossRoom) {
                             StatTracker.changeScore(400);
+                        }
+                        if (RoomManager.getCurrent() instanceof WeaponRoom) {
+                            ((WeaponRoom)RoomManager.getCurrent()).onClear();
                         }
                     }
                 }

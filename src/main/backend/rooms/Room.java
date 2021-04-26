@@ -205,4 +205,8 @@ public class Room {
         }
         return found;
     }
+
+    public void onClear() {
+
+    }
 }
