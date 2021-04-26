@@ -240,10 +240,8 @@ public class Controller {
         Collidable c = RoomManager.getCurrent().pickUpCollectable(Player.getInstance());
         if (c == null) {
             System.out.println("Nothing to pick up");
-        } else {
-            if (!Player.getInstance().addToInventory(c)) {
-                RoomManager.getCurrent().addCollectable(c, Player.getInstance().getPosition());
-            }
+        } else if (!Player.getInstance().addToInventory(c)) { //inventory full
+            RoomManager.getCurrent().addCollectable(c, Player.getInstance().getPosition());
         }
     }
 

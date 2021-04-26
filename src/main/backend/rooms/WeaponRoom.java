@@ -8,6 +8,7 @@ import javafx.geometry.Point2D;
 
 public class WeaponRoom extends Room {
     private Weapon generatedWeapon;
+    public static int counter = 0;
 
     public WeaponRoom() {
         super("empty");
@@ -22,17 +23,16 @@ public class WeaponRoom extends Room {
             collectables.remove(w);
             Controller.destroyImage(w.getImage());
         }
-
     }
-    boolean first = true;
+
     public void onClear() {
-        if (this.isClear() && first) {
-            first = false;
+        if (counter == 0) {
+            counter++;
+        }
+        if (this.isClear() && counter == 1) {
             Bag bag = new Bag(400, 400, 75, 75, "bag.png", 0, 0);
             this.addCollectable(bag, new Point2D(400, 400));
             collectables.add(bag);
         }
     }
-
-
 }
