@@ -1,7 +1,5 @@
 package main.backend.characters;
 
-import java.util.Random;
-
 import main.backend.weapons.Weapon;
 import main.backend.weapons.Axe;
 
