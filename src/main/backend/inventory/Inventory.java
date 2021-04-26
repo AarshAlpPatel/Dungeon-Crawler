@@ -36,16 +36,18 @@ public class Inventory {
         try {
             if (c instanceof Weapon) {
                 if (RoomManager.getCurrent() instanceof WeaponRoom) {
-                    WeaponRoom r = (WeaponRoom)RoomManager.getCurrent();
-                    r.trigger((Weapon)c);
-                } 
-                addWeapon((Weapon) c);
+                    WeaponRoom r = (WeaponRoom) RoomManager.getCurrent();
+                    r.trigger((Weapon) c);
+                } else {
+                    addWeapon((Weapon) c);
+                }
             } else if (c instanceof Potion) {
                 addPotion((Potion) c);
                 printInventory();
             } else if (c instanceof Bag){
                 Player.getInstance().setCash(Player.getInstance().getCash() + 200);
                 System.out.println(Player.getInstance().getCash());
+                //add line to update room's cash label
             } else {
                 throw new IllegalArgumentException("Invalid collectable");
             }
