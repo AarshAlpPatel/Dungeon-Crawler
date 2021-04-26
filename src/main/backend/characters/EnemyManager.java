@@ -18,7 +18,7 @@ public class EnemyManager {
         this.enemies = new Enemy[enemyCount];
         this.enemiesHit = new boolean[enemyCount];
         this.playerHits = new boolean[enemyCount];
-        this.enemyCounter = enemyCount;
+        this.enemyCounter = 0;
         this.difficulty = difficulty;
         generateEnemies(enemyCount, difficulty, boss);
     }
@@ -78,6 +78,14 @@ public class EnemyManager {
         //};
         if(boss) {
             enemies--;
+
+                // if (Math.random() < (0.9/difficulty)*(0.9/difficulty)) {
+                //     this.enemies[i] = randomlyChooseEnemy();
+                // } else if (Math.random() < 1 / difficulty) {
+                //     this.enemies[i] = randomlyChooseEnemy();
+                // } else {
+                //     this.enemies[i] = randomlyChooseEnemy();
+                // }
         }
 
         for (int i = 0, j = 0; i < enemies; ++i, j++) {
