@@ -17,6 +17,7 @@ public class WeaponRoom extends Room {
         if (w == generatedWeapon && generatedWeapon != null) {
             generatedWeapon = null;
             createEnemies(8, 4);
+            collectables.remove(w);
             Controller.destroyImage(w.getImage());
         }
     }
