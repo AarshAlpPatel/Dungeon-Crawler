@@ -112,8 +112,7 @@ public class EnemyManager {
             // }
         }
         if (boss) {
-            this.enemies[enemies] = new Boss(getRandomPosition(),
-                    getRandomPosition(), this.enemyCounter++);
+            this.enemies[enemies] = new Boss(400, 400, this.enemyCounter++);
         }
     }
 

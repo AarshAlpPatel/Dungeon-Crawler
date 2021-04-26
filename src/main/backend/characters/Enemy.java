@@ -71,7 +71,9 @@ public class Enemy extends Sprite {
         Controller.addImage(images);
         Player.getInstance().getStats().addMonster();
 
-        this.mainWeapon.dropWeapon();
+        if (!(this instanceof Boss)) {
+            this.mainWeapon.dropWeapon();
+        }
         this.mainWeapon = null;
     }
 
