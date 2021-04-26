@@ -116,10 +116,10 @@ public abstract class Sprite extends Collidable {
         this.healthBar.setProgress(this.health / this.maxHealth);
     }
 
-//    @Override
-//    public String toString() {
-//        return String.format("Character: %s", name);
-//    }
+    //    @Override
+    //    public String toString() {
+    //        return String.format("Character: %s", name);
+    //    }
 
     public double getDistance(Sprite s) {
         return this.position.distance(s.position);
@@ -142,7 +142,9 @@ public abstract class Sprite extends Collidable {
 
     public void hit(Sprite s) {
         s.takeDamage(mainWeapon.getDamage() * this.attackMultiplier);
-        if (this instanceof Enemy) StatTracker.killer = (Enemy) this;
+        if (this instanceof Enemy) {
+            StatTracker.killer = (Enemy) this;
+        }
     }
 
     public void takeDamage(double damage) {
@@ -157,7 +159,7 @@ public abstract class Sprite extends Collidable {
         if (this instanceof Enemy) {
             System.out.println(health);
             StatTracker.addDamageDealt(damageTaken);
-        } else if (this instanceof Player){
+        } else if (this instanceof Player) {
             StatTracker.addDamageTaken(damageTaken);
         }
         if (this.health == 0) {

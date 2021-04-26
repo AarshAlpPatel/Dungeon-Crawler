@@ -73,7 +73,8 @@ public class Room {
     public Door checkEdge(double x, double y) {
         //challenge room locked door logic
         Weapon generatedWeapon = WeaponManager.create("key", 400, 400, true, 2.5, 10, -1);
-        if (this instanceof WeaponRoom && !this.getImages().contains(generatedWeapon.getImage()) && !this.isClear()) {
+        if (this instanceof WeaponRoom
+                && !this.getImages().contains(generatedWeapon.getImage()) && !this.isClear()) {
             return null;
         }
         if (x <= Controller.getMinPlayerX() + 5

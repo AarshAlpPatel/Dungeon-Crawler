@@ -50,8 +50,8 @@ public class Inventory {
                 Player.getInstance().setCash(Player.getInstance().getCash() + 200);
                 System.out.println(Player.getInstance().getCash());
                 //add line to update room's cash label
-                ShopScreen.cashValue.setText(Player.getInstance().getCash().toString());
-                Room.cashValue.setText(Player.getInstance().getCash().toString());
+                ShopScreen.getCashValue().setText(Player.getInstance().getCash().toString());
+                Room.getCashValue().setText(Player.getInstance().getCash().toString());
             } else {
                 throw new IllegalArgumentException("Invalid collectable");
             }

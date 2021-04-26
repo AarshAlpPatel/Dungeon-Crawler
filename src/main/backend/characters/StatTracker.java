@@ -1,7 +1,5 @@
 package main.backend.characters;
 
-import main.backend.characters.Enemy;
-import main.backend.characters.Player;
 
 public class StatTracker {
     private static Long startTime;
@@ -18,11 +16,15 @@ public class StatTracker {
     private static String deathReason;
 
     public static void startTimer() {
-        if (startTime == null) startTime = System.nanoTime();
+        if (startTime == null) {
+            startTime = System.nanoTime();
+        }
     }
 
     public static void finishTimer() {
-        if (finishTime == null) finishTime = System.nanoTime();
+        if (finishTime == null) {
+            finishTime = System.nanoTime();
+        }
     }
 
     public static void reset() {

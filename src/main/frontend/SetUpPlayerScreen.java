@@ -290,7 +290,7 @@ public class SetUpPlayerScreen {
                 }
 
                 MainScreen.setScene(Room.getScene());
-                ShopScreen.cashValue.setText(Player.getInstance().getCash().toString());
+                ShopScreen.getCashValue().setText(Player.getInstance().getCash().toString());
                 Controller.startTimer();
             }
         });

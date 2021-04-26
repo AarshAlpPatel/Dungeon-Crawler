@@ -29,8 +29,9 @@ public abstract class EndGame {
         Label sub = new Label(subText);
         sub.getStyleClass().add("sub");
         subB.getChildren().addAll(main, sub);
-//        ImageView gOver = new ImageView(new Image("main/design/images/endScreen/gameOver.png", 300, 300, true, false));
-//        backgroundStack.getChildren().addAll(gOver);
+        //       ImageView gOver = new ImageView(new Image(
+        //       "main/design/images/endScreen/gameOver.png", 300, 300, true, false));
+        //       backgroundStack.getChildren().addAll(gOver);
         backgroundStack.getChildren().addAll(background, subB);
         return backgroundStack;
     }
@@ -60,7 +61,8 @@ public abstract class EndGame {
 
     protected static StackPane createSumButton() {
         StackPane toSum = new StackPane();
-        ImageView sum = new ImageView(new Image("main/design/images/endScreen/summary.png", 75, 75, true, false));
+        ImageView sum = new ImageView(new Image("main/design/images/endScreen/summary.png",
+                75, 75, true, false));
         toSum.getChildren().add(sum);
         toSum.setId("toSum");
         toSum.setMaxSize(sum.getFitHeight(), sum.getFitWidth());
@@ -79,7 +81,8 @@ public abstract class EndGame {
 
     protected static StackPane createBackButton() {
         StackPane back = new StackPane();
-        ImageView backToMenu = new ImageView(new Image("main/design/images/endScreen/backArrow.png", 60, 60, true, false));
+        ImageView backToMenu = new ImageView(new Image("main/design/images/endScreen/backArrow.png",
+                60, 60, true, false));
         back.getChildren().add(backToMenu);
         back.setId("back");
         back.setMaxSize(backToMenu.getFitHeight(), backToMenu.getFitWidth());
@@ -94,7 +97,8 @@ public abstract class EndGame {
 
     protected static StackPane createExitButton() {
         StackPane exit = new StackPane();
-        ImageView exitApp = new ImageView(new Image("main/design/images/exit.png", 60, 60, true, false));
+        ImageView exitApp = new ImageView(new Image("main/design/images/exit.png",
+                60, 60, true, false));
         exit.getChildren().add(exitApp);
         exit.setMaxSize(exitApp.getFitHeight(), exitApp.getFitWidth());
         exit.setOnMouseReleased(e -> {
@@ -113,7 +117,8 @@ public abstract class EndGame {
         return top;
     }
 
-    protected static Scene getEndScene(String mainText, String subText, Image image, String cssScreen) {
+    protected static Scene getEndScene(String mainText,
+                                       String subText, Image image, String cssScreen) {
         Controller.stopTimer();
         screenHolder = new StackPane();
         screen = new BorderPane();
@@ -195,14 +200,15 @@ public abstract class EndGame {
             stats.getStyleClass().addAll("center");
             VBox score = createScoreBox();
             HBox monstersKilled = createStatLine(
-                    new Image("main/design/images/enemies/bat/base/bat-base.gif", 50, 50, true, false),
-                    "Monsters Killed:" + (int)((double)Controller.getPlayerStats().get(2)));
+                    new Image("main/design/images/enemies/bat/base/bat-base.gif",
+                            50, 50, true, false),
+                    "Monsters Killed:" + (int) ((double) Controller.getPlayerStats().get(2)));
             HBox damageDealt = createStatLine(
                     new Image("main/design/images/endScreen/pow.png", 50, 50, true, false),
-                    "Damage Taken:" + (int)((double)Controller.getPlayerStats().get(1)));
+                    "Damage Taken:" + (int) ((double) Controller.getPlayerStats().get(1)));
             HBox damageTaken = createStatLine(
                     new Image("main/design/images/endScreen/pow.png", 50, 50, true, false),
-                    "Damage Dealt:" + (int)((double)Controller.getPlayerStats().get(0)));
+                    "Damage Dealt:" + (int) ((double) Controller.getPlayerStats().get(0)));
             String timeString = createTimeString(Controller.getTimeTaken());
             Label time = new Label(timeString);
             time.getStyleClass().add("time");
@@ -214,7 +220,7 @@ public abstract class EndGame {
             score.setPadding(new Insets(0, 0, 25, 0));
             Label scoreT = new Label("SCORE");
             scoreT.getStyleClass().add("score");
-            Label scoreV = new Label("" + (int)((double)Controller.getPlayerStats().get(3)));
+            Label scoreV = new Label("" + (int) ((double) Controller.getPlayerStats().get(3)));
             scoreV.getStyleClass().add("score");
             score.getChildren().addAll(scoreT, scoreV);
             score.getStyleClass().add("center");

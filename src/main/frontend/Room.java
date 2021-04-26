@@ -15,7 +15,7 @@ public class Room {
     private static Pane screen = null;
     private static BorderPane bPane = null;
     private static Text healthVal;
-    public static Label cashValue;
+    private static Label cashValue;
 
     public static void reset() {
         if (screen != null) {
@@ -26,6 +26,10 @@ public class Room {
 
     public static Text getHealthVal() {
         return healthVal;
+    }
+
+    public static Label getCashValue() {
+        return cashValue;
     }
 
     public static Scene getScene() {

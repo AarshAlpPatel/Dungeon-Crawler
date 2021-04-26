@@ -77,16 +77,16 @@ public class EnemyManager {
         //    new Ghost(getRandomPosition(), getRandomPosition(), this.enemyCounter++),
         //    new Snake(getRandomPosition(), getRandomPosition(), this.enemyCounter++)
         //};
-        if(boss) {
+        if (boss) {
             enemies--;
 
-                // if (Math.random() < (0.9/difficulty)*(0.9/difficulty)) {
-                //     this.enemies[i] = randomlyChooseEnemy();
-                // } else if (Math.random() < 1 / difficulty) {
-                //     this.enemies[i] = randomlyChooseEnemy();
-                // } else {
-                //     this.enemies[i] = randomlyChooseEnemy();
-                // }
+            // if (Math.random() < (0.9/difficulty)*(0.9/difficulty)) {
+            //     this.enemies[i] = randomlyChooseEnemy();
+            // } else if (Math.random() < 1 / difficulty) {
+            //     this.enemies[i] = randomlyChooseEnemy();
+            // } else {
+            //     this.enemies[i] = randomlyChooseEnemy();
+            // }
         }
 
         for (int i = 0, j = 0; i < enemies; ++i, j++) {

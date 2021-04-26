@@ -1,9 +1,7 @@
 package test.java;
 
-import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import main.backend.Controller;
 import main.backend.characters.Enemy;
@@ -63,11 +61,15 @@ public class Milestone6 extends ApplicationTest {
         press(KeyCode.E);
         release(KeyCode.E);
         verifyThat("You Won!", NodeMatchers.isVisible());
-        verifyThat("Congratulations! You defeated the boss and made it out alive!", NodeMatchers.isVisible());
+        verifyThat("Congratulations! You defeated the boss and made it out alive!",
+                NodeMatchers.isVisible());
         verifyThat(new ImageView("main/design/images/exit.png"), NodeMatchers.isVisible());
-        verifyThat(new ImageView("main/design/images/endScreen/backArrow.png"), NodeMatchers.isVisible());
-        verifyThat(new ImageView("main/design/images/endScreen/summary.png"), NodeMatchers.isVisible());
-        verifyThat(new ImageView("main/design/images/endScreen/dancing.gif"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/endScreen/backArrow.png"),
+                NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/endScreen/summary.png"),
+                NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/endScreen/dancing.gif"),
+                NodeMatchers.isVisible());
         clickOn("#toSum");
         verifyThat("SCORE", NodeMatchers.isVisible());
         clickOn("#closeSum");
@@ -81,11 +83,15 @@ public class Milestone6 extends ApplicationTest {
         press(KeyCode.Q);
         release(KeyCode.Q);
         verifyThat("Game Over!", NodeMatchers.isVisible());
-        verifyThat("I have no idea how the hell ya died but ya did it. Congrats?", NodeMatchers.isVisible());
+        verifyThat("I have no idea how the hell ya died but ya did it. Congrats?",
+                NodeMatchers.isVisible());
         verifyThat(new ImageView("main/design/images/exit.png"), NodeMatchers.isVisible());
-        verifyThat(new ImageView("main/design/images/endScreen/backArrow.png"), NodeMatchers.isVisible());
-        verifyThat(new ImageView("main/design/images/endScreen/summary.png"), NodeMatchers.isVisible());
-        verifyThat(new ImageView("main/design/images/endScreen/gSkull.gif"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/endScreen/backArrow.png"),
+                NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/endScreen/summary.png"),
+                NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/endScreen/gSkull.gif"),
+                NodeMatchers.isVisible());
         clickOn("#toSum");
         verifyThat("SCORE", NodeMatchers.isVisible());
         clickOn("#closeSum");
@@ -110,7 +116,8 @@ public class Milestone6 extends ApplicationTest {
         press(KeyCode.Q);
         release(KeyCode.Q);
         clickOn("#toSum");
-        verifyThat("Monsters Killed:" + (startingNumAlive - enemiesAlive), NodeMatchers.isVisible());
+        verifyThat("Monsters Killed:" + (startingNumAlive - enemiesAlive),
+                NodeMatchers.isVisible());
     }
 
     @Test
@@ -149,7 +156,8 @@ public class Milestone6 extends ApplicationTest {
         press(KeyCode.Q);
         release(KeyCode.Q);
         clickOn("#toSum");
-        verifyThat("Damage Dealt:" + (int)(StatTracker.getDamageDealt()), NodeMatchers.isVisible());
+        verifyThat("Damage Dealt:" + (int) (StatTracker.getDamageDealt()),
+                NodeMatchers.isVisible());
     }
 
     @Test
@@ -167,7 +175,8 @@ public class Milestone6 extends ApplicationTest {
         press(KeyCode.Q);
         release(KeyCode.Q);
         clickOn("#toSum");
-        verifyThat("" + (int) (StatTracker.getMonstersKilled()*20 - StatTracker.getDamageTaken()), NodeMatchers.isVisible());
+        verifyThat("" + (int) (StatTracker.getMonstersKilled() * 20 - StatTracker.getDamageTaken()),
+                NodeMatchers.isVisible());
     }
 
     @Test
@@ -180,7 +189,8 @@ public class Milestone6 extends ApplicationTest {
         press(KeyCode.Q);
         release(KeyCode.Q);
         clickOn("#toSum");
-        verifyThat(String.format("%02d:%02d", StatTracker.getElapsedTime()[1], StatTracker.getElapsedTime()[2]), NodeMatchers.isVisible());
+        verifyThat(String.format("%02d:%02d", StatTracker.getElapsedTime()[1],
+                StatTracker.getElapsedTime()[2]), NodeMatchers.isVisible());
     }
 
     @Test
@@ -193,7 +203,8 @@ public class Milestone6 extends ApplicationTest {
         verifyThat("Left click to attack.", NodeMatchers.isVisible());
         verifyThat("Press G to open the shop.", NodeMatchers.isVisible());
         verifyThat("Press H to open the inventory.", NodeMatchers.isVisible());
-        verifyThat("Defeat the monster at the \nend of the labyrinth to win!", NodeMatchers.isVisible());
+        verifyThat("Defeat the monster at the \nend of the labyrinth to win!",
+                NodeMatchers.isVisible());
     }
 
     @Test
@@ -220,7 +231,8 @@ public class Milestone6 extends ApplicationTest {
         release(KeyCode.G);
         press(KeyCode.H);
         press(KeyCode.H);
-        verifyThat(new ImageView("main/design/images/potions/health.png"), NodeMatchers.isVisible());
+        verifyThat(new ImageView("main/design/images/potions/health.png"),
+                NodeMatchers.isVisible());
     }
 
     public Door findEnemyRoom() {
@@ -257,7 +269,8 @@ public class Milestone6 extends ApplicationTest {
             directionKilled = "South";
         }
         while (!RoomManager.getCurrentEnemies().getEnemies()[index].isDead()) {
-            clickOn(RoomManager.getCurrentEnemies().getEnemies()[index].getRawImage()); //problem child
+            //problem child
+            clickOn(RoomManager.getCurrentEnemies().getEnemies()[index].getRawImage());
             numAlive = 0;
             for (Enemy e : RoomManager.getCurrentEnemies().getEnemies()) {
                 if (!e.isDead()) {
