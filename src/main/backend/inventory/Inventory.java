@@ -45,6 +45,7 @@ public class Inventory {
                 printInventory();
             } else if (c instanceof Bag){
                 Player.getInstance().setCash(Player.getInstance().getCash() + 200);
+                System.out.println(Player.getInstance().getCash());
             } else {
                 throw new IllegalArgumentException("Invalid collectable");
             }
