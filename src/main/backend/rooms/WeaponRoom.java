@@ -8,7 +8,6 @@ import javafx.geometry.Point2D;
 
 public class WeaponRoom extends Room {
     private Weapon generatedWeapon;
-    public static int counter = 0;
 
     public WeaponRoom() {
         super("empty");
@@ -26,11 +25,7 @@ public class WeaponRoom extends Room {
     }
 
     public void onClear() {
-        if (counter == 0) {
-            counter++;
-        }
-        if (this.isClear() && counter == 1) {
-            counter++;
+        if (this.isClear()) {
             Bag bag = new Bag(400, 400, 75, 75, "bag.png", 0, 0);
             this.addCollectable(bag, new Point2D(400, 400));
         }
