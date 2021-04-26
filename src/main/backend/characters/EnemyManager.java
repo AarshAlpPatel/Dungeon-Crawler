@@ -130,7 +130,7 @@ public class EnemyManager {
                             StatTracker.changeScore(400);
                         }
                         if (RoomManager.getCurrent() instanceof WeaponRoom) {
-                            ((WeaponRoom)RoomManager.getCurrent()).onClear();
+                            ((WeaponRoom) RoomManager.getCurrent()).onClear();
                         }
                     }
                 }

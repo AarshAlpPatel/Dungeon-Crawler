@@ -30,9 +30,9 @@ public class WeaponRoom extends Room {
             counter++;
         }
         if (this.isClear() && counter == 1) {
+            counter++;
             Bag bag = new Bag(400, 400, 75, 75, "bag.png", 0, 0);
             this.addCollectable(bag, new Point2D(400, 400));
-            collectables.add(bag);
         }
     }
 }
