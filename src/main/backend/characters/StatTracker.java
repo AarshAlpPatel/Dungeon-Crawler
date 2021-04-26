@@ -104,4 +104,8 @@ public class StatTracker {
         //-1 per damage taken
         //500 for clearing boss
     }
+
+    public static double getFinalScore() {
+        return score;
+    }
 }

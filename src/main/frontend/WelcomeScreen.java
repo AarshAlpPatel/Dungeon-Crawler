@@ -71,6 +71,7 @@ public class WelcomeScreen {
             //screenHolder = new StackPane();
             rect = new Rectangle(MainScreen.getLength() - 200, MainScreen.getHeight() - 200);
             rect.getStyleClass().add("rect");
+            rect.setId("helpRect");
             this.getChildren().add(rect);
             createInfoBox();
             screen = new VBox();
@@ -80,6 +81,7 @@ public class WelcomeScreen {
             closePane.setPadding(new Insets(20, 20, 0, 0));
             closePane.setAlignment(Pos.CENTER_RIGHT);
             close = new ImageView("main/design/images/exit.png");
+            closePane.setId("helpClose");
             close.setOnMouseReleased(event -> {
                 screenHolder.getChildren().remove(this);
                 screenHolder.getChildren().get(0).setOpacity(1);
