@@ -25,6 +25,8 @@ public class SetUpPlayerScreen {
         "spear",
         "axe"
     };
+    private static String[] attacks = {"07", "10", "20"};
+    private static String[] speeds = {"25", "15", "10"};
 
     //private static ImageCursor defaultCursor =
     //new ImageCursor(new Image("/main/design/images/cursors/default_cursor.png"));
@@ -79,9 +81,9 @@ public class SetUpPlayerScreen {
             );
             Label dName = new Label(capitalize(weapons[i]));
             dName.getStyleClass().addAll("dName", "weapon_description");
-            Label dAttack = new Label("Attack: 20");
+            Label dAttack = new Label("Attacks: " + attacks[i]);
             dAttack.getStyleClass().addAll("dAttack", "weapon_description");
-            Label dSpeed = new Label("Speed: 30");
+            Label dSpeed = new Label("Speed: " + speeds[i]);
             dSpeed.getStyleClass().addAll("dSpeed", "weapon_description");
             dChar.getChildren().addAll(dName, dAttack, dSpeed);
             weaponBox.getChildren().addAll(dSprite, dChar);
