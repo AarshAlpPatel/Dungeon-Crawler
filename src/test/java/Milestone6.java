@@ -18,6 +18,7 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 import static org.testfx.api.FxToolkit.setupApplication;
@@ -116,8 +117,7 @@ public class Milestone6 extends ApplicationTest {
         press(KeyCode.Q);
         release(KeyCode.Q);
         clickOn("#toSum");
-        verifyThat("Monsters Killed:" + (startingNumAlive - enemiesAlive),
-                NodeMatchers.isVisible());
+        assertEquals(startingNumAlive - enemiesAlive, StatTracker.getMonstersKilled());
     }
 
     @Test
@@ -134,11 +134,11 @@ public class Milestone6 extends ApplicationTest {
         double startingHealth = Player.getInstance().getHealth();
         getHit();
         double healthLeft = Player.getInstance().getHealth();
-        int healthLost = (int) (startingHealth - healthLeft);
+        Double healthLost = startingHealth - healthLeft;
         press(KeyCode.Q);
         release(KeyCode.Q);
         clickOn("#toSum");
-        verifyThat("Damage Taken:" + healthLost, NodeMatchers.isVisible());
+        assertEquals(healthLost, StatTracker.getDamageTaken());
     }
 
     @Test
@@ -266,56 +266,6 @@ public class Milestone6 extends ApplicationTest {
         }
         RoomManager.getCurrentEnemies().getEnemies()[index].changeHealth(-99);
         clickOn(RoomManager.getCurrentEnemies().getEnemies()[index].getRawImage());
-
-
-
-
-
-
-
-
-
-        /*
-        int numAlive = 0;
-        String directionKilled;
-        if (RoomManager.getCurrentEnemies().getEnemies()[index].getPosition().getY()
-                < MainScreen.getMidY()) {
-            Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[index]
-                    .getPosition().add(0, 100));
-            directionKilled = "North";
-        } else {
-            Player.getInstance().setPosition(RoomManager.getCurrentEnemies().getEnemies()[index]
-                    .getPosition().subtract(0, 100));
-            directionKilled = "South";
-        }
-        while (!RoomManager.getCurrentEnemies().getEnemies()[index].isDead()) {
-            int startingTime = (int) System.nanoTime();
-            int i = 0;
-            while (System.nanoTime() < (startingTime + 1000000000)) {
-                i++;
-            }
-            //problem child
-            clickOn(RoomManager.getCurrentEnemies().getEnemies()[index].getRawImage());
-            startingTime = (int) System.nanoTime();
-            i = 0;
-            while (System.nanoTime() < (startingTime + 1000000000)) {
-                i++;
-            }
-            numAlive = 0;
-            for (Enemy e : RoomManager.getCurrentEnemies().getEnemies()) {
-                if (!e.isDead()) {
-                    numAlive++;
-                }
-            }
-            //assertSame(numAlive, RoomManager.getCurrentEnemies().getEnemyCounter());
-        }
-        numAlive = 0;
-        for (Enemy e : RoomManager.getCurrentEnemies().getEnemies()) {
-            if (!e.isDead()) {
-                numAlive++;
-            }
-        }
-        return directionKilled; */
     }
 
     public void getHit() {
