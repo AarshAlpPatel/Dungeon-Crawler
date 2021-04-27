@@ -4,7 +4,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import main.backend.Controller;
-import main.backend.characters.Enemy;
 import main.backend.characters.Player;
 import main.backend.characters.StatTracker;
 import main.backend.rooms.*;
@@ -19,7 +18,6 @@ import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 import static org.testfx.api.FxToolkit.setupApplication;
 import static org.testfx.api.FxAssert.verifyThat;
